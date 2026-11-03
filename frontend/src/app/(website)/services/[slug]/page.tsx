@@ -13,7 +13,6 @@ import { PageHeader } from '@/components/shared/page-header';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { StudioStamp, HandUnderline } from '@/components/human/hand-crafted-svg';
-import { TiltCard } from '@/components/human/tilt-card';
 
 interface ServicePageProps {
   params: {
@@ -93,13 +92,13 @@ export default function ServiceDetailPage({ params }: ServicePageProps) {
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {service.features.map((feat, idx) => (
-                  <TiltCard
+                  <div
                     key={idx}
-                    className="p-5 rounded-2xl border border-[#1E5A54]/25 bg-[#F8F4F2] flex items-start gap-3"
+                    className="p-5 rounded-2xl border border-[#1E5A54]/25 bg-[#F8F4F2] flex items-start gap-3 transition-transform duration-200 hover:-translate-y-0.5"
                   >
                     <CheckCircle2 className="h-5 w-5 text-[#F7623D] shrink-0 mt-0.5" />
                     <span className="text-sm font-medium text-[#1E5A54] leading-snug">{feat}</span>
-                  </TiltCard>
+                  </div>
                 ))}
               </div>
             </div>

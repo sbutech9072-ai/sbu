@@ -7,7 +7,6 @@ import { PageHeader } from '@/components/shared/page-header';
 import { Button } from '@/components/ui/button';
 import { formatDate } from '@/lib/utils';
 import { StudioStamp, HandUnderline } from '@/components/human/hand-crafted-svg';
-import { TiltCard } from '@/components/human/tilt-card';
 
 interface BlogPostPageProps {
   params: {
@@ -125,7 +124,7 @@ export default function BlogPostDetailPage({ params }: BlogPostPageProps) {
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {relatedPosts.map((r) => (
-                <TiltCard key={r.id}>
+                <div key={r.id} className="transition-transform duration-200 hover:-translate-y-0.5">
                   <Link
                     href={`/blog/${r.slug}`}
                     className="p-6 rounded-3xl border border-[#1E5A54]/25 bg-[#F8F4F2] hover:bg-[#E2D7D1] transition-colors space-y-3 block h-full"
@@ -144,7 +143,7 @@ export default function BlogPostDetailPage({ params }: BlogPostPageProps) {
                       <ArrowRight className="h-3.5 w-3.5 text-[#F7623D]" />
                     </span>
                   </Link>
-                </TiltCard>
+                </div>
               ))}
             </div>
           </div>

@@ -29,7 +29,7 @@ export function Hero() {
             </div>
 
             {/* Main Headline with HandUnderline under key phrase */}
-            <h1 className="font-headline text-5xl sm:text-6xl md:text-7xl lg:text-[5.25rem] font-black tracking-tight text-[#1E5A54] leading-[0.91] uppercase">
+            <h1 className="font-headline text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-normal tracking-[0.04em] text-[#1E5A54] leading-[1.12] uppercase">
               We Architect{' '}
               <span className="relative inline-block">
                 High-Throughput

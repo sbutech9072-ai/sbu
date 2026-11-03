@@ -98,7 +98,7 @@ export function CompanyIntro() {
                       </span>
                     </div>
 
-                    <h3 className="font-headline text-2xl font-bold uppercase tracking-tight text-[#1E5A54] leading-tight">
+                    <h3 className="font-headline text-2xl font-normal uppercase tracking-[0.04em] text-[#1E5A54] leading-[1.2]">
                       {pillar.title}
                     </h3>
 

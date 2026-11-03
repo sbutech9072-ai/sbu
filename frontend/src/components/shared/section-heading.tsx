@@ -35,11 +35,11 @@ export function SectionHeading({
           </Badge>
         </div>
       )}
-      <div className={cn(' inline-block', align === 'center' ? 'mx-auto' : '')}>
-        <h2 className="font-headline text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-[#1E5A54] uppercase leading-[0.94]">
+      <div className={cn('inline-block', align === 'center' ? 'mx-auto' : '')}>
+        <h2 className="font-headline text-3xl sm:text-4xl md:text-5xl font-normal tracking-[0.04em] text-[#1E5A54] uppercase leading-[1.15]">
           {title}
         </h2>
-        <div className={cn('mt-2', align === 'center' ? 'mx-auto w-28' : 'w-28')}>
+        <div className={cn('mt-3', align === 'center' ? 'mx-auto w-28' : 'w-28')}>
           <HandUnderline className="h-2.5 w-full" />
         </div>
       </div>

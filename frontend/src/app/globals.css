@@ -33,14 +33,25 @@
     min-height: 100vh;
     overflow-x: hidden;
     position: relative;
+    line-height: 1.65;
+    letter-spacing: 0.01em;
   }
 
-  /* Display / Headings: ultra-condensed, heavy, UPPERCASE grotesque */
+  /* Display / Headings: ultra-condensed, heavy, UPPERCASE grotesque
+     IMPORTANT: Anton is a 400-weight display face. Setting font-weight: 400 !important
+     prevents browser synthetic faux-bold from bloating and jamming letterforms together. */
   h1, h2, h3, h4, h5, h6, .font-headline {
     font-family: var(--font-anton), 'Anton', Impact, 'League Gothic', sans-serif;
+    font-weight: 400 !important;
     text-transform: uppercase;
-    letter-spacing: -0.01em;
-    line-height: 0.95;
+    letter-spacing: 0.04em !important;
+    word-spacing: 0.08em !important;
+    line-height: 1.15 !important;
+  }
+
+  p {
+    line-height: 1.7;
+    letter-spacing: 0.01em;
   }
 }
 
@@ -88,6 +99,6 @@ body::before {
 }
 
 ::selection {
-  background-color: #F7623D;
+  background: #1E5A54;
   color: #EEE6E2;
 }

@@ -16,7 +16,6 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { StudioStamp, HandUnderline } from '@/components/human/hand-crafted-svg';
-import { TiltCard } from '@/components/human/tilt-card';
 
 interface ProjectPageProps {
   params: {
@@ -95,15 +94,15 @@ export default function ProjectDetailPage({ params }: ProjectPageProps) {
 
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                 {project.metrics.map((m, idx) => (
-                  <TiltCard
+                  <div
                     key={idx}
-                    className="bg-[#F8F4F2] p-4 rounded-2xl border border-[#1E5A54]/25"
+                    className="bg-[#F8F4F2] p-4 rounded-2xl border border-[#1E5A54]/25 transition-transform duration-200 hover:-translate-y-0.5"
                   >
                     <span className="font-headline text-2xl sm:text-3xl text-[#1E5A54] block">
                       {m.value}
                     </span>
                     <span className="text-xs font-medium text-[#1E5A54]">{m.label}</span>
-                  </TiltCard>
+                  </div>
                 ))}
               </div>
             </div>

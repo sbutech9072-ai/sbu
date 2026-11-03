@@ -69,10 +69,10 @@ export function PageHeader({
             )}
 
             <div className="inline-block mb-4">
-              <h1 className="font-headline text-4xl sm:text-5xl md:text-6xl font-black uppercase tracking-tight text-[#1E5A54] leading-[0.94]">
+              <h1 className="font-headline text-4xl sm:text-5xl md:text-6xl font-normal uppercase tracking-[0.04em] text-[#1E5A54] leading-[1.15]">
                 {title}
               </h1>
-              <div className="w-36 mt-2">
+              <div className="w-36 mt-3">
                 <HandUnderline className="h-3 w-full" />
               </div>
             </div>
