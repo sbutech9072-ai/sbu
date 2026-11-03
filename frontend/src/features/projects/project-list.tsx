@@ -31,31 +31,38 @@ export function ProjectList({ initialProjects }: ProjectListProps) {
   return (
     <div className="space-y-8">
       {/* Search and Category Filters */}
-      <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 p-4 rounded-2xl border border-slate-800 bg-slate-900/40">
-        <div className="flex flex-wrap items-center gap-1.5">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setSelectedCategory(cat)}
-              className={cn(
-                'px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all',
-                selectedCategory === cat
-                  ? 'bg-blue-600 text-white shadow-sm'
-                  : 'text-slate-400 hover:text-white hover:bg-slate-800'
-              )}
-            >
-              {cat}
-            </button>
-          ))}
+      <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 p-4 rounded-2xl border border-[#1E5A54]/25 bg-[#F8F4F2]">
+        <div className="flex flex-wrap items-center gap-2">
+          {categories.map((cat) => {
+            const isSelected = selectedCategory === cat;
+            return (
+              <button
+                key={cat}
+                type="button"
+                onClick={() => setSelectedCategory(cat)}
+                className={cn(
+                  'px-4 py-2 rounded-full text-xs font-bold uppercase tracking-[0.14em] transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] cursor-pointer flex items-center gap-2',
+                  isSelected
+                    ? 'bg-[#1E5A54] text-[#EEE6E2] border border-[#1E5A54]'
+                    : 'bg-[#EEE6E2] text-[#1E5A54] border border-[#1E5A54]/25 hover:border-[#1E5A54]'
+                )}
+              >
+                {isSelected && (
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#F7623D]" />
+                )}
+                <span>{cat}</span>
+              </button>
+            );
+          })}
         </div>
 
         <div className="relative w-full md:w-72">
-          <Search className="absolute left-3 top-2.5 h-4 w-4 text-slate-500" />
+          <Search className="absolute left-4 top-3 h-4 w-4 text-[#1E5A54]/85" />
           <Input
-            placeholder="Search stack, client, or topic..."
+            placeholder="Filter by stack, client, or system..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-9 h-9 text-xs bg-slate-950 border-slate-800"
+            className="pl-11 h-10 text-xs bg-[#EEE6E2] border-[#1E5A54]/35 text-[#1E5A54] placeholder-[#1E5A54]/70"
           />
         </div>
       </div>
@@ -69,9 +76,9 @@ export function ProjectList({ initialProjects }: ProjectListProps) {
         </div>
       ) : (
         <EmptyState
-          title="No case studies found"
-          description="Try selecting a different filter category or changing your search terms."
-          actionLabel="Clear Filters"
+          title="No matching case studies"
+          description="Try picking another system category or clearing your search filter."
+          actionLabel="Reset Filters"
           onAction={() => {
             setSelectedCategory('All');
             setSearchQuery('');
@@ -81,4 +88,3 @@ export function ProjectList({ initialProjects }: ProjectListProps) {
     </div>
   );
 }
-

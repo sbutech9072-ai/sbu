@@ -1,54 +1,45 @@
 import React from 'react';
 import Link from 'next/link';
-import { ArrowRight, Sparkles, Terminal } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { ArrowRight, ArrowUpRight } from 'lucide-react';
 
 export function CTASection() {
   return (
-    <section className="py-20 md:py-24 border-b border-slate-800/80 bg-gradient-to-b from-slate-950 via-blue-950/20 to-slate-950 relative overflow-hidden">
-      {/* Decorative background glow */}
-      <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-        <div className="h-[350px] w-[600px] bg-blue-600/15 blur-[120px] rounded-full" />
-      </div>
-
+    <section className="py-20 md:py-24 border-b border-[#1E5A54]/18 bg-[#EEE6E2] relative overflow-hidden">
       <div className="container mx-auto px-4 max-w-5xl relative z-10 text-center space-y-8">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-blue-500/30 bg-blue-500/10 text-xs font-semibold text-blue-400">
-          <Sparkles className="h-3.5 w-3.5" />
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#1E5A54]/25 bg-transparent text-xs font-bold uppercase tracking-[0.18em] text-[#1E5A54]">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#F7623D]" />
           <span>Ready to Build Next-Gen Software?</span>
         </div>
 
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white leading-tight">
+        <h2 className="font-headline text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-[#1E5A54] leading-[0.95] uppercase">
           Transform Your Vision into an Enterprise-Ready Digital Platform
         </h2>
 
-        <p className="text-base md:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
+        <p className="text-base md:text-lg text-[#1E5A54]/80 max-w-2xl mx-auto leading-relaxed font-sans">
           From full platform engineering to specialized cloud migrations and AI copilots, our senior
           architects are ready to partner with you.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
-          <Button
-            asChild
-            size="lg"
-            className="w-full sm:w-auto rounded-xl px-8 shadow-xl shadow-blue-600/25 text-base gap-2"
+          <Link
+            href="/get-a-quote"
+            className="w-full sm:w-auto rounded-full bg-[#F7623D] hover:bg-[#E05330] text-white uppercase text-xs font-bold tracking-[0.16em] px-8 py-3.5 inline-flex items-center justify-center gap-2.5 transition-all shadow-none"
           >
-            <Link href="/get-a-quote">
-              <span>Request a Project Estimate</span>
-              <ArrowRight className="h-4 w-4" />
-            </Link>
-          </Button>
+            <span>Request a Project Estimate</span>
+            <ArrowRight className="h-4 w-4" />
+          </Link>
 
-          <Button
-            asChild
-            variant="outline"
-            size="lg"
-            className="w-full sm:w-auto rounded-xl px-8 border-slate-700 bg-slate-900/60 hover:bg-slate-800 text-base"
+          <Link
+            href="/contact"
+            className="group w-full sm:w-auto rounded-full border border-[#1E5A54] text-[#1E5A54] hover:bg-[#1E5A54]/5 uppercase text-xs font-bold tracking-[0.16em] pl-7 pr-2 py-2 inline-flex items-center justify-center gap-3 transition-all shadow-none"
           >
-            <Link href="/contact">Schedule a Discovery Call</Link>
-          </Button>
+            <span>Schedule a Discovery Call</span>
+            <span className="w-7 h-7 rounded-full bg-[#F7623D] text-white flex items-center justify-center transition-transform group-hover:scale-110">
+              <ArrowUpRight className="h-3.5 w-3.5 stroke-2" />
+            </span>
+          </Link>
         </div>
       </div>
     </section>
   );
 }
-

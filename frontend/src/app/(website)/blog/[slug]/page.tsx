@@ -9,19 +9,20 @@ import { Button } from '@/components/ui/button';
 import { formatDate } from '@/lib/utils';
 
 interface BlogPostPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
   return blogsData.map((post) => ({
     slug: post.slug,
   }));
 }
 
-export function generateMetadata({ params }: BlogPostPageProps): Metadata {
-  const post = blogsData.find((p) => p.slug === params.slug);
+export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const post = blogsData.find((p) => p.slug === slug);
   if (!post) return { title: 'Article Not Found' };
 
   return {
@@ -30,8 +31,9 @@ export function generateMetadata({ params }: BlogPostPageProps): Metadata {
   };
 }
 
-export default function BlogPostDetailPage({ params }: BlogPostPageProps) {
-  const post = blogsData.find((p) => p.slug === params.slug);
+export default async function BlogPostDetailPage({ params }: BlogPostPageProps) {
+  const { slug } = await params;
+  const post = blogsData.find((p) => p.slug === slug);
 
   if (!post) {
     notFound();
@@ -40,7 +42,7 @@ export default function BlogPostDetailPage({ params }: BlogPostPageProps) {
   const relatedPosts = blogsData.filter((p) => p.slug !== post.slug).slice(0, 2);
 
   return (
-    <article className="space-y-12 pb-20">
+    <article className="space-y-12 pb-20 bg-[#EEE6E2] text-[#1E5A54]">
       <PageHeader
         badge={post.category}
         title={post.title}
@@ -50,41 +52,41 @@ export default function BlogPostDetailPage({ params }: BlogPostPageProps) {
 
       <div className="container mx-auto px-4 max-w-4xl">
         {/* Author & Read Time Bar */}
-        <div className="flex flex-wrap items-center justify-between gap-4 py-6 border-b border-slate-800 text-xs text-slate-400">
+        <div className="flex flex-wrap items-center justify-between gap-4 py-6 border-b border-[#1E5A54]/18 text-xs text-[#1E5A54]/70">
           <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center font-bold text-white">
+            <div className="h-10 w-10 rounded-full border border-[#1E5A54]/30 bg-[#EEE6E2] flex items-center justify-center font-bold text-[#1E5A54]">
               {post.author.name.slice(0, 2).toUpperCase()}
             </div>
             <div>
-              <span className="font-semibold text-white block">{post.author.name}</span>
-              <span className="text-slate-400">{post.author.role}</span>
+              <span className="font-semibold text-[#1E5A54] block">{post.author.name}</span>
+              <span className="text-xs text-[#1E5A54]/60">{post.author.role}</span>
             </div>
           </div>
 
           <div className="flex items-center gap-4">
-            <span className="flex items-center gap-1.5 font-mono">
-              <Calendar className="h-3.5 w-3.5" />
+            <span className="flex items-center gap-1.5 uppercase tracking-wider text-[11px]">
+              <Calendar className="h-3.5 w-3.5 text-[#1E5A54]/60" />
               {formatDate(post.publishedAt)}
             </span>
-            <span className="flex items-center gap-1.5 font-mono">
-              <Clock className="h-3.5 w-3.5" />
+            <span className="flex items-center gap-1.5 uppercase tracking-wider text-[11px]">
+              <Clock className="h-3.5 w-3.5 text-[#1E5A54]/60" />
               {post.readTime}
             </span>
           </div>
         </div>
 
         {/* Content Body */}
-        <div className="prose prose-invert prose-slate max-w-none py-10 space-y-6 text-slate-300 leading-relaxed text-base">
+        <div className="py-10 space-y-6 text-[#1E5A54]/85 leading-relaxed text-base">
           <div className="whitespace-pre-line leading-relaxed font-sans">{post.content}</div>
         </div>
 
         {/* Tags */}
-        <div className="flex flex-wrap items-center gap-2 pt-6 border-t border-slate-800">
-          <Tag className="h-4 w-4 text-slate-500 mr-1" />
+        <div className="flex flex-wrap items-center gap-2 pt-6 border-t border-[#1E5A54]/18">
+          <Tag className="h-4 w-4 text-[#1E5A54]/60 mr-1" />
           {post.tags.map((tag) => (
             <span
               key={tag}
-              className="text-xs font-mono px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-slate-300"
+              className="text-xs uppercase tracking-wider px-3 py-1 rounded-full bg-[#EEE6E2] border border-[#1E5A54]/30 text-[#1E5A54]"
             >
               #{tag}
             </span>
@@ -92,13 +94,13 @@ export default function BlogPostDetailPage({ params }: BlogPostPageProps) {
         </div>
 
         {/* Author Bio Box */}
-        <div className="mt-12 p-6 rounded-2xl border border-slate-800 bg-slate-900/40 flex items-center gap-4">
-          <div className="h-12 w-12 rounded-full bg-blue-600/20 border border-blue-500/30 flex items-center justify-center font-bold text-blue-400 shrink-0">
+        <div className="mt-12 p-6 rounded-3xl border border-[#1E5A54]/25 bg-[#EEE6E2] flex items-center gap-4">
+          <div className="h-12 w-12 rounded-full border border-[#1E5A54]/30 flex items-center justify-center font-bold text-[#1E5A54] shrink-0">
             {post.author.name.slice(0, 2).toUpperCase()}
           </div>
           <div>
-            <h4 className="text-sm font-bold text-white">{post.author.name}</h4>
-            <p className="text-xs text-slate-400 mt-1">
+            <h4 className="font-headline text-lg uppercase tracking-tight text-[#1E5A54]">{post.author.name}</h4>
+            <p className="text-xs text-[#1E5A54]/80 mt-1">
               Senior engineering contributor at Sbu Tech writing on cloud architecture, distributed
               systems, and performance engineering.
             </p>
@@ -107,20 +109,20 @@ export default function BlogPostDetailPage({ params }: BlogPostPageProps) {
 
         {/* Related Posts */}
         {relatedPosts.length > 0 && (
-          <div className="mt-16 pt-10 border-t border-slate-800 space-y-6">
-            <h3 className="text-xl font-bold text-white">Recommended Reading</h3>
+          <div className="mt-16 pt-10 border-t border-[#1E5A54]/18 space-y-6">
+            <h3 className="font-headline text-2xl uppercase tracking-tight text-[#1E5A54]">Recommended Reading</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {relatedPosts.map((r) => (
                 <Link
                   key={r.id}
                   href={`/blog/${r.slug}`}
-                  className="p-5 rounded-2xl border border-slate-800 bg-slate-900/30 hover:bg-slate-900/80 transition-colors space-y-2 block"
+                  className="p-5 rounded-3xl border border-[#1E5A54]/25 bg-[#EEE6E2] hover:bg-[#1E5A54]/5 transition-colors space-y-2 block"
                 >
-                  <span className="text-[10px] font-mono text-blue-400 uppercase tracking-wider block">
+                  <span className="text-[10px] font-semibold text-[#1E5A54]/60 uppercase tracking-wider block">
                     {r.category}
                   </span>
-                  <h4 className="text-sm font-bold text-white line-clamp-2">{r.title}</h4>
-                  <p className="text-xs text-slate-400 line-clamp-2">{r.excerpt}</p>
+                  <h4 className="font-headline text-base uppercase tracking-tight text-[#1E5A54] line-clamp-2">{r.title}</h4>
+                  <p className="text-xs text-[#1E5A54]/80 line-clamp-2">{r.excerpt}</p>
                 </Link>
               ))}
             </div>
@@ -128,7 +130,7 @@ export default function BlogPostDetailPage({ params }: BlogPostPageProps) {
         )}
 
         <div className="mt-10">
-          <Button asChild variant="outline" size="sm" className="gap-1.5">
+          <Button asChild variant="outline" size="sm" className="gap-2">
             <Link href="/blog">
               <ArrowLeft className="h-4 w-4" />
               <span>Back to All Articles</span>
@@ -139,4 +141,3 @@ export default function BlogPostDetailPage({ params }: BlogPostPageProps) {
     </article>
   );
 }
-

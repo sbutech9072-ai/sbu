@@ -8,7 +8,7 @@ export const mockMessages: ContactMessage[] = [
     phone: '+1 (555) 782-9011',
     subject: 'Enterprise Cloud Migration Consultation',
     message:
-      'We are looking to modernize our legacy logistics backend to AWS EKS with Kubernetes and automated CI/CD. Would love to schedule a 30-minute discovery call next Tuesday.',
+      'We are planning to move our legacy dispatch backend to AWS EKS with Terraform and GitHub Actions CI/CD. Can we book a 30-minute technical call next Tuesday?',
     createdAt: '2026-10-30T14:32:00Z',
     status: 'new',
   },
@@ -19,7 +19,7 @@ export const mockMessages: ContactMessage[] = [
     phone: '+1 (555) 442-1920',
     subject: 'HIPAA-Compliant Patient Portal Architecture',
     message:
-      'We read your case study on Zenith Health and want to build a similar WebRTC tele-consultation platform with EHR sync. Please share your typical project engagement structure.',
+      'We read your Zenith Health case study and need a similar WebRTC video consultation portal with Epic EHR sync. How do you structure initial architecture sprints?',
     createdAt: '2026-10-29T10:15:00Z',
     status: 'read',
   },
@@ -30,7 +30,7 @@ export const mockMessages: ContactMessage[] = [
     phone: '+44 20 7946 0912',
     subject: 'Cross-Platform React Native Fintech App',
     message:
-      'Our team is launching a digital banking solution in the UK and needs experienced mobile architects to build our native crypto & fiat exchange application.',
+      'Our team is launching a multi-currency business account app in the UK and needs senior React Native engineers to own the mobile wallet and biometric auth layer.',
     createdAt: '2026-10-28T16:45:00Z',
     status: 'replied',
   },
@@ -41,7 +41,7 @@ export const mockMessages: ContactMessage[] = [
     phone: '+46 8 123 456',
     subject: 'Design System & Component Monorepo',
     message:
-      'We want to consolidate 6 European media storefronts into a unified Next.js and Tailwind CSS design system. What is your estimated timeline for design and token setup?',
+      'We want to consolidate 6 European media properties into one shared Next.js and Tailwind CSS component monorepo. What is a realistic timeline for token and Storybook setup?',
     createdAt: '2026-10-26T09:20:00Z',
     status: 'replied',
   },
@@ -58,7 +58,7 @@ export const mockQuoteRequests: QuoteRequest[] = [
     budgetRange: '$50,000 - $100,000',
     timeline: '3 - 6 Months',
     projectOverview:
-      'We need a multi-tenant B2B wholesale platform for managing 15,000 SKUs, real-time inventory synchronization with SAP, and automated customer credit limits.',
+      'We need a multi-tenant B2B wholesale portal managing 15,000 SKUs, live inventory sync with SAP, and automated net-30 customer credit rules.',
     featuresNeeded: [
       'Multi-tenant authentication',
       'Real-time inventory sync',
@@ -79,7 +79,7 @@ export const mockQuoteRequests: QuoteRequest[] = [
     budgetRange: '$100,000+',
     timeline: '6+ Months',
     projectOverview:
-      'Building an on-premise RAG pipeline that processes biomedical research papers, indexes gene sequences, and assists researchers with semantic literature cross-referencing.',
+      'Building an on-premise RAG system that ingests clinical research PDFs, parses assay tables, and helps lab scientists cross-reference prior studies with exact citations.',
     featuresNeeded: [
       'Private offline vector search',
       'PDF OCR and table extraction',
@@ -99,7 +99,7 @@ export const mockQuoteRequests: QuoteRequest[] = [
     budgetRange: '$25,000 - $50,000',
     timeline: '1 - 3 Months',
     projectOverview:
-      'Modernizing infrastructure to Kubernetes on AWS GovCloud with strict SOC 2 and FedRAMP readiness controls.',
+      'Migrating our container workloads to Kubernetes on AWS GovCloud with strict SOC 2 Type II and FedRAMP readiness controls.',
     featuresNeeded: [
       'Terraform IaC automation',
       'Prometheus and Grafana observability',
@@ -116,10 +116,9 @@ export const defaultSiteSettings: SiteSettings = {
   salesEmail: 'hello@sbutech.com',
   phoneNumber: '+1 (555) 382-4900',
   officeAddress: '100 Innovation Way, Suite 400, San Francisco, CA 94107',
-  metaTitle: 'Sbu Tech | Modern Software Engineering & Digital Product Studio',
+  metaTitle: 'Sbu Tech | Software Engineering & Digital Product Studio',
   metaDescription:
-    'Sbu Tech builds scalable cloud software, enterprise web applications, and intuitive digital experiences for high-growth companies worldwide.',
+    'Sbu Tech is a software engineering studio based in San Francisco. We build production web applications, cloud infrastructure, and private AI systems for growing engineering teams.',
   enableMaintenanceMode: false,
   enableRegistration: true,
 };
-

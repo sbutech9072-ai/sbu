@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { ArrowUpRight, Calendar, Layers } from 'lucide-react';
+import { ArrowUpRight, Calendar } from 'lucide-react';
 import { Project } from '@/types';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
@@ -11,45 +11,63 @@ interface ProjectCardProps {
 
 export function ProjectCard({ project }: ProjectCardProps) {
   return (
-    <Card className="group flex flex-col justify-between overflow-hidden border-slate-800/80 bg-slate-900/40 hover:bg-slate-900/80 hover:border-slate-700 transition-all duration-300">
+    <Card className="group flex flex-col justify-between overflow-hidden rounded-2xl border border-[#1E5A54]/25 bg-[#F8F4F2] hover:-translate-y-1 hover:border-[#1E5A54] transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]">
       <div>
-        {/* Header Preview Banner */}
-        <div className="relative h-48 w-full overflow-hidden bg-gradient-to-br from-slate-900 via-blue-950/40 to-slate-900 p-6 flex flex-col justify-between border-b border-slate-800">
-          <div className="flex items-center justify-between z-10">
-            <Badge variant="default" className="text-xs">
-              {project.category}
-            </Badge>
-            <span className="text-xs font-mono text-slate-400 flex items-center gap-1">
-              <Calendar className="h-3 w-3" />
+        {/* Architectural Blueprint Header */}
+        <div className="relative w-full bg-[#E2D7D1]/65 p-6 flex flex-col justify-between border-b border-[#1E5A54]/20">
+          <div className="flex items-center justify-between gap-2 pb-3 mb-3 border-b border-dashed border-[#1E5A54]/25">
+            <span className="font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-[#1E5A54]">
+              ARCH // {project.id.toUpperCase()} · {project.duration}
+            </span>
+            <span className="text-xs font-bold text-[#1E5A54] flex items-center gap-1">
+              <Calendar className="h-3 w-3 stroke-[1.75] text-[#F7623D]" />
               {project.year}
             </span>
           </div>
 
-          <div className="z-10">
-            <span className="text-[11px] font-medium text-slate-400 uppercase tracking-wider block mb-1">
+          <div className="flex items-center justify-between gap-2 mb-3">
+            <Badge
+              variant="default"
+              className="text-[10px] uppercase tracking-[0.16em] bg-[#1E5A54] text-[#EEE6E2]"
+            >
+              {project.category}
+            </Badge>
+            {project.isFeatured && (
+              <span className="inline-block -rotate-2 rounded-full border border-[#F7623D] bg-[#F8F4F2] px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.14em] text-[#1E5A54]">
+                Featured Build
+              </span>
+            )}
+          </div>
+
+          <div>
+            <span className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#1E5A54]/85 block mb-1">
               {project.client}
             </span>
-            <h3 className="text-lg font-bold text-white group-hover:text-blue-400 transition-colors line-clamp-2">
+            <h3 className="font-headline text-xl font-bold uppercase tracking-tight text-[#1E5A54] leading-tight line-clamp-2">
               {project.title}
             </h3>
           </div>
-
-          {/* Decorative subtle background pattern */}
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-60" />
         </div>
 
         <CardContent className="p-6 space-y-4">
-          <p className="text-sm text-slate-400 line-clamp-3 leading-relaxed">
+          <p className="text-sm text-[#1E5A54]/90 line-clamp-3 leading-relaxed font-sans">
             {project.shortDescription}
           </p>
 
           {/* Key Metrics snapshot */}
           {project.metrics && project.metrics.length > 0 && (
-            <div className="grid grid-cols-2 gap-2 pt-2 border-t border-slate-800/60">
+            <div className="grid grid-cols-2 gap-2.5 pt-3 border-t border-[#1E5A54]/15">
               {project.metrics.slice(0, 2).map((m, idx) => (
-                <div key={idx} className="bg-slate-950/60 rounded-lg p-2.5 border border-slate-800/60">
-                  <span className="text-xs text-slate-400 block">{m.label}</span>
-                  <span className="text-sm font-bold text-white text-blue-300">{m.value}</span>
+                <div
+                  key={idx}
+                  className="rounded-xl p-3 border border-[#1E5A54]/20 bg-[#EEE6E2]"
+                >
+                  <span className="text-[10px] uppercase tracking-[0.14em] font-bold text-[#1E5A54]/85 block">
+                    {m.label}
+                  </span>
+                  <span className="font-headline text-lg font-bold text-[#1E5A54] block mt-0.5">
+                    {m.value}
+                  </span>
                 </div>
               ))}
             </div>
@@ -60,30 +78,26 @@ export function ProjectCard({ project }: ProjectCardProps) {
             {project.technologies.slice(0, 4).map((tech) => (
               <span
                 key={tech}
-                className="px-2 py-0.5 rounded text-[11px] font-mono bg-slate-800/80 text-slate-300 border border-slate-700/50"
+                className="text-[10px] font-bold uppercase tracking-[0.12em] px-2.5 py-0.5 rounded-full border border-[#1E5A54]/25 bg-[#EEE6E2] text-[#1E5A54]"
               >
                 {tech}
               </span>
             ))}
-            {project.technologies.length > 4 && (
-              <span className="px-2 py-0.5 rounded text-[11px] font-mono text-slate-400">
-                +{project.technologies.length - 4}
-              </span>
-            )}
           </div>
         </CardContent>
       </div>
 
-      <div className="px-6 pb-6 pt-0">
+      <div className="p-6 pt-0">
         <Link
           href={`/projects/${project.slug}`}
-          className="inline-flex w-full items-center justify-between rounded-xl bg-slate-800/50 px-4 py-2.5 text-xs font-semibold text-slate-200 hover:bg-blue-600 hover:text-white transition-all group/btn"
+          className="group/btn w-full rounded-full border border-[#1E5A54] bg-[#EEE6E2] pl-5 pr-1.5 py-1.5 text-xs font-bold uppercase tracking-[0.15em] text-[#1E5A54] hover:bg-[#1E5A54] hover:text-[#EEE6E2] flex items-center justify-between transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]"
         >
-          <span>View Case Study</span>
-          <ArrowUpRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
+          <span>Read Case Study</span>
+          <span className="w-6 h-6 rounded-full bg-[#F7623D] text-[#F8F4F2] flex items-center justify-center transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/btn:translate-x-0.5">
+            <ArrowUpRight className="h-3.5 w-3.5 stroke-2" />
+          </span>
         </Link>
       </div>
     </Card>
   );
 }
-

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Mail, Search, Eye, CheckCircle2, Trash2, Clock, Phone } from 'lucide-react';
+import { Mail, Search, Eye, CheckCircle2, Trash2, Phone } from 'lucide-react';
 import { mockMessages as initialMessages } from '@/data/mock-admin';
 import { ContactMessage } from '@/types';
 import { Button } from '@/components/ui/button';
@@ -56,42 +56,42 @@ export default function AdminMessagesPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-800">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#1E5A54]/20">
         <div>
-          <h1 className="text-2xl font-bold text-white tracking-tight flex items-center gap-2">
-            <Mail className="h-6 w-6 text-blue-400" />
+          <h1 className="font-headline text-3xl uppercase text-[#1E5A54] tracking-tight flex items-center gap-2">
+            <Mail className="h-6 w-6 text-[#F7623D]" />
             <span>Contact Messages & Inquiries</span>
           </h1>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-[#1E5A54]/85 mt-1">
             Review incoming consultation requests and correspondence from the public site.
           </p>
         </div>
 
-        <div className="text-xs text-slate-400 font-mono">
-          Total Inquiries: <span className="text-white font-bold">{messages.length}</span>
+        <div className="text-xs text-[#1E5A54]/85 font-mono">
+          Total Inquiries: <span className="text-[#1E5A54] font-bold">{messages.length}</span>
         </div>
       </div>
 
       {feedback && (
-        <div className="flex items-center gap-2 p-3.5 rounded-xl border border-emerald-500/30 bg-emerald-500/10 text-emerald-300 text-xs">
-          <CheckCircle2 className="h-4 w-4 shrink-0" />
+        <div className="flex items-center gap-2 p-3.5 rounded-2xl border border-[#1E5A54]/30 bg-[#F8F4F2] text-[#1E5A54] text-xs font-medium">
+          <CheckCircle2 className="h-4 w-4 text-[#F7623D] shrink-0" />
           <span>{feedback}</span>
         </div>
       )}
 
       <div className="relative max-w-sm">
-        <Search className="absolute left-3 top-2.5 h-4 w-4 text-slate-500" />
+        <Search className="absolute left-3.5 top-2.5 h-4 w-4 text-[#1E5A54]/70" />
         <Input
           placeholder="Filter by sender, email, or subject..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="pl-9 h-9 text-xs"
+          className="pl-10 h-9 text-xs rounded-full bg-[#F8F4F2] border-[#1E5A54]/25"
         />
       </div>
 
-      <Card className="overflow-hidden border-slate-800 bg-slate-900/40">
+      <Card className="overflow-hidden border-[#1E5A54]/25 bg-[#F8F4F2] rounded-3xl">
         <table className="w-full text-left text-xs">
-          <thead className="border-b border-slate-800 bg-slate-950/60 text-slate-400 font-mono uppercase tracking-wider text-[10px]">
+          <thead className="border-b border-[#1E5A54]/20 bg-[#E2D7D1] text-[#1E5A54] font-mono uppercase tracking-wider text-[10px]">
             <tr>
               <th className="py-3.5 px-4">Sender</th>
               <th className="py-3.5 px-4">Subject</th>
@@ -100,17 +100,17 @@ export default function AdminMessagesPage() {
               <th className="py-3.5 px-4 text-right">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-800/80">
+          <tbody className="divide-y divide-[#1E5A54]/15">
             {filtered.map((msg) => (
-              <tr key={msg.id} className="hover:bg-slate-900/60 transition-colors">
+              <tr key={msg.id} className="hover:bg-[#E2D7D1]/50 transition-colors">
                 <td className="py-3.5 px-4">
-                  <span className="font-semibold text-white block">{msg.name}</span>
-                  <span className="text-[10px] text-slate-400">{msg.email}</span>
+                  <span className="font-bold text-[#1E5A54] block">{msg.name}</span>
+                  <span className="text-[10px] text-[#1E5A54]/85">{msg.email}</span>
                 </td>
-                <td className="py-3.5 px-4 text-slate-300 font-medium max-w-xs truncate">
+                <td className="py-3.5 px-4 text-[#1E5A54] font-medium max-w-xs truncate">
                   {msg.subject}
                 </td>
-                <td className="py-3.5 px-4 text-slate-400 font-mono text-[11px]">
+                <td className="py-3.5 px-4 text-[#1E5A54]/85 font-mono text-[11px]">
                   {formatDate(msg.createdAt)}
                 </td>
                 <td className="py-3.5 px-4">
@@ -131,14 +131,14 @@ export default function AdminMessagesPage() {
                   <div className="inline-flex items-center gap-1.5">
                     <button
                       onClick={() => handleOpenDetail(msg)}
-                      className="p-1.5 text-blue-400 hover:text-blue-300 rounded-lg hover:bg-blue-500/10"
+                      className="p-1.5 text-[#1E5A54] hover:bg-[#E2D7D1] rounded-full"
                       title="Read Message"
                     >
                       <Eye className="h-3.5 w-3.5" />
                     </button>
                     <button
                       onClick={() => handleDelete(msg.id)}
-                      className="p-1.5 text-rose-400 hover:text-rose-300 rounded-lg hover:bg-rose-500/10"
+                      className="p-1.5 text-[#F7623D] hover:bg-[#E2D7D1] rounded-full"
                       title="Delete"
                     >
                       <Trash2 className="h-3.5 w-3.5" />
@@ -164,19 +164,19 @@ export default function AdminMessagesPage() {
         {selectedMessage && (
           <div className="space-y-6 text-xs">
             {selectedMessage.phone && (
-              <div className="flex items-center gap-2 text-slate-400 font-mono">
-                <Phone className="h-3.5 w-3.5 text-blue-400" />
+              <div className="flex items-center gap-2 text-[#1E5A54] font-mono">
+                <Phone className="h-3.5 w-3.5 text-[#F7623D]" />
                 <span>{selectedMessage.phone}</span>
               </div>
             )}
 
-            <div className="p-4 rounded-xl border border-slate-800 bg-slate-950 text-slate-200 leading-relaxed text-sm whitespace-pre-wrap">
+            <div className="p-4 rounded-2xl border border-[#1E5A54]/25 bg-[#EEE6E2] text-[#1E5A54] leading-relaxed text-sm whitespace-pre-wrap">
               {selectedMessage.message}
             </div>
 
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-4 border-t border-slate-800">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-4 border-t border-[#1E5A54]/20">
               <div className="flex items-center gap-2">
-                <span className="text-slate-400">Current status:</span>
+                <span className="text-[#1E5A54]/85">Current status:</span>
                 <Badge variant="default" className="capitalize">
                   {selectedMessage.status}
                 </Badge>
@@ -187,12 +187,14 @@ export default function AdminMessagesPage() {
                   size="sm"
                   variant="outline"
                   onClick={() => handleUpdateStatus(selectedMessage.id, 'read')}
+                  className="rounded-full"
                 >
                   Mark as Read
                 </Button>
                 <Button
                   size="sm"
                   onClick={() => handleUpdateStatus(selectedMessage.id, 'replied')}
+                  className="rounded-full"
                 >
                   Mark as Replied
                 </Button>
@@ -204,4 +206,3 @@ export default function AdminMessagesPage() {
     </div>
   );
 }
-

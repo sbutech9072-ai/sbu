@@ -1,62 +1,138 @@
 import Link from 'next/link';
-import { Terminal, Home, ArrowLeft, Layers, Mail } from 'lucide-react';
+import { ArrowLeft, ArrowUpRight, Compass, FolderGit2, Layers, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import {
+  HandArrow,
+  HandUnderline,
+  StudioStamp,
+} from '@/components/human/hand-crafted-svg';
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-[#090d16] text-slate-100 selection:bg-blue-600 selection:text-white">
-      <div className="w-full max-w-lg text-center space-y-6">
-        {/* Decorative Badge */}
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-rose-500/30 bg-rose-500/10 text-xs font-semibold text-rose-400">
-          <Terminal className="h-4 w-4" />
-          <span>Error 404 • Resource Not Located</span>
+    <div className="min-h-screen flex flex-col justify-between bg-[#EEE6E2] text-[#1E5A54] px-6 py-12 sm:px-12 selection:bg-[#F7623D] selection:text-[#EEE6E2]">
+      {/* Top Studio Index Bar */}
+      <div className="mx-auto flex w-full max-w-5xl items-center justify-between border-b border-[#1E5A54]/20 pb-4 font-mono text-[11px] uppercase tracking-[0.18em]">
+        <span>SBU TECH // STUDIO ROUTING TABLE</span>
+        <span className="text-[#F7623D]">STATUS: 404 NOT FOUND</span>
+      </div>
+
+      {/* Main Editorial 404 Block */}
+      <div className="mx-auto my-12 w-full max-w-5xl">
+        <div className="mb-6 flex flex-wrap items-center gap-4">
+          <StudioStamp
+            text="404 // ROUTE OFF THE MAP"
+            subtext="INDEX LOOKUP FAILED"
+            rotate="left"
+            variant="orange"
+          />
+          <HandArrow direction="right" color="#1E5A54" className="hidden sm:block" />
         </div>
 
-        <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-white">
-          Page Not Found
+        <h1 className="font-headline text-6xl sm:text-8xl lg:text-9xl uppercase leading-[0.9] tracking-tight text-[#1E5A54]">
+          THIS ROUTE IS NOT IN OUR{' '}
+          <span className="relative inline-block text-[#F7623D]">
+            BLUEPRINT.
+            <HandUnderline color="#1E5A54" className="-bottom-2 left-0" />
+          </span>
         </h1>
 
-        <p className="text-sm sm:text-base text-slate-400 max-w-md mx-auto leading-relaxed">
-          The endpoint or page you requested does not exist or has been relocated to another service
-          route.
+        <p className="mt-8 max-w-xl text-base sm:text-lg leading-relaxed text-[#1E5A54]/85">
+          The URL you entered either moved during a recent architecture cleanup or never existed in the first place. Pick a verified destination below to get back on solid ground.
         </p>
 
-        {/* Quick Links */}
-        <div className="p-6 rounded-2xl border border-slate-800 bg-slate-900/40 space-y-3">
-          <span className="text-xs uppercase font-mono tracking-wider text-slate-400 block mb-2">
-            Recommended Destinations
-          </span>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-            <Link
-              href="/"
-              className="p-2.5 rounded-xl border border-slate-800 hover:border-slate-700 bg-slate-950/60 hover:bg-slate-800 flex items-center gap-2 text-slate-200 transition-colors"
-            >
-              <Home className="h-4 w-4 text-blue-400" />
-              <span>Company Home</span>
-            </Link>
-            <Link
-              href="/services"
-              className="p-2.5 rounded-xl border border-slate-800 hover:border-slate-700 bg-slate-950/60 hover:bg-slate-800 flex items-center gap-2 text-slate-200 transition-colors"
-            >
-              <Layers className="h-4 w-4 text-cyan-400" />
-              <span>Explore Services</span>
-            </Link>
-          </div>
+        {/* Studio Directory Cards */}
+        <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <Link
+            href="/"
+            className="group flex flex-col justify-between rounded-2xl border border-[#1E5A54]/20 bg-[#F8F4F2] p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-[#F7623D]"
+          >
+            <div className="flex items-center justify-between">
+              <Compass className="h-5 w-5 text-[#F7623D]" />
+              <ArrowUpRight className="h-4 w-4 text-[#1E5A54]/50 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[#F7623D]" />
+            </div>
+            <div className="mt-6">
+              <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#1E5A54]/60">
+                01 // ROOT
+              </span>
+              <h2 className="mt-1 font-headline text-2xl uppercase text-[#1E5A54]">
+                STUDIO HOME
+              </h2>
+            </div>
+          </Link>
+
+          <Link
+            href="/projects"
+            className="group flex flex-col justify-between rounded-2xl border border-[#1E5A54]/20 bg-[#F8F4F2] p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-[#F7623D]"
+          >
+            <div className="flex items-center justify-between">
+              <FolderGit2 className="h-5 w-5 text-[#F7623D]" />
+              <ArrowUpRight className="h-4 w-4 text-[#1E5A54]/50 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[#F7623D]" />
+            </div>
+            <div className="mt-6">
+              <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#1E5A54]/60">
+                02 // ARCHIVE
+              </span>
+              <h2 className="mt-1 font-headline text-2xl uppercase text-[#1E5A54]">
+                SHIPPED WORK
+              </h2>
+            </div>
+          </Link>
+
+          <Link
+            href="/services"
+            className="group flex flex-col justify-between rounded-2xl border border-[#1E5A54]/20 bg-[#F8F4F2] p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-[#F7623D]"
+          >
+            <div className="flex items-center justify-between">
+              <Layers className="h-5 w-5 text-[#F7623D]" />
+              <ArrowUpRight className="h-4 w-4 text-[#1E5A54]/50 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[#F7623D]" />
+            </div>
+            <div className="mt-6">
+              <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#1E5A54]/60">
+                03 // CAPABILITIES
+              </span>
+              <h2 className="mt-1 font-headline text-2xl uppercase text-[#1E5A54]">
+                OUR SERVICES
+              </h2>
+            </div>
+          </Link>
+
+          <Link
+            href="/contact"
+            className="group flex flex-col justify-between rounded-2xl border border-[#1E5A54]/20 bg-[#F8F4F2] p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-[#F7623D]"
+          >
+            <div className="flex items-center justify-between">
+              <Mail className="h-5 w-5 text-[#F7623D]" />
+              <ArrowUpRight className="h-4 w-4 text-[#1E5A54]/50 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[#F7623D]" />
+            </div>
+            <div className="mt-6">
+              <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#1E5A54]/60">
+                04 // DIRECT LINE
+              </span>
+              <h2 className="mt-1 font-headline text-2xl uppercase text-[#1E5A54]">
+                START A PROJECT
+              </h2>
+            </div>
+          </Link>
         </div>
 
-        <div className="flex items-center justify-center gap-3 pt-2">
+        <div className="mt-10 flex flex-wrap items-center gap-4">
           <Button asChild size="default" className="gap-2">
             <Link href="/">
               <ArrowLeft className="h-4 w-4" />
-              <span>Return to Home</span>
+              <span>Back to Front Page</span>
             </Link>
           </Button>
           <Button asChild variant="outline" size="default">
-            <Link href="/contact">Contact Support</Link>
+            <Link href="/contact">Report a Broken Link</Link>
           </Button>
         </div>
+      </div>
+
+      {/* Bottom Footnote */}
+      <div className="mx-auto flex w-full max-w-5xl items-center justify-between border-t border-[#1E5A54]/20 pt-4 font-mono text-[10px] uppercase tracking-[0.16em] text-[#1E5A54]/70">
+        <span>SBU TECH ENGINEERING</span>
+        <span>DHAKA // REMOTE WORLDWIDE</span>
       </div>
     </div>
   );
 }
-

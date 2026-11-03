@@ -4,7 +4,7 @@ export const testimonialsData: Testimonial[] = [
   {
     id: 'test-1',
     quote:
-      'Sbu Tech engineered our analytics engine from the ground up. Their deep mastery of Next.js, Go, and Kafka allowed us to ingest 100M+ events every day with sub-second dashboard updates. They are genuine partners, not just contractors.',
+      'Sbu Tech rebuilt our entire telemetry pipeline in Go, Kafka, and ClickHouse. We went from multi-minute timeouts to ingesting 100M+ daily events with sub-second Next.js dashboard queries, and their engineers wrote code our own team actually enjoys maintaining.',
     author: 'Rachel Sterling (Sample Testimonial)',
     title: 'Chief Technology Officer',
     company: 'PulseFlow Systems Inc.',
@@ -16,7 +16,7 @@ export const testimonialsData: Testimonial[] = [
   {
     id: 'test-2',
     quote:
-      'We launched NovaVault across two continents ahead of schedule. Sbu Tech took ownership of our mobile security, biometric keys, and automated regulatory compliance. Their code quality is exemplary.',
+      'We shipped NovaVault across Europe and North America two weeks ahead of our board deadline. Sbu Tech owned the hardest parts of the stack: hardware biometric signing, offline ledger sync, and passing our PCI-DSS Level 1 audit on the first attempt.',
     author: 'Liam O’Connor (Sample Testimonial)',
     title: 'Head of Mobile Engineering',
     company: 'NovaPay Financial Group',
@@ -28,7 +28,7 @@ export const testimonialsData: Testimonial[] = [
   {
     id: 'test-3',
     quote:
-      'Migrating 45 live enterprise microservices to AWS EKS with zero downtime felt impossible. The Sbu Tech team executed the entire switch without dropping a single shipment request. Our annual server costs dropped by nearly $200k.',
+      'Moving 45 live microservices onto AWS EKS without pausing seaport dispatch sounded like a recipe for an outage. Sbu Tech used dual-write replication and weighted DNS cutovers to migrate the whole fleet with zero dropped shipments, saving us over $200k a year.',
     author: 'Derrick Thorne (Sample Testimonial)',
     title: 'VP of Global Infrastructure',
     company: 'Stratos Logistics',
@@ -40,7 +40,7 @@ export const testimonialsData: Testimonial[] = [
   {
     id: 'test-4',
     quote:
-      'The AI legal copilot Sbu Tech built has saved our attorneys hundreds of hours every week. More importantly, they solved our private data privacy requirements with dedicated models and verifiable citations.',
+      'Every commercial AI vendor we tried hallucinated case law or wanted us to upload confidential briefs to their cloud. Sbu Tech deployed an on-premise RAG system over our 2.5M documents that cites exact paragraphs and cut initial contract review from six hours to 45 minutes.',
     author: 'Victoria Vance (Sample Testimonial)',
     title: 'Senior Managing Partner',
     company: 'Lexicon Partners Law',

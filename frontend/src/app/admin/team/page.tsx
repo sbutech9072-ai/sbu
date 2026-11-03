@@ -102,43 +102,43 @@ export default function AdminTeamPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-800">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#1E5A54]/20">
         <div>
-          <h1 className="text-2xl font-bold text-white tracking-tight flex items-center gap-2">
-            <Users className="h-6 w-6 text-indigo-400" />
+          <h1 className="font-headline text-3xl uppercase text-[#1E5A54] tracking-tight flex items-center gap-2">
+            <Users className="h-6 w-6 text-[#F7623D]" />
             <span>Manage Team Profiles</span>
           </h1>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-[#1E5A54]/85 mt-1">
             Organize engineering staff, leadership profiles, and public bios.
           </p>
         </div>
 
-        <Button onClick={handleOpenCreate} size="sm" className="gap-1.5 text-xs">
+        <Button onClick={handleOpenCreate} size="sm" className="gap-1.5 text-xs rounded-full">
           <Plus className="h-4 w-4" />
           <span>Add Member</span>
         </Button>
       </div>
 
       {feedback && (
-        <div className="flex items-center gap-2 p-3.5 rounded-xl border border-emerald-500/30 bg-emerald-500/10 text-emerald-300 text-xs">
-          <CheckCircle2 className="h-4 w-4 shrink-0" />
+        <div className="flex items-center gap-2 p-3.5 rounded-2xl border border-[#1E5A54]/30 bg-[#F8F4F2] text-[#1E5A54] text-xs font-medium">
+          <CheckCircle2 className="h-4 w-4 text-[#F7623D] shrink-0" />
           <span>{feedback}</span>
         </div>
       )}
 
       <div className="relative max-w-sm">
-        <Search className="absolute left-3 top-2.5 h-4 w-4 text-slate-500" />
+        <Search className="absolute left-3.5 top-2.5 h-4 w-4 text-[#1E5A54]/70" />
         <Input
           placeholder="Filter by name, role, department..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="pl-9 h-9 text-xs"
+          className="pl-10 h-9 text-xs rounded-full bg-[#F8F4F2] border-[#1E5A54]/25"
         />
       </div>
 
-      <Card className="overflow-hidden border-slate-800 bg-slate-900/40">
+      <Card className="overflow-hidden border-[#1E5A54]/25 bg-[#F8F4F2] rounded-3xl">
         <table className="w-full text-left text-xs">
-          <thead className="border-b border-slate-800 bg-slate-950/60 text-slate-400 font-mono uppercase tracking-wider text-[10px]">
+          <thead className="border-b border-[#1E5A54]/20 bg-[#E2D7D1] text-[#1E5A54] font-mono uppercase tracking-wider text-[10px]">
             <tr>
               <th className="py-3.5 px-4">Name</th>
               <th className="py-3.5 px-4">Role</th>
@@ -147,19 +147,19 @@ export default function AdminTeamPage() {
               <th className="py-3.5 px-4 text-right">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-800/80">
+          <tbody className="divide-y divide-[#1E5A54]/15">
             {filtered.map((member) => (
-              <tr key={member.id} className="hover:bg-slate-900/60 transition-colors">
-                <td className="py-3.5 px-4 font-semibold text-white">{member.name}</td>
-                <td className="py-3.5 px-4 text-blue-300">{member.role}</td>
+              <tr key={member.id} className="hover:bg-[#E2D7D1]/50 transition-colors">
+                <td className="py-3.5 px-4 font-bold text-[#1E5A54]">{member.name}</td>
+                <td className="py-3.5 px-4 text-[#1E5A54]/85 font-medium">{member.role}</td>
                 <td className="py-3.5 px-4">
                   <Badge variant="default" className="text-[10px]">
                     {member.department}
                   </Badge>
                 </td>
-                <td className="py-3.5 px-4 text-slate-400">
+                <td className="py-3.5 px-4 text-[#1E5A54]/85">
                   {member.isLeadership ? (
-                    <span className="text-amber-400 font-semibold">Leadership</span>
+                    <span className="text-[#F7623D] font-bold">Leadership</span>
                   ) : (
                     <span>Staff</span>
                   )}
@@ -168,14 +168,14 @@ export default function AdminTeamPage() {
                   <div className="inline-flex items-center gap-1.5">
                     <button
                       onClick={() => handleOpenEdit(member)}
-                      className="p-1.5 text-blue-400 hover:text-blue-300 rounded-lg hover:bg-blue-500/10"
+                      className="p-1.5 text-[#1E5A54] hover:bg-[#E2D7D1] rounded-full"
                       title="Edit Member"
                     >
                       <Edit2 className="h-3.5 w-3.5" />
                     </button>
                     <button
                       onClick={() => handleDelete(member.id, member.name)}
-                      className="p-1.5 text-rose-400 hover:text-rose-300 rounded-lg hover:bg-rose-500/10"
+                      className="p-1.5 text-[#F7623D] hover:bg-[#E2D7D1] rounded-full"
                       title="Delete Member"
                     >
                       <Trash2 className="h-3.5 w-3.5" />
@@ -196,7 +196,7 @@ export default function AdminTeamPage() {
       >
         <form onSubmit={handleSave} className="space-y-4 text-xs">
           <div className="space-y-1">
-            <label className="font-semibold text-slate-300">Full Name *</label>
+            <label className="font-semibold text-[#1E5A54]">Full Name *</label>
             <Input
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -206,7 +206,7 @@ export default function AdminTeamPage() {
           </div>
 
           <div className="space-y-1">
-            <label className="font-semibold text-slate-300">Role / Job Title *</label>
+            <label className="font-semibold text-[#1E5A54]">Role / Job Title *</label>
             <Input
               value={formData.role}
               onChange={(e) => setFormData({ ...formData, role: e.target.value })}
@@ -217,11 +217,14 @@ export default function AdminTeamPage() {
 
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-1">
-              <label className="font-semibold text-slate-300">Department</label>
+              <label className="font-semibold text-[#1E5A54]">Department</label>
               <Select
                 value={formData.department}
                 onChange={(e) =>
-                  setFormData({ ...formData, department: e.target.value as any })
+                  setFormData({
+                    ...formData,
+                    department: e.target.value as TeamMember['department'],
+                  })
                 }
               >
                 <option value="Leadership">Leadership</option>
@@ -232,7 +235,7 @@ export default function AdminTeamPage() {
             </div>
 
             <div className="space-y-1">
-              <label className="font-semibold text-slate-300">Leadership Badge</label>
+              <label className="font-semibold text-[#1E5A54]">Leadership Badge</label>
               <Select
                 value={formData.isLeadership ? 'yes' : 'no'}
                 onChange={(e) =>
@@ -246,7 +249,7 @@ export default function AdminTeamPage() {
           </div>
 
           <div className="space-y-1">
-            <label className="font-semibold text-slate-300">Bio</label>
+            <label className="font-semibold text-[#1E5A54]">Bio</label>
             <Textarea
               rows={3}
               value={formData.bio}
@@ -255,16 +258,17 @@ export default function AdminTeamPage() {
             />
           </div>
 
-          <div className="flex items-center justify-end gap-2 pt-4 border-t border-slate-800">
+          <div className="flex items-center justify-end gap-2 pt-4 border-t border-[#1E5A54]/20">
             <Button
               type="button"
               variant="outline"
               size="sm"
               onClick={() => setIsModalOpen(false)}
+              className="rounded-full"
             >
               Cancel
             </Button>
-            <Button type="submit" size="sm">
+            <Button type="submit" size="sm" className="rounded-full">
               {editingMember ? 'Save Profile' : 'Add Profile'}
             </Button>
           </div>
@@ -273,4 +277,3 @@ export default function AdminTeamPage() {
     </div>
   );
 }
-

@@ -6,7 +6,7 @@ const Card = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElemen
     <div
       ref={ref}
       className={cn(
-        'rounded-xl border border-slate-800/80 bg-slate-900/60 text-slate-100 shadow-sm backdrop-blur-sm transition-all',
+        'rounded-2xl border border-[#1E5A54]/18 bg-[#EEE6E2] text-[#1E5A54] transition-all duration-200 hover:border-[#1E5A54]/35 shadow-none',
         className
       )}
       {...props}
@@ -17,16 +17,19 @@ Card.displayName = 'Card';
 
 const CardHeader = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
-    <div ref={ref} className={cn('flex flex-col space-y-1.5 p-6', className)} {...props} />
+    <div ref={ref} className={cn('flex flex-col space-y-2 p-6', className)} {...props} />
   )
 );
 CardHeader.displayName = 'CardHeader';
 
-const CardTitle = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLHeadingElement>>(
+const CardTitle = React.forwardRef<HTMLHeadingElement, React.HTMLAttributes<HTMLHeadingElement>>(
   ({ className, ...props }, ref) => (
     <h3
       ref={ref}
-      className={cn('text-xl font-semibold leading-none tracking-tight text-white', className)}
+      className={cn(
+        'font-headline text-2xl font-bold uppercase tracking-tight text-[#1E5A54] leading-tight',
+        className
+      )}
       {...props}
     />
   )
@@ -37,7 +40,11 @@ const CardDescription = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLParagraphElement>
 >(({ className, ...props }, ref) => (
-  <p ref={ref} className={cn('text-sm text-slate-400 leading-relaxed', className)} {...props} />
+  <p
+    ref={ref}
+    className={cn('text-sm text-[#1E5A54]/80 leading-relaxed font-sans', className)}
+    {...props}
+  />
 ));
 CardDescription.displayName = 'CardDescription';
 
@@ -56,4 +63,3 @@ const CardFooter = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDiv
 CardFooter.displayName = 'CardFooter';
 
 export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent };
-

@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function PrivacyPolicyPage() {
   return (
-    <div className="space-y-12 pb-20">
+    <div className="space-y-12 pb-20 bg-[#EEE6E2] text-[#1E5A54]">
       <PageHeader
         badge="Legal & Governance"
         title="Privacy Policy & Terms of Engagement"
@@ -19,9 +19,9 @@ export default function PrivacyPolicyPage() {
       />
 
       <div className="container mx-auto px-4 max-w-4xl">
-        <div className="p-8 md:p-12 rounded-3xl border border-slate-800 bg-slate-900/40 space-y-8 text-sm text-slate-300 leading-relaxed">
+        <div className="p-8 md:p-12 rounded-3xl border border-[#1E5A54]/25 bg-[#EEE6E2] space-y-8 text-sm text-[#1E5A54]/80 leading-relaxed shadow-sm">
           <section className="space-y-3">
-            <h2 className="text-xl font-bold text-white">1. Information We Collect</h2>
+            <h2 className="font-headline text-2xl uppercase tracking-tight text-[#1E5A54]">1. Information We Collect</h2>
             <p>
               When you submit an inquiry or project scope request through {siteConfig.name}, we
               collect your contact details (full name, work email address, company name, and phone
@@ -32,7 +32,7 @@ export default function PrivacyPolicyPage() {
           </section>
 
           <section className="space-y-3">
-            <h2 className="text-xl font-bold text-white">2. Confidentiality & Non-Disclosure</h2>
+            <h2 className="font-headline text-2xl uppercase tracking-tight text-[#1E5A54]">2. Confidentiality & Non-Disclosure</h2>
             <p>
               We treat all client architectural blueprints, database models, business logic, and
               unreleased product ideas under strict confidentiality standards. We never sell,
@@ -41,7 +41,7 @@ export default function PrivacyPolicyPage() {
           </section>
 
           <section className="space-y-3">
-            <h2 className="text-xl font-bold text-white">3. Intellectual Property Rights</h2>
+            <h2 className="font-headline text-2xl uppercase tracking-tight text-[#1E5A54]">3. Intellectual Property Rights</h2>
             <p>
               Unless otherwise specified in a formal Master Services Agreement (MSA), all custom
               source code, design tokens, infrastructure manifests, and documentation produced by{' '}
@@ -51,7 +51,7 @@ export default function PrivacyPolicyPage() {
           </section>
 
           <section className="space-y-3">
-            <h2 className="text-xl font-bold text-white">4. Security & Data Protection</h2>
+            <h2 className="font-headline text-2xl uppercase tracking-tight text-[#1E5A54]">4. Security & Data Protection</h2>
             <p>
               We employ industry-standard encryption protocols (TLS 1.3 in transit, AES-256 at rest)
               for all communications and development environments. Access to client source code and
@@ -61,18 +61,18 @@ export default function PrivacyPolicyPage() {
           </section>
 
           <section className="space-y-3">
-            <h2 className="text-xl font-bold text-white">5. Contact Information</h2>
+            <h2 className="font-headline text-2xl uppercase tracking-tight text-[#1E5A54]">5. Contact Information</h2>
             <p>
               For legal inquiries or to execute a customized mutual non-disclosure agreement prior to
               project discovery, please contact our legal desk at{' '}
-              <a href={`mailto:${siteConfig.contact.email}`} className="text-blue-400 underline">
+              <a href={`mailto:${siteConfig.contact.email}`} className="text-[#1E5A54] underline hover:text-[#F7623D]">
                 {siteConfig.contact.email}
               </a>
               .
             </p>
           </section>
 
-          <div className="pt-6 border-t border-slate-800 text-xs text-slate-500">
+          <div className="pt-6 border-t border-[#1E5A54]/18 text-xs text-[#1E5A54]/60">
             Last Updated: October 2026. Sbu Tech Digital Engineering Studio.
           </div>
         </div>
@@ -80,4 +80,3 @@ export default function PrivacyPolicyPage() {
     </div>
   );
 }
-

@@ -8,9 +8,9 @@ export const projectsData: Project[] = [
     client: 'PulseFlow Systems Inc. (Sample Client)',
     category: 'Web App',
     shortDescription:
-      'A real-time telemetry processing and data visualization dashboard handling 100M+ events daily with sub-second querying.',
+      'Real-time telemetry ingestion and visualization platform processing 100M+ daily events with sub-second query latency.',
     fullDescription:
-      'PulseFlow required a modern cloud-native analytics dashboard capable of ingesting high-throughput telemetry streams from thousands of IoT devices and enterprise clusters. Sbu Tech engineered an end-to-end Next.js and Go microservices platform featuring custom WebGL timeline charts and automated anomaly detection.',
+      'PulseFlow needed to replace an overloaded analytics backend that was choking on telemetry streams from thousands of IoT devices and enterprise clusters. Sbu Tech architected a Go and ClickHouse ingestion pipeline paired with a Next.js dashboard capable of rendering high-density WebGL time-series charts without dropping frames.',
     coverImage: '/projects/pulseflow.jpg',
     year: 2025,
     duration: '5 Months',
@@ -22,9 +22,9 @@ export const projectsData: Project[] = [
       { label: 'Cost Reduction', value: '38%' },
     ],
     challenge:
-      'The legacy monolithic backend was buckling under growing telemetry volume, suffering from multi-minute queries, UI freezes, and skyrocketing AWS compute costs.',
+      'The existing monolithic relational backend stalled under rising event volume, causing multi-minute query timeouts, browser tab crashes, and climbing AWS compute bills.',
     solution:
-      'We designed an event-driven architecture using Apache Kafka and ClickHouse columnar storage, paired with an optimized Next.js App Router frontend with virtualized data lists and server-side pre-aggregations.',
+      'We decoupled ingestion using Apache Kafka and ClickHouse columnar storage, then built a Next.js App Router interface with virtualized tables and server-side rollups.',
     results: [
       'Query response speeds improved by 14x across all standard analytics widgets.',
       'Reduced cloud infrastructure expenditure by 38% via columnar data compression.',
@@ -41,23 +41,23 @@ export const projectsData: Project[] = [
     client: 'NovaPay Financial (Sample Client)',
     category: 'Mobile App',
     shortDescription:
-      'Cross-border payments and multi-currency mobile wallet engineered with React Native and biometric security.',
+      'Multi-currency mobile wallet and cross-border FX settlement app built with React Native and hardware biometric keys.',
     fullDescription:
-      'NovaVault wanted to expand from European markets into North America with an upgraded, lightning-fast mobile wallet that allows instant currency exchange, virtual debit card issuance, and international wire tracking.',
+      'NovaVault was expanding from European markets into North America and needed a mobile wallet capable of instant multi-currency exchange, virtual card issuance, and live international wire tracking under strict banking regulations.',
     coverImage: '/projects/novavault.jpg',
     year: 2024,
     duration: '6 Months',
     technologies: ['React Native', 'TypeScript', 'Node.js', 'PostgreSQL', 'Stripe', 'Redis'],
     metrics: [
       { label: 'Active Users', value: '250,000+' },
-      { label: 'App Store Rating', value: '4.9 ★' },
+      { label: 'App Store Rating', value: '4.9 / 5.0' },
       { label: 'Transaction Speed', value: '< 3.2s' },
       { label: 'Fraud Detection', value: '99.9%' },
     ],
     challenge:
-      'Maintaining rigorous banking-grade cryptographic security while providing an intuitive, friction-free onboarding flow with KYC identity verification.',
+      'Enforcing bank-grade cryptographic signing and KYC identity verification while keeping onboarding under three minutes on mid-range mobile devices.',
     solution:
-      'We engineered a React Native mobile application integrating hardware-level biometric keys, on-device document OCR scanning, and automated multi-currency liquidity routing.',
+      'We built a React Native application backed by Secure Enclave / Keystore biometric signing, on-device document OCR, and idempotent settlement ledgers in PostgreSQL.',
     results: [
       'Grew active monthly users from 40,000 to over 250,000 within 9 months of launch.',
       'Maintained a 4.9-star average rating across both iOS App Store and Google Play.',
@@ -73,9 +73,9 @@ export const projectsData: Project[] = [
     client: 'Stratos Global Freight (Sample Client)',
     category: 'Cloud & DevOps',
     shortDescription:
-      'Automated multi-region Kubernetes migration and GitOps continuous delivery for an international freight network.',
+      'Multi-region AWS EKS migration and GitOps release automation for an international maritime freight network.',
     fullDescription:
-      'Stratos operated on legacy on-premise hardware prone to regional power outages and manual deployment errors. Sbu Tech planned and executed a zero-downtime migration to an auto-scaling AWS EKS cluster managed via Terraform and ArgoCD.',
+      'Stratos ran its core dispatch software on aging co-located racks prone to regional network outages and manual SSH deployment mistakes. Sbu Tech designed and executed a live cutover to multi-region AWS EKS clusters managed entirely through Terraform and ArgoCD.',
     coverImage: '/projects/stratos.jpg',
     year: 2024,
     duration: '4 Months',
@@ -87,9 +87,9 @@ export const projectsData: Project[] = [
       { label: 'Server Fleet', value: '180 Nodes' },
     ],
     challenge:
-      'Migrating 45 interconnected microservices and 12TB of mission-critical logistics shipping history without stopping live seaport dispatch operations.',
+      'Migrating 45 interconnected microservices and 12TB of live shipping records without halting active seaport dispatch operations.',
     solution:
-      'Implemented dual-write synchronization patterns, automated canary verification tests, and standardized containerized build pipelines with GitOps release automation.',
+      'We set up dual-write database replication, shadow traffic mirroring, and ArgoCD canary rollouts with automated Prometheus metric gates.',
     results: [
       'Eliminated deployment downtime windows entirely (previously required 4-hour weekend pauses).',
       'Reduced MTTR (Mean Time to Recovery) from 2.5 hours to under 45 seconds.',
@@ -105,9 +105,9 @@ export const projectsData: Project[] = [
     client: 'Lexicon Partners Law Group (Sample Client)',
     category: 'AI & Data',
     shortDescription:
-      'Enterprise RAG system summarizing thousands of contract precedents and litigation transcripts with citation verification.',
+      'On-premise legal RAG platform indexing 2.5M+ case filings and contracts with paragraph-level citation verification.',
     fullDescription:
-      'Lexicon needed an intelligent legal assistant to help attorneys cross-reference case law, identify non-standard indemnity clauses, and generate contract summaries while strictly keeping sensitive litigation documents private.',
+      'Lexicon wanted an internal research tool to help litigators cross-reference precedent, flag non-standard indemnity clauses, and draft brief summaries while guaranteeing that zero client records ever left the firm network.',
     coverImage: '/projects/lexicon.jpg',
     year: 2025,
     duration: '3.5 Months',
@@ -119,9 +119,9 @@ export const projectsData: Project[] = [
       { label: 'Zero Data Leaks', value: '100% On-Premise' },
     ],
     challenge:
-      'General commercial LLMs hallucinated case citations and violated client confidentiality guidelines regarding third-party model training.',
+      'Off-the-shelf commercial LLMs invented fake case citations and violated strict client confidentiality rules around external API logging.',
     solution:
-      'We deployed dedicated self-hosted open-weights models connected via hybrid vector-keyword retrieval with cryptographic audit trails and paragraph-level source attribution.',
+      'We deployed self-hosted open-weights models paired with BM25 + dense vector hybrid search, cross-encoder reranking, and deterministic citation checking.',
     results: [
       'Reduced preliminary contract review time from 6 hours to under 45 minutes.',
       'Adopted by over 320 practicing partners and paralegals in the firm.',
@@ -138,9 +138,9 @@ export const projectsData: Project[] = [
     client: 'Zenith Health Alliance (Sample Client)',
     category: 'Web App',
     shortDescription:
-      'HIPAA-compliant patient portal with WebRTC video consultations, electronic prescription dispatch, and records sync.',
+      'HIPAA-compliant telehealth portal with browser-based WebRTC video consults, e-prescriptions, and HL7 FHIR EHR sync.',
     fullDescription:
-      'Zenith Health needed a modern patient engagement web application connecting patients with board-certified physicians, providing secure encrypted video conferencing and seamless sync with Cerner and Epic EHR records.',
+      'Zenith Health needed a unified patient portal connecting patients with board-certified physicians over encrypted video while syncing clinical notes and prescriptions directly with Epic and Cerner EHR systems.',
     coverImage: '/projects/zenith.jpg',
     year: 2024,
     duration: '7 Months',
@@ -152,9 +152,9 @@ export const projectsData: Project[] = [
       { label: 'HIPAA Compliance', value: '100%' },
     ],
     challenge:
-      'Meeting strict healthcare compliance regulations while keeping the video consultation interface simple enough for elderly patients to use without technical support.',
+      'Meeting strict HIPAA encryption and audit-logging mandates while keeping the video room simple enough for elderly patients on low-bandwidth connections.',
     solution:
-      'Engineered an ultra-clean, accessible browser-based WebRTC experience that requires no downloads, featuring automatic bandwidth adaptation and encrypted clinical notes.',
+      'We built a zero-install WebRTC browser client with automatic bitrate adaptation, high-contrast accessible controls, and encrypted FHIR record synchronization.',
     results: [
       'Processed over 500,000 telehealth appointments with 99.98% video stream stability.',
       'Increased patient adherence to routine follow-up consultations by 42%.',
@@ -169,9 +169,9 @@ export const projectsData: Project[] = [
     client: 'Orbit Retail Brands (Sample Client)',
     category: 'Web App',
     shortDescription:
-      'Unified design system and component architecture powering 12 distinct international e-commerce storefronts.',
+      'Multi-brand React component library and Turborepo monorepo powering 12 international retail storefronts.',
     fullDescription:
-      'Orbit Retail operates distinct clothing and consumer goods brands across 8 countries. They suffered from fragmented user experiences and months of redundant frontend rework for every new campaign.',
+      'Orbit Retail runs 12 clothing and consumer goods brands across 8 countries. Each brand maintained a separate frontend codebase, turning simple checkout fixes and seasonal campaigns into months of duplicated work.',
     coverImage: '/projects/orbit.jpg',
     year: 2023,
     duration: '4 Months',
@@ -183,9 +183,9 @@ export const projectsData: Project[] = [
       { label: 'Code Reusability', value: '82%' },
     ],
     challenge:
-      'Each brand had its own bespoke code repository, leading to inconsistent checkout behaviors, bugs, and sluggish feature rollouts.',
+      'Twelve separate repositories meant inconsistent cart logic, repeated accessibility bugs, and slow regional campaign launches.',
     solution:
-      'Built a headless monorepo design system with Tailwind CSS tokens and accessible React components, enabling each brand to skin themes via CSS variables while sharing proven logic.',
+      'We consolidated all 12 storefronts into a Turborepo monorepo backed by shared accessible React primitives and per-brand CSS token themes.',
     results: [
       'Cut new campaign launch time from 6 weeks down to 4 business days.',
       'Consistently achieved 95+ Google Lighthouse scores across all 12 storefronts.',
@@ -194,4 +194,3 @@ export const projectsData: Project[] = [
     liveUrl: 'https://example.com/projects/orbit',
   },
 ];
-

@@ -1,6 +1,20 @@
 import type { Metadata, Viewport } from 'next';
+import { Anton, Inter } from 'next/font/google';
 import { siteConfig } from '@/config/site';
 import './globals.css';
+
+const anton = Anton({
+  weight: '400',
+  subsets: ['latin'],
+  variable: '--font-anton',
+  display: 'swap',
+});
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-sans',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -41,7 +55,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#090d16',
+  themeColor: '#EEE6E2',
   width: 'device-width',
   initialScale: 1,
 };
@@ -52,8 +66,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark scroll-smooth">
-      <body className="min-h-screen bg-[#090d16] text-slate-100 antialiased selection:bg-blue-600 selection:text-white">
+    <html lang="en" className={`${anton.variable} ${inter.variable} scroll-smooth`}>
+      <body className="min-h-screen bg-[#EEE6E2] text-[#1E5A54] font-sans antialiased selection:bg-[#F7623D] selection:text-[#EEE6E2]">
         {children}
       </body>
     </html>

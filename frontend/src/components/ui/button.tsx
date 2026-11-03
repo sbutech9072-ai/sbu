@@ -3,22 +3,27 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center whitespace-nowrap rounded-lg text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 select-none',
+  'inline-flex items-center justify-center whitespace-nowrap rounded-full text-xs font-bold uppercase tracking-[0.16em] transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F7623D] focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 select-none shadow-none',
   {
     variants: {
       variant: {
-        default: 'bg-blue-600 text-white hover:bg-blue-500 shadow-sm active:bg-blue-700',
-        secondary: 'bg-slate-800 text-slate-100 hover:bg-slate-700 border border-slate-700/80 active:bg-slate-900',
+        default:
+          'bg-[#F7623D] text-[#EEE6E2] hover:bg-[#E05330] active:scale-[0.98]',
+        secondary:
+          'border border-[#1E5A54] bg-transparent text-[#1E5A54] hover:bg-[#1E5A54]/10 active:scale-[0.98]',
         outline:
-          'border border-slate-700 bg-transparent text-slate-200 hover:bg-slate-800/80 hover:text-white',
-        ghost: 'text-slate-300 hover:bg-slate-800 hover:text-white',
-        destructive: 'bg-rose-600 text-white hover:bg-rose-500 active:bg-rose-700',
-        link: 'text-blue-400 underline-offset-4 hover:underline p-0 h-auto font-normal',
+          'border border-[#1E5A54] bg-transparent text-[#1E5A54] hover:bg-[#1E5A54]/10 active:scale-[0.98]',
+        ghost:
+          'bg-transparent text-[#1E5A54] hover:bg-[#1E5A54]/10 active:scale-[0.98]',
+        destructive:
+          'bg-[#F7623D] text-[#EEE6E2] hover:bg-[#E05330] active:scale-[0.98]',
+        link:
+          'text-[#1E5A54] underline-offset-4 hover:underline p-0 h-auto font-medium lowercase tracking-normal',
       },
       size: {
-        default: 'h-10 px-4 py-2',
-        sm: 'h-8 rounded-md px-3 text-xs',
-        lg: 'h-12 rounded-xl px-6 text-base font-semibold',
+        default: 'h-11 px-6 py-2.5',
+        sm: 'h-9 px-4 text-[11px]',
+        lg: 'h-13 px-8 py-3.5 text-xs',
         icon: 'h-10 w-10 p-0',
       },
     },
@@ -36,11 +41,30 @@ export interface ButtonProps
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, ...props }, ref) => {
-    return <button className={cn(buttonVariants({ variant, size, className }))} ref={ref} {...props} />;
+  ({ className, variant, size, asChild = false, children, ...props }, ref) => {
+    if (asChild && React.isValidElement(children)) {
+      const child = children as React.ReactElement<Record<string, unknown>>;
+      return React.cloneElement(child, {
+        ...props,
+        className: cn(
+          buttonVariants({ variant, size }),
+          typeof child.props?.className === 'string' ? child.props.className : undefined,
+          className
+        ),
+      });
+    }
+
+    return (
+      <button
+        className={cn(buttonVariants({ variant, size, className }))}
+        ref={ref}
+        {...props}
+      >
+        {children}
+      </button>
+    );
   }
 );
 Button.displayName = 'Button';
 
 export { Button, buttonVariants };
-

@@ -54,27 +54,27 @@ export function AdminSidebar({ mobileOpen, onCloseMobile }: AdminSidebarProps) {
   const pathname = usePathname();
 
   const sidebarContent = (
-    <div className="flex h-full flex-col justify-between p-4 bg-slate-950 border-r border-slate-800">
+    <div className="flex h-full flex-col justify-between p-4 bg-[#E2D7D1] border-r border-[#1E5A54]/20">
       {/* Top Brand */}
       <div className="space-y-6">
         <div className="flex items-center justify-between px-2 pt-2">
           <Link href="/admin" className="flex items-center gap-2.5">
-            <div className="h-9 w-9 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-md shadow-blue-500/20">
+            <div className="h-9 w-9 rounded-full bg-[#1E5A54] flex items-center justify-center text-[#EEE6E2]">
               <Terminal className="h-4 w-4" />
             </div>
             <div>
-              <span className="text-base font-bold text-white tracking-tight flex items-center gap-1">
-                Sbu<span className="text-blue-400">Tech</span>
+              <span className="font-headline text-lg uppercase text-[#1E5A54] tracking-tight flex items-center gap-1 leading-none">
+                Sbu<span className="text-[#F7623D]">Tech</span>
               </span>
-              <span className="text-[10px] font-mono tracking-widest text-blue-400 uppercase block">
-                Admin Console
+              <span className="text-[10px] font-mono tracking-widest text-[#1E5A54]/85 uppercase block mt-0.5">
+                Admin Desk
               </span>
             </div>
           </Link>
           {onCloseMobile && (
             <button
               onClick={onCloseMobile}
-              className="lg:hidden p-1.5 text-slate-400 hover:text-white rounded-lg"
+              className="lg:hidden p-1.5 text-[#1E5A54] hover:bg-[#EEE6E2] rounded-full"
             >
               <X className="h-5 w-5" />
             </button>
@@ -93,10 +93,10 @@ export function AdminSidebar({ mobileOpen, onCloseMobile }: AdminSidebarProps) {
                 href={item.href}
                 onClick={onCloseMobile}
                 className={cn(
-                  'flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-medium transition-colors',
+                  'flex items-center gap-3 px-3.5 py-2.5 rounded-full text-xs font-medium transition-colors',
                   isActive
-                    ? 'bg-blue-600 text-white font-semibold shadow-sm'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900'
+                    ? 'bg-[#1E5A54] text-[#EEE6E2] font-semibold'
+                    : 'text-[#1E5A54]/85 hover:text-[#1E5A54] hover:bg-[#EEE6E2]'
                 )}
               >
                 {iconMap[item.title] || <LayoutDashboard className="h-4 w-4" />}
@@ -108,34 +108,36 @@ export function AdminSidebar({ mobileOpen, onCloseMobile }: AdminSidebarProps) {
       </div>
 
       {/* Footer / Links */}
-      <div className="space-y-2 pt-4 border-t border-slate-800">
+      <div className="space-y-2 pt-4 border-t border-[#1E5A54]/20">
         <Link
           href="/"
           target="_blank"
-          className="flex items-center justify-between px-3 py-2 text-xs font-medium text-slate-400 hover:text-white hover:bg-slate-900 rounded-xl transition-colors"
+          className="flex items-center justify-between px-3.5 py-2 text-xs font-medium text-[#1E5A54]/85 hover:text-[#1E5A54] hover:bg-[#EEE6E2] rounded-full transition-colors"
         >
           <span className="flex items-center gap-2">
             <ExternalLink className="h-3.5 w-3.5" />
             <span>Public Website</span>
           </span>
-          <span className="text-[10px] font-mono bg-slate-800 px-1.5 py-0.5 rounded text-slate-400">
+          <span className="text-[10px] font-mono bg-[#EEE6E2] border border-[#1E5A54]/25 px-2 py-0.5 rounded-full text-[#1E5A54]">
             Live
           </span>
         </Link>
 
         <Link
           href="/admin/login"
-          className="flex items-center gap-2 px-3 py-2 text-xs font-medium text-rose-400 hover:text-rose-300 hover:bg-rose-500/10 rounded-xl transition-colors"
+          className="flex items-center gap-2 px-3.5 py-2 text-xs font-semibold text-[#F7623D] hover:bg-[#EEE6E2] rounded-full transition-colors"
         >
           <LogOut className="h-3.5 w-3.5" />
           <span>Exit / Re-authenticate</span>
         </Link>
 
-        <div className="p-3 rounded-xl bg-slate-900/60 border border-slate-800/80 text-[11px] text-slate-400 flex items-start gap-2">
-          <Shield className="h-4 w-4 text-amber-400 shrink-0 mt-0.5" />
+        <div className="p-3 rounded-2xl bg-[#F8F4F2] border border-[#1E5A54]/25 text-[11px] text-[#1E5A54] flex items-start gap-2">
+          <Shield className="h-4 w-4 text-[#F7623D] shrink-0 mt-0.5" />
           <div>
-            <span className="font-semibold text-amber-300 block">Mock Admin Mode</span>
-            <span>All forms operate with local memory state. No live database.</span>
+            <span className="font-semibold text-[#1E5A54] block">Mock Admin Mode</span>
+            <span className="text-[#1E5A54]/85">
+              All forms run in browser state. No live database connected.
+            </span>
           </div>
         </div>
       </div>
@@ -153,7 +155,7 @@ export function AdminSidebar({ mobileOpen, onCloseMobile }: AdminSidebarProps) {
       {mobileOpen && (
         <div className="fixed inset-0 z-50 lg:hidden flex">
           <div
-            className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm"
+            className="fixed inset-0 bg-[#1E5A54]/40"
             onClick={onCloseMobile}
           />
           <div className="relative w-72 h-full z-10">{sidebarContent}</div>
@@ -162,4 +164,3 @@ export function AdminSidebar({ mobileOpen, onCloseMobile }: AdminSidebarProps) {
     </>
   );
 }
-

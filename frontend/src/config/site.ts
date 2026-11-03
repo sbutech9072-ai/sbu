@@ -1,8 +1,8 @@
 export const siteConfig = {
   name: 'Sbu Tech',
-  title: 'Sbu Tech | Modern Software Engineering & Digital Product Studio',
+  title: 'Sbu Tech | Software Engineering & Digital Product Studio',
   description:
-    'Sbu Tech builds scalable cloud software, enterprise web applications, and intuitive digital experiences for high-growth companies worldwide.',
+    'Sbu Tech is a software engineering studio based in San Francisco. We build production web applications, cloud infrastructure, and private AI systems for growing engineering teams.',
   url: process.env.NEXT_PUBLIC_SITE_URL || 'https://sbutech.com',
   ogImage: '/og-image.jpg',
   links: {
@@ -38,9 +38,9 @@ export const siteConfig = {
     { title: 'Settings', href: '/admin/settings', icon: 'Settings' },
   ],
   stats: [
-    { label: 'Completed Projects', value: '140+', helper: 'Delivered with 99.4% satisfaction' },
-    { label: 'Enterprise Clients', value: '45+', helper: 'Across North America & Europe' },
-    { label: 'System Uptime SLA', value: '99.98%', helper: 'Mission critical performance' },
-    { label: 'Senior Engineers', value: '28+', helper: 'Full-stack & AI specialists' },
+    { label: 'Completed Projects', value: '140+', helper: 'Shipped on schedule with 99.4% client satisfaction' },
+    { label: 'Enterprise Clients', value: '45+', helper: 'Engineering orgs across North America and Europe' },
+    { label: 'System Uptime SLA', value: '99.98%', helper: 'Measured across live production workloads' },
+    { label: 'Senior Engineers', value: '28+', helper: 'Full-stack, infrastructure, and ML practitioners' },
   ],
 };

@@ -10,10 +10,6 @@ import {
   Mail,
   FileSpreadsheet,
   ArrowRight,
-  TrendingUp,
-  Clock,
-  CheckCircle2,
-  AlertCircle,
   Plus,
 } from 'lucide-react';
 import { StatsCard } from '@/components/admin/stats-card';
@@ -25,30 +21,29 @@ import { projectsData } from '@/data/projects';
 import { servicesData } from '@/data/services';
 import { teamData } from '@/data/team';
 import { blogsData } from '@/data/blogs';
-import { formatDate } from '@/lib/utils';
 
 export default function AdminDashboardOverviewPage() {
   return (
     <div className="space-y-8">
       {/* Top Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-800">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#1E5A54]/20">
         <div>
-          <h1 className="text-2xl md:text-3xl font-bold text-white tracking-tight">
-            Dashboard Overview
+          <h1 className="font-headline text-3xl md:text-4xl uppercase text-[#1E5A54] tracking-tight">
+            Studio Operations Ledger
           </h1>
-          <p className="text-xs text-slate-400 mt-1">
-            Welcome to the Sbu Tech administration console. Manage portfolio case studies, services, team members, and incoming leads.
+          <p className="text-xs text-[#1E5A54]/85 mt-1">
+            Review case studies, service lines, engineering staff, and incoming project scopes.
           </p>
         </div>
 
         <div className="flex items-center gap-2">
-          <Button asChild size="sm" className="gap-1.5 text-xs">
+          <Button asChild size="sm" className="gap-1.5 text-xs rounded-full">
             <Link href="/admin/projects">
               <Plus className="h-3.5 w-3.5" />
               <span>Add New Project</span>
             </Link>
           </Button>
-          <Button asChild variant="outline" size="sm" className="text-xs">
+          <Button asChild variant="outline" size="sm" className="text-xs rounded-full">
             <Link href="/admin/settings">Settings</Link>
           </Button>
         </div>
@@ -62,7 +57,7 @@ export default function AdminDashboardOverviewPage() {
           change="+2 this month"
           changeType="positive"
           icon={FolderGit2}
-          helper="Portfolio items published"
+          helper="Published case studies"
         />
         <StatsCard
           title="Core Services"
@@ -70,7 +65,7 @@ export default function AdminDashboardOverviewPage() {
           change="100% active"
           changeType="positive"
           icon={Cpu}
-          helper="Engineering offerings"
+          helper="Engineering practices"
         />
         <StatsCard
           title="Quote Requests"
@@ -95,26 +90,26 @@ export default function AdminDashboardOverviewPage() {
         {/* Left Column: Recent Quote Submissions */}
         <div className="lg:col-span-7 space-y-4">
           <div className="flex items-center justify-between">
-            <h3 className="text-lg font-bold text-white flex items-center gap-2">
-              <FileSpreadsheet className="h-4 w-4 text-blue-400" />
+            <h3 className="font-headline text-xl uppercase text-[#1E5A54] flex items-center gap-2">
+              <FileSpreadsheet className="h-4 w-4 text-[#F7623D]" />
               <span>Incoming Project Scopes</span>
             </h3>
             <Link
               href="/admin/quote-requests"
-              className="text-xs text-blue-400 hover:text-blue-300 flex items-center gap-1 font-medium"
+              className="text-xs text-[#1E5A54] hover:text-[#F7623D] flex items-center gap-1 font-semibold"
             >
               <span>View All</span>
               <ArrowRight className="h-3 w-3" />
             </Link>
           </div>
 
-          <Card className="divide-y divide-slate-800 border-slate-800 bg-slate-900/40">
+          <Card className="divide-y divide-[#1E5A54]/15 border-[#1E5A54]/25 bg-[#F8F4F2] rounded-3xl overflow-hidden">
             {mockQuoteRequests.map((req) => (
-              <div key={req.id} className="p-4 hover:bg-slate-900/80 transition-colors space-y-2">
+              <div key={req.id} className="p-5 hover:bg-[#E2D7D1]/50 transition-colors space-y-2">
                 <div className="flex items-start justify-between gap-2">
                   <div>
-                    <h4 className="text-sm font-semibold text-white">{req.companyName}</h4>
-                    <span className="text-xs text-slate-400">
+                    <h4 className="text-sm font-bold text-[#1E5A54]">{req.companyName}</h4>
+                    <span className="text-xs text-[#1E5A54]/85">
                       Contact: {req.fullName} ({req.email})
                     </span>
                   </div>
@@ -132,13 +127,13 @@ export default function AdminDashboardOverviewPage() {
                   </Badge>
                 </div>
 
-                <p className="text-xs text-slate-300 line-clamp-2 leading-relaxed">
+                <p className="text-xs text-[#1E5A54]/85 line-clamp-2 leading-relaxed">
                   {req.projectOverview}
                 </p>
 
-                <div className="flex items-center justify-between pt-1 text-[11px] text-slate-400 font-mono">
+                <div className="flex items-center justify-between pt-1 text-[11px] text-[#1E5A54]/85 font-mono">
                   <span>Scope: {req.serviceCategory}</span>
-                  <span className="text-blue-300 font-semibold">{req.budgetRange}</span>
+                  <span className="text-[#1E5A54] font-bold">{req.budgetRange}</span>
                 </div>
               </div>
             ))}
@@ -148,24 +143,24 @@ export default function AdminDashboardOverviewPage() {
         {/* Right Column: Recent Messages */}
         <div className="lg:col-span-5 space-y-4">
           <div className="flex items-center justify-between">
-            <h3 className="text-lg font-bold text-white flex items-center gap-2">
-              <Mail className="h-4 w-4 text-cyan-400" />
+            <h3 className="font-headline text-xl uppercase text-[#1E5A54] flex items-center gap-2">
+              <Mail className="h-4 w-4 text-[#F7623D]" />
               <span>Recent Inquiries</span>
             </h3>
             <Link
               href="/admin/messages"
-              className="text-xs text-blue-400 hover:text-blue-300 flex items-center gap-1 font-medium"
+              className="text-xs text-[#1E5A54] hover:text-[#F7623D] flex items-center gap-1 font-semibold"
             >
               <span>View All</span>
               <ArrowRight className="h-3 w-3" />
             </Link>
           </div>
 
-          <Card className="divide-y divide-slate-800 border-slate-800 bg-slate-900/40">
+          <Card className="divide-y divide-[#1E5A54]/15 border-[#1E5A54]/25 bg-[#F8F4F2] rounded-3xl overflow-hidden">
             {mockMessages.map((msg) => (
-              <div key={msg.id} className="p-4 hover:bg-slate-900/80 transition-colors space-y-1.5">
+              <div key={msg.id} className="p-5 hover:bg-[#E2D7D1]/50 transition-colors space-y-1.5">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-semibold text-white">{msg.name}</span>
+                  <span className="text-xs font-bold text-[#1E5A54]">{msg.name}</span>
                   <Badge
                     variant={msg.status === 'new' ? 'destructive' : 'secondary'}
                     className="text-[10px] capitalize"
@@ -173,8 +168,8 @@ export default function AdminDashboardOverviewPage() {
                     {msg.status}
                   </Badge>
                 </div>
-                <h5 className="text-xs font-medium text-blue-400 truncate">{msg.subject}</h5>
-                <p className="text-xs text-slate-400 line-clamp-2">{msg.message}</p>
+                <h5 className="text-xs font-semibold text-[#F7623D] truncate">{msg.subject}</h5>
+                <p className="text-xs text-[#1E5A54]/85 line-clamp-2">{msg.message}</p>
               </div>
             ))}
           </Card>
@@ -182,49 +177,48 @@ export default function AdminDashboardOverviewPage() {
       </div>
 
       {/* Quick Navigation Cards */}
-      <div className="pt-4 border-t border-slate-800">
-        <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-400 mb-4">
+      <div className="pt-4 border-t border-[#1E5A54]/20">
+        <h3 className="text-xs font-mono font-semibold uppercase tracking-wider text-[#1E5A54]/85 mb-4">
           Quick Management Portals
         </h3>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           <Link
             href="/admin/projects"
-            className="p-4 rounded-xl border border-slate-800 bg-slate-900/30 hover:bg-slate-900/80 transition-all space-y-1 block"
+            className="p-5 rounded-3xl border border-[#1E5A54]/25 bg-[#F8F4F2] hover:bg-[#E2D7D1] transition-all space-y-1 block"
           >
-            <FolderGit2 className="h-5 w-5 text-blue-400 mb-2" />
-            <h4 className="text-sm font-bold text-white">Projects</h4>
-            <p className="text-xs text-slate-400">{projectsData.length} Case studies</p>
+            <FolderGit2 className="h-5 w-5 text-[#F7623D] mb-2" />
+            <h4 className="font-headline text-lg uppercase text-[#1E5A54]">Projects</h4>
+            <p className="text-xs text-[#1E5A54]/85">{projectsData.length} Case studies</p>
           </Link>
 
           <Link
             href="/admin/services"
-            className="p-4 rounded-xl border border-slate-800 bg-slate-900/30 hover:bg-slate-900/80 transition-all space-y-1 block"
+            className="p-5 rounded-3xl border border-[#1E5A54]/25 bg-[#F8F4F2] hover:bg-[#E2D7D1] transition-all space-y-1 block"
           >
-            <Cpu className="h-5 w-5 text-cyan-400 mb-2" />
-            <h4 className="text-sm font-bold text-white">Services</h4>
-            <p className="text-xs text-slate-400">{servicesData.length} Practice areas</p>
+            <Cpu className="h-5 w-5 text-[#1E5A54] mb-2" />
+            <h4 className="font-headline text-lg uppercase text-[#1E5A54]">Services</h4>
+            <p className="text-xs text-[#1E5A54]/85">{servicesData.length} Practice areas</p>
           </Link>
 
           <Link
             href="/admin/team"
-            className="p-4 rounded-xl border border-slate-800 bg-slate-900/30 hover:bg-slate-900/80 transition-all space-y-1 block"
+            className="p-5 rounded-3xl border border-[#1E5A54]/25 bg-[#F8F4F2] hover:bg-[#E2D7D1] transition-all space-y-1 block"
           >
-            <Users className="h-5 w-5 text-indigo-400 mb-2" />
-            <h4 className="text-sm font-bold text-white">Team Members</h4>
-            <p className="text-xs text-slate-400">{teamData.length} Staff profiles</p>
+            <Users className="h-5 w-5 text-[#1E5A54] mb-2" />
+            <h4 className="font-headline text-lg uppercase text-[#1E5A54]">Team Members</h4>
+            <p className="text-xs text-[#1E5A54]/85">{teamData.length} Staff profiles</p>
           </Link>
 
           <Link
             href="/admin/blogs"
-            className="p-4 rounded-xl border border-slate-800 bg-slate-900/30 hover:bg-slate-900/80 transition-all space-y-1 block"
+            className="p-5 rounded-3xl border border-[#1E5A54]/25 bg-[#F8F4F2] hover:bg-[#E2D7D1] transition-all space-y-1 block"
           >
-            <BookOpen className="h-5 w-5 text-amber-400 mb-2" />
-            <h4 className="text-sm font-bold text-white">Blog Posts</h4>
-            <p className="text-xs text-slate-400">{blogsData.length} Articles</p>
+            <BookOpen className="h-5 w-5 text-[#F7623D] mb-2" />
+            <h4 className="font-headline text-lg uppercase text-[#1E5A54]">Blog Posts</h4>
+            <p className="text-xs text-[#1E5A54]/85">{blogsData.length} Articles</p>
           </Link>
         </div>
       </div>
     </div>
   );
 }
-

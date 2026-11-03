@@ -7,7 +7,6 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import {
-  Terminal,
   Lock,
   Mail,
   ArrowRight,
@@ -47,7 +46,7 @@ export default function AdminLoginPage() {
     },
   });
 
-  const onSubmit = async (data: AdminLoginData) => {
+  const onSubmit = async () => {
     setIsSubmitting(true);
     // Simulate brief authentication handshake
     await new Promise((resolve) => setTimeout(resolve, 600));
@@ -61,66 +60,66 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <main className="min-h-screen flex items-center justify-center p-4 bg-[#090d16] text-slate-100">
+    <main className="min-h-screen flex items-center justify-center p-4 bg-[#EEE6E2] text-[#1E5A54]">
       <div className="w-full max-w-md space-y-6">
         {/* Header Branding */}
         <div className="text-center space-y-2">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-semibold">
-            <ShieldCheck className="h-3.5 w-3.5" />
-            <span>Sbu Tech Control Console</span>
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F8F4F2] border border-[#1E5A54]/25 text-[#1E5A54] text-xs font-mono font-semibold uppercase tracking-wider">
+            <ShieldCheck className="h-3.5 w-3.5 text-[#F7623D]" />
+            <span>Sbu Tech Control Desk</span>
           </div>
 
-          <h1 className="text-2xl md:text-3xl font-extrabold text-white tracking-tight">
+          <h1 className="font-headline text-3xl md:text-4xl uppercase text-[#1E5A54] tracking-tight">
             Administrator Sign In
           </h1>
-          <p className="text-xs text-slate-400">
-            Internal console UI for managing company case studies, services, and inquiries.
+          <p className="text-xs text-[#1E5A54]/85">
+            Internal console for managing case studies, practice areas, and client inquiries.
           </p>
         </div>
 
         {/* Notice Card */}
-        <div className="p-4 rounded-xl border border-amber-500/30 bg-amber-500/10 text-amber-200 text-xs space-y-1.5">
-          <div className="flex items-center gap-1.5 font-semibold text-amber-300">
-            <AlertCircle className="h-4 w-4 shrink-0" />
+        <div className="p-4 rounded-2xl border border-[#1E5A54]/25 bg-[#F8F4F2] text-[#1E5A54] text-xs space-y-1.5">
+          <div className="flex items-center gap-1.5 font-semibold text-[#1E5A54]">
+            <AlertCircle className="h-4 w-4 text-[#F7623D] shrink-0" />
             <span>Phase 01 Mock Interface</span>
           </div>
-          <p className="text-[11px] text-amber-200/90 leading-relaxed">
+          <p className="text-[11px] text-[#1E5A54]/85 leading-relaxed">
             Live database authentication is not connected in this phase. You can sign in directly
             using any credentials or the pre-filled demo account.
           </p>
         </div>
 
         {/* Login Form Card */}
-        <Card className="p-6 md:p-8 border-slate-800 bg-slate-900/60 shadow-2xl space-y-6">
+        <Card className="p-6 md:p-8 border-[#1E5A54]/25 bg-[#F8F4F2] rounded-3xl space-y-6">
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold uppercase tracking-wider text-slate-300">
+              <label className="text-xs font-semibold uppercase tracking-wider text-[#1E5A54]">
                 Staff Email Address
               </label>
               <div className="relative">
-                <Mail className="absolute left-3.5 top-3 h-4 w-4 text-slate-500" />
+                <Mail className="absolute left-3.5 top-3 h-4 w-4 text-[#1E5A54]/70" />
                 <Input
                   type="email"
-                  className="pl-10"
+                  className="pl-10 rounded-full bg-[#EEE6E2] border-[#1E5A54]/30 text-[#1E5A54]"
                   placeholder="admin@sbutech.internal"
                   {...register('email')}
                   error={!!errors.email}
                 />
               </div>
               {errors.email && (
-                <p className="text-xs text-rose-400">{errors.email.message}</p>
+                <p className="text-xs text-[#F7623D] font-medium">{errors.email.message}</p>
               )}
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold uppercase tracking-wider text-slate-300">
+              <label className="text-xs font-semibold uppercase tracking-wider text-[#1E5A54]">
                 Password
               </label>
               <div className="relative">
-                <Lock className="absolute left-3.5 top-3 h-4 w-4 text-slate-500" />
+                <Lock className="absolute left-3.5 top-3 h-4 w-4 text-[#1E5A54]/70" />
                 <Input
                   type={showPassword ? 'text' : 'password'}
-                  className="pl-10 pr-10"
+                  className="pl-10 pr-10 rounded-full bg-[#EEE6E2] border-[#1E5A54]/30 text-[#1E5A54]"
                   placeholder="••••••••••••"
                   {...register('password')}
                   error={!!errors.password}
@@ -128,21 +127,21 @@ export default function AdminLoginPage() {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3.5 top-3 text-slate-500 hover:text-slate-300"
+                  className="absolute right-3.5 top-3 text-[#1E5A54]/70 hover:text-[#1E5A54]"
                   aria-label="Toggle password visibility"
                 >
                   {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
               </div>
               {errors.password && (
-                <p className="text-xs text-rose-400">{errors.password.message}</p>
+                <p className="text-xs text-[#F7623D] font-medium">{errors.password.message}</p>
               )}
             </div>
 
             <Button
               type="submit"
               disabled={isSubmitting}
-              className="w-full h-11 text-sm font-semibold rounded-xl gap-2 mt-2 shadow-lg shadow-blue-600/25"
+              className="w-full h-11 text-xs font-semibold uppercase tracking-wider rounded-full gap-2 mt-2 bg-[#F7623D] hover:bg-[#e5522d] text-white"
             >
               {isSubmitting ? (
                 <>
@@ -158,15 +157,15 @@ export default function AdminLoginPage() {
             </Button>
           </form>
 
-          <div className="pt-2 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
+          <div className="pt-3 border-t border-[#1E5A54]/20 flex items-center justify-between text-xs text-[#1E5A54]/85">
             <button
               type="button"
               onClick={handleFillDemo}
-              className="text-blue-400 hover:text-blue-300 font-medium"
+              className="text-[#F7623D] hover:underline font-semibold"
             >
               Fill Demo Credentials
             </button>
-            <Link href="/" className="hover:text-white transition-colors flex items-center gap-1">
+            <Link href="/" className="hover:text-[#1E5A54] transition-colors flex items-center gap-1 font-medium">
               <Home className="h-3 w-3" />
               <span>Back to Home</span>
             </Link>
@@ -176,4 +175,3 @@ export default function AdminLoginPage() {
     </main>
   );
 }
-

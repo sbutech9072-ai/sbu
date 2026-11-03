@@ -18,12 +18,16 @@ export function EmptyState({
   onAction,
 }: EmptyStateProps) {
   return (
-    <div className="flex flex-col items-center justify-center p-12 text-center rounded-2xl border border-dashed border-slate-800 bg-slate-900/40">
-      <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-800/80 text-slate-400 mb-4">
-        <Icon className="h-7 w-7 text-slate-400" />
+    <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-[#1E5A54]/30 bg-[#F8F4F2] p-12 text-center">
+      <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl border border-[#1E5A54]/20 bg-[#EEE6E2] text-[#F7623D]">
+        <Icon className="h-6 w-6 text-[#F7623D]" />
       </div>
-      <h3 className="text-lg font-semibold text-white mb-1">{title}</h3>
-      <p className="text-sm text-slate-400 max-w-sm mb-6 leading-relaxed">{description}</p>
+      <h3 className="mb-1.5 font-headline text-2xl uppercase tracking-tight text-[#1E5A54]">
+        {title}
+      </h3>
+      <p className="mb-6 max-w-sm text-sm leading-relaxed text-[#1E5A54]/80">
+        {description}
+      </p>
       {actionLabel && onAction && (
         <Button onClick={onAction} variant="secondary" size="sm">
           {actionLabel}
@@ -32,4 +36,3 @@ export function EmptyState({
     </div>
   );
 }
-

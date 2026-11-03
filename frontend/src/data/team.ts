@@ -7,7 +7,7 @@ export const teamData: TeamMember[] = [
     role: 'Chief Executive Officer & Co-Founder',
     department: 'Leadership',
     avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80',
-    bio: 'Former VP of Engineering with 15+ years leading high-growth software engineering organizations and distributed cloud teams.',
+    bio: 'Spent 15 years leading distributed engineering orgs before co-founding Sbu Tech. Still reviews system architecture docs and scoping estimates.',
     skills: ['Strategic Planning', 'System Architecture', 'Enterprise Partnerships', 'Product Strategy'],
     socials: {
       github: 'https://github.com',
@@ -22,7 +22,7 @@ export const teamData: TeamMember[] = [
     role: 'Chief Technology Officer & Co-Founder',
     department: 'Leadership',
     avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
-    bio: 'Distributed systems architect and open-source contributor with deep expertise in Kubernetes, Go, and high-throughput data pipelines.',
+    bio: 'Systems architect focused on Go, Kubernetes, and storage internals. Previously built high-volume event pipelines for financial clearinghouses.',
     skills: ['Cloud Infrastructure', 'Go', 'Kubernetes', 'Microservices', 'Database Internals'],
     socials: {
       github: 'https://github.com',
@@ -36,7 +36,7 @@ export const teamData: TeamMember[] = [
     role: 'Head of Product Design (UI/UX)',
     department: 'Design',
     avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=400&q=80',
-    bio: 'Award-winning product designer specializing in complex SaaS software, data visualization, and accessibility-first design systems.',
+    bio: 'Product designer specializing in dense B2B interfaces, telemetry dashboards, and tokenized Figma-to-React component systems.',
     skills: ['Figma', 'Design Systems', 'User Research', 'Information Architecture', 'Interaction Design'],
     socials: {
       linkedin: 'https://linkedin.com',
@@ -50,7 +50,7 @@ export const teamData: TeamMember[] = [
     role: 'Lead Frontend Architect',
     department: 'Engineering',
     avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80',
-    bio: 'Next.js and TypeScript specialist focused on web performance optimization, core web vitals, and scalable React architectures.',
+    bio: 'Next.js and TypeScript engineer obsessed with bundle budgets, sub-second page transitions, and deterministic state machines.',
     skills: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Performance Tuning', 'State Machines'],
     socials: {
       github: 'https://github.com',
@@ -64,7 +64,7 @@ export const teamData: TeamMember[] = [
     role: 'Principal AI & Machine Learning Engineer',
     department: 'Engineering',
     avatar: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=400&q=80',
-    bio: 'Ph.D. in Computer Science with focus on Natural Language Processing, enterprise RAG architectures, and model fine-tuning.',
+    bio: 'Computer science Ph.D. focused on information retrieval, hybrid vector search, and evaluation harnesses for private enterprise LLMs.',
     skills: ['Python', 'PyTorch', 'LangChain', 'Vector DBs', 'LLM Fine-tuning', 'FastAPI'],
     socials: {
       github: 'https://github.com',
@@ -78,7 +78,7 @@ export const teamData: TeamMember[] = [
     role: 'Staff DevOps & Cloud Security Engineer',
     department: 'Engineering',
     avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80',
-    bio: 'Specialist in multi-cloud security, zero-trust network architectures, SOC 2 compliance, and automated deployment pipelines.',
+    bio: 'Infrastructure engineer specializing in Terraform, multi-region Kubernetes failover, zero-trust networking, and SOC 2 technical controls.',
     skills: ['AWS', 'GCP', 'Terraform', 'Docker', 'Kubernetes', 'Security Auditing'],
     socials: {
       github: 'https://github.com',
@@ -92,7 +92,7 @@ export const teamData: TeamMember[] = [
     role: 'Senior Product Manager',
     department: 'Product',
     avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
-    bio: 'Product strategist bridging business goals and technical execution across enterprise software delivery cycles.',
+    bio: 'Keeps complex multi-quarter builds on track. Translates messy regulatory and operational constraints into clear weekly engineering scopes.',
     skills: ['Agile Methodologies', 'Roadmap Planning', 'User Analytics', 'Stakeholder Management'],
     socials: {
       linkedin: 'https://linkedin.com',
@@ -105,7 +105,7 @@ export const teamData: TeamMember[] = [
     role: 'Senior Mobile Engineer (iOS & Android)',
     department: 'Engineering',
     avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=400&q=80',
-    bio: 'Cross-platform mobile developer with over 8 years experience building high-rated financial and consumer applications.',
+    bio: 'Eight years shipping React Native, Swift, and Kotlin apps for regulated fintech and logistics teams, with a focus on offline SQLite sync.',
     skills: ['React Native', 'Flutter', 'Swift', 'Kotlin', 'Offline Sync'],
     socials: {
       github: 'https://github.com',
@@ -114,4 +114,3 @@ export const teamData: TeamMember[] = [
     isLeadership: false,
   },
 ];
-

@@ -6,7 +6,6 @@ import { testimonialsData as initialTestimonials } from '@/data/testimonials';
 import { Testimonial } from '@/types';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
 import { Modal } from '@/components/ui/modal';
 import { Textarea } from '@/components/ui/textarea';
@@ -96,43 +95,43 @@ export default function AdminTestimonialsPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-800">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#1E5A54]/20">
         <div>
-          <h1 className="text-2xl font-bold text-white tracking-tight flex items-center gap-2">
-            <Quote className="h-6 w-6 text-pink-400" />
+          <h1 className="font-headline text-3xl uppercase text-[#1E5A54] tracking-tight flex items-center gap-2">
+            <Quote className="h-6 w-6 text-[#F7623D]" />
             <span>Manage Client Testimonials</span>
           </h1>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-[#1E5A54]/85 mt-1">
             Curate executive reviews and quotes featured across public pages.
           </p>
         </div>
 
-        <Button onClick={handleOpenCreate} size="sm" className="gap-1.5 text-xs">
+        <Button onClick={handleOpenCreate} size="sm" className="gap-1.5 text-xs rounded-full">
           <Plus className="h-4 w-4" />
           <span>Add Testimonial</span>
         </Button>
       </div>
 
       {feedback && (
-        <div className="flex items-center gap-2 p-3.5 rounded-xl border border-emerald-500/30 bg-emerald-500/10 text-emerald-300 text-xs">
-          <CheckCircle2 className="h-4 w-4 shrink-0" />
+        <div className="flex items-center gap-2 p-3.5 rounded-2xl border border-[#1E5A54]/30 bg-[#F8F4F2] text-[#1E5A54] text-xs font-medium">
+          <CheckCircle2 className="h-4 w-4 text-[#F7623D] shrink-0" />
           <span>{feedback}</span>
         </div>
       )}
 
       <div className="relative max-w-sm">
-        <Search className="absolute left-3 top-2.5 h-4 w-4 text-slate-500" />
+        <Search className="absolute left-3.5 top-2.5 h-4 w-4 text-[#1E5A54]/70" />
         <Input
           placeholder="Filter by author or company..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="pl-9 h-9 text-xs"
+          className="pl-10 h-9 text-xs rounded-full bg-[#F8F4F2] border-[#1E5A54]/25"
         />
       </div>
 
-      <Card className="overflow-hidden border-slate-800 bg-slate-900/40">
+      <Card className="overflow-hidden border-[#1E5A54]/25 bg-[#F8F4F2] rounded-3xl">
         <table className="w-full text-left text-xs">
-          <thead className="border-b border-slate-800 bg-slate-950/60 text-slate-400 font-mono uppercase tracking-wider text-[10px]">
+          <thead className="border-b border-[#1E5A54]/20 bg-[#E2D7D1] text-[#1E5A54] font-mono uppercase tracking-wider text-[10px]">
             <tr>
               <th className="py-3.5 px-4">Author & Title</th>
               <th className="py-3.5 px-4">Company</th>
@@ -141,36 +140,36 @@ export default function AdminTestimonialsPage() {
               <th className="py-3.5 px-4 text-right">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-800/80">
+          <tbody className="divide-y divide-[#1E5A54]/15">
             {filtered.map((t) => (
-              <tr key={t.id} className="hover:bg-slate-900/60 transition-colors">
+              <tr key={t.id} className="hover:bg-[#E2D7D1]/50 transition-colors">
                 <td className="py-3.5 px-4">
-                  <span className="font-semibold text-white block">{t.author}</span>
-                  <span className="text-[10px] text-slate-400">{t.title}</span>
+                  <span className="font-bold text-[#1E5A54] block">{t.author}</span>
+                  <span className="text-[10px] text-[#1E5A54]/85">{t.title}</span>
                 </td>
-                <td className="py-3.5 px-4 text-slate-300">{t.company}</td>
+                <td className="py-3.5 px-4 text-[#1E5A54] font-medium">{t.company}</td>
                 <td className="py-3.5 px-4">
-                  <div className="flex items-center gap-0.5 text-amber-400">
+                  <div className="flex items-center gap-0.5 text-[#F7623D]">
                     {Array.from({ length: t.rating }).map((_, i) => (
-                      <Star key={i} className="h-3 w-3 fill-amber-400" />
+                      <Star key={i} className="h-3 w-3 fill-[#F7623D]" />
                     ))}
                   </div>
                 </td>
-                <td className="py-3.5 px-4 text-slate-400 max-w-xs truncate">
+                <td className="py-3.5 px-4 text-[#1E5A54]/85 max-w-xs truncate">
                   &ldquo;{t.quote}&rdquo;
                 </td>
                 <td className="py-3.5 px-4 text-right">
                   <div className="inline-flex items-center gap-1.5">
                     <button
                       onClick={() => handleOpenEdit(t)}
-                      className="p-1.5 text-blue-400 hover:text-blue-300 rounded-lg hover:bg-blue-500/10"
+                      className="p-1.5 text-[#1E5A54] hover:bg-[#E2D7D1] rounded-full"
                       title="Edit Testimonial"
                     >
                       <Edit2 className="h-3.5 w-3.5" />
                     </button>
                     <button
                       onClick={() => handleDelete(t.id, t.author)}
-                      className="p-1.5 text-rose-400 hover:text-rose-300 rounded-lg hover:bg-rose-500/10"
+                      className="p-1.5 text-[#F7623D] hover:bg-[#E2D7D1] rounded-full"
                       title="Delete Testimonial"
                     >
                       <Trash2 className="h-3.5 w-3.5" />
@@ -191,7 +190,7 @@ export default function AdminTestimonialsPage() {
       >
         <form onSubmit={handleSave} className="space-y-4 text-xs">
           <div className="space-y-1">
-            <label className="font-semibold text-slate-300">Author Full Name *</label>
+            <label className="font-semibold text-[#1E5A54]">Author Full Name *</label>
             <Input
               value={formData.author}
               onChange={(e) => setFormData({ ...formData, author: e.target.value })}
@@ -202,7 +201,7 @@ export default function AdminTestimonialsPage() {
 
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-1">
-              <label className="font-semibold text-slate-300">Job Title</label>
+              <label className="font-semibold text-[#1E5A54]">Job Title</label>
               <Input
                 value={formData.title}
                 onChange={(e) => setFormData({ ...formData, title: e.target.value })}
@@ -210,7 +209,7 @@ export default function AdminTestimonialsPage() {
               />
             </div>
             <div className="space-y-1">
-              <label className="font-semibold text-slate-300">Company</label>
+              <label className="font-semibold text-[#1E5A54]">Company</label>
               <Input
                 value={formData.company}
                 onChange={(e) => setFormData({ ...formData, company: e.target.value })}
@@ -220,7 +219,7 @@ export default function AdminTestimonialsPage() {
           </div>
 
           <div className="space-y-1">
-            <label className="font-semibold text-slate-300">Client Endorsement Quote *</label>
+            <label className="font-semibold text-[#1E5A54]">Client Endorsement Quote *</label>
             <Textarea
               rows={4}
               value={formData.quote}
@@ -230,16 +229,17 @@ export default function AdminTestimonialsPage() {
             />
           </div>
 
-          <div className="flex items-center justify-end gap-2 pt-4 border-t border-slate-800">
+          <div className="flex items-center justify-end gap-2 pt-4 border-t border-[#1E5A54]/20">
             <Button
               type="button"
               variant="outline"
               size="sm"
               onClick={() => setIsModalOpen(false)}
+              className="rounded-full"
             >
               Cancel
             </Button>
-            <Button type="submit" size="sm">
+            <Button type="submit" size="sm" className="rounded-full">
               {editingItem ? 'Save Updates' : 'Add Testimonial'}
             </Button>
           </div>
@@ -248,4 +248,3 @@ export default function AdminTestimonialsPage() {
     </div>
   );
 }
-

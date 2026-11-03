@@ -52,7 +52,7 @@ export default function ServicesPage() {
   ];
 
   return (
-    <div className="space-y-20 pb-20">
+    <div className="space-y-20 pb-20 bg-[#EEE6E2] text-[#1E5A54]">
       <PageHeader
         badge="Services & Capabilities"
         title="Comprehensive Digital Engineering Solutions"
@@ -87,19 +87,19 @@ export default function ServicesPage() {
           {engagementModels.map((model, idx) => (
             <div
               key={idx}
-              className="p-8 rounded-2xl border border-slate-800 bg-slate-900/40 hover:bg-slate-900/80 transition-all flex flex-col justify-between space-y-6"
+              className="p-8 rounded-3xl border border-[#1E5A54]/25 bg-[#EEE6E2] flex flex-col justify-between space-y-6"
             >
               <div className="space-y-3">
-                <span className="text-xs font-mono font-semibold uppercase tracking-wider text-blue-400">
+                <span className="text-xs uppercase tracking-[0.16em] font-semibold text-[#1E5A54]/70">
                   Model 0{idx + 1}
                 </span>
-                <h3 className="text-lg font-bold text-white">{model.title}</h3>
-                <p className="text-xs text-slate-400 leading-relaxed">{model.desc}</p>
+                <h3 className="font-headline text-2xl uppercase tracking-tight text-[#1E5A54]">{model.title}</h3>
+                <p className="text-xs text-[#1E5A54]/80 leading-relaxed">{model.desc}</p>
               </div>
 
-              <div className="pt-4 border-t border-slate-800 text-xs text-slate-300">
-                <span className="font-semibold text-slate-200 block mb-1">Best suited for:</span>
-                <span className="text-slate-400">{model.idealFor}</span>
+              <div className="pt-4 border-t border-[#1E5A54]/18 text-xs text-[#1E5A54]/80">
+                <span className="font-semibold text-[#1E5A54] block mb-1 uppercase tracking-wider">Best suited for:</span>
+                <span className="text-[#1E5A54]/70">{model.idealFor}</span>
               </div>
             </div>
           ))}
@@ -118,13 +118,13 @@ export default function ServicesPage() {
           {faqs.map((faq, idx) => (
             <div
               key={idx}
-              className="p-6 rounded-2xl border border-slate-800/80 bg-slate-900/40 space-y-2"
+              className="p-6 rounded-3xl border border-[#1E5A54]/25 bg-[#EEE6E2] space-y-2"
             >
-              <h4 className="text-base font-bold text-white flex items-center gap-2">
-                <HelpCircle className="h-4 w-4 text-blue-400 shrink-0" />
+              <h4 className="font-headline text-lg uppercase tracking-tight text-[#1E5A54] flex items-center gap-2">
+                <HelpCircle className="h-4 w-4 text-[#1E5A54] shrink-0" />
                 <span>{faq.q}</span>
               </h4>
-              <p className="text-sm text-slate-400 pl-6 leading-relaxed">{faq.a}</p>
+              <p className="text-sm text-[#1E5A54]/80 pl-6 leading-relaxed">{faq.a}</p>
             </div>
           ))}
         </div>
@@ -132,20 +132,22 @@ export default function ServicesPage() {
 
       {/* CTA */}
       <section className="container mx-auto px-4 max-w-5xl text-center space-y-6 pt-6">
-        <div className="p-12 rounded-3xl border border-slate-800 bg-gradient-to-b from-blue-950/20 to-slate-900/60 space-y-6">
-          <h2 className="text-2xl md:text-3xl font-bold text-white">
+        <div className="p-12 rounded-3xl border border-[#1E5A54]/25 bg-[#EEE6E2] space-y-6">
+          <h2 className="font-headline text-3xl md:text-5xl uppercase tracking-tight text-[#1E5A54]">
             Need a Tailored Architectural Solution?
           </h2>
-          <p className="text-sm text-slate-400 max-w-xl mx-auto">
+          <p className="text-sm text-[#1E5A54]/80 max-w-xl mx-auto">
             Share your requirements with our lead architects to receive a breakdown of scope, timeline,
-            and estimated investment.
+            and resource allocation.
           </p>
-          <Button asChild size="lg" className="rounded-xl px-8 shadow-xl shadow-blue-600/20">
-            <Link href="/get-a-quote">Request an Engineering Estimate</Link>
+          <Button asChild size="lg">
+            <Link href="/get-a-quote" className="gap-2">
+              <span>Request a Technical Estimate</span>
+              <ArrowRight className="h-4 w-4" />
+            </Link>
           </Button>
         </div>
       </section>
     </div>
   );
 }
-

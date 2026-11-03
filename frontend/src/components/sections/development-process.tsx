@@ -1,84 +1,119 @@
 import React from 'react';
-import { Search, Terminal, CheckCircle2, Rocket } from 'lucide-react';
 import { SectionHeading } from '@/components/shared/section-heading';
+import { HandArrow, StudioStamp } from '@/components/human/hand-crafted-svg';
+import { TiltCard } from '@/components/human/tilt-card';
 
 export function DevelopmentProcess() {
   const steps = [
     {
       num: '01',
-      icon: <Search className="h-6 w-6 text-blue-400" />,
+      window: 'WEEKS 01 - 02',
       title: 'Discovery & Architectural Blueprint',
-      desc: 'We define the technical roadmap, database schema, API contracts, and UX flows before a single line of production code is written.',
+      desc: 'We lock down the domain schema, API contracts, cloud topology, and UX wireframes before writing production application code.',
       deliverables: ['System Architecture Diagram', 'Figma UX Wireframes', 'Sprint Backlog & Milestones'],
+      offsetClass: 'lg:mt-0',
     },
     {
       num: '02',
-      icon: <Terminal className="h-6 w-6 text-cyan-400" />,
+      window: 'WEEKS 03 - 08',
       title: 'Iterative Sprint Engineering',
-      desc: 'Development in two-week agile sprints. You receive staging access to review features live as they are built, with continuous feedback loops.',
+      desc: 'Development runs in two-week sprints. You get a dedicated staging URL to test live features as they land in the main branch.',
       deliverables: ['Bi-Weekly Demo Builds', 'Type-Safe Git Pull Requests', 'CI/CD Automated Previews'],
+      offsetClass: 'lg:mt-10',
     },
     {
       num: '03',
-      icon: <CheckCircle2 className="h-6 w-6 text-indigo-400" />,
-      title: 'Deep Testing & Security Audits',
-      desc: 'We stress-test the application with automated end-to-end suites, load simulations, accessibility scans, and dependency vulnerability checks.',
+      window: 'WEEKS 09 - 10',
+      title: 'Load Testing & Security Audits',
+      desc: 'We stress-test endpoints with automated end-to-end suites, high-concurrency load simulations, WCAG checks, and dependency scans.',
       deliverables: ['Security Penetration Report', 'Load & Latency Benchmarks', 'WCAG Accessibility Pass'],
+      offsetClass: 'lg:mt-20',
     },
     {
       num: '04',
-      icon: <Rocket className="h-6 w-6 text-emerald-400" />,
-      title: 'Zero-Downtime Launch & Scale',
-      desc: 'Production rollout via automated canary releases. We configure real-time Datadog / Prometheus telemetry and provide ongoing operational support.',
-      deliverables: ['Zero-Downtime Cutover', 'Telemetry & Alerting Dashboards', 'Maintenance Runbook'],
+      window: 'WEEK 11 // CUTOVER',
+      title: 'Zero-Downtime Launch & Handoff',
+      desc: 'Production rollout via automated canary releases, complete with Datadog / Prometheus telemetry dashboards and team training.',
+      deliverables: ['Zero-Downtime Cutover', 'Telemetry & Alerting Dashboards', 'Operations Runbook'],
+      offsetClass: 'lg:mt-30',
     },
   ];
 
   return (
-    <section className="py-20 md:py-28 border-b border-slate-800/80 bg-slate-950/40">
-      <div className="container mx-auto px-4 max-w-7xl space-y-16">
-        <SectionHeading
-          badge="How We Work"
-          title="Our Battle-Tested Engineering Methodology"
-          subtitle="A structured, transparent lifecycle engineered to eliminate ambiguity and deliver resilient software on time and within scope."
-        />
+    <section className="py-20 md:py-28 border-b border-[#1E5A54]/20 bg-[#EEE6E2]">
+      <div className="container mx-auto px-4 max-w-7xl space-y-14">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <SectionHeading
+            align="left"
+            badge="How We Work"
+            title="Four-Stage Blueprint Sequence"
+            subtitle="A clear, chronological build sequence designed to ship production software on schedule and within scope."
+          />
+          <StudioStamp
+            text="SEQUENCE // 01 -> 04"
+            subtext="BI-WEEKLY RELEASES"
+            rotate="slight-right"
+            variant="orange"
+          />
+        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {steps.map((st, idx) => (
-            <div
-              key={idx}
-              className="p-6 md:p-8 rounded-2xl border border-slate-800/80 bg-slate-900/40 hover:bg-slate-900/80 hover:border-slate-700 transition-all duration-300 relative flex flex-col justify-between"
-            >
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <span className="text-3xl font-extrabold font-mono text-blue-500/30">
-                    {st.num}
-                  </span>
-                  <div className="h-10 w-10 rounded-xl bg-slate-800 border border-slate-700/80 flex items-center justify-center">
-                    {st.icon}
+        {/* Stepped Diagonal / Staggered Blueprint Timeline */}
+        <div className="relative">
+          {/* Connecting Dashed Blueprint Line on Desktop */}
+          <div
+            aria-hidden="true"
+            className="hidden lg:block absolute top-16 left-12 right-12 border-t-2 border-dashed border-[#1E5A54]/25 pointer-events-none"
+          />
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-5 items-start">
+            {steps.map((st, idx) => (
+              <div key={st.num} className={`relative ${st.offsetClass}`}>
+                {/* HandArrow connector between stepped cards on desktop */}
+                {idx < steps.length - 1 && (
+                  <div className="hidden lg:flex items-center justify-end mb-2 pr-2">
+                    <HandArrow direction="right" className="w-12 h-5" />
                   </div>
-                </div>
+                )}
 
-                <h3 className="text-lg font-bold text-white leading-snug">{st.title}</h3>
-                <p className="text-xs text-slate-400 leading-relaxed">{st.desc}</p>
-              </div>
+                <TiltCard className="p-6 md:p-7 rounded-2xl border border-[#1E5A54]/25 bg-[#F8F4F2] hover:border-[#1E5A54]/50 transition-colors flex flex-col justify-between space-y-6">
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between border-b border-[#1E5A54]/15 pb-3">
+                      <span className="font-headline text-4xl font-black text-[#F7623D] leading-none">
+                        {st.num}
+                      </span>
+                      <span className="px-2.5 py-1 rounded-full bg-[#E2D7D1] font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-[#1E5A54]">
+                        {st.window}
+                      </span>
+                    </div>
 
-              <div className="pt-6 mt-6 border-t border-slate-800/60 space-y-1.5">
-                <span className="text-[10px] font-semibold uppercase tracking-wider text-slate-400 block">
-                  Key Deliverables
-                </span>
-                {st.deliverables.map((del, dIdx) => (
-                  <div key={dIdx} className="text-xs text-slate-300 flex items-center gap-1.5">
-                    <span className="h-1 w-1 rounded-full bg-blue-400" />
-                    <span>{del}</span>
+                    <h3 className="font-headline text-2xl font-bold uppercase tracking-tight text-[#1E5A54] leading-tight">
+                      {st.title}
+                    </h3>
+
+                    <p className="text-xs sm:text-sm text-[#1E5A54]/85 leading-relaxed font-sans">
+                      {st.desc}
+                    </p>
                   </div>
-                ))}
+
+                  <div className="pt-4 border-t border-[#1E5A54]/15 space-y-2.5">
+                    <span className="font-mono text-[10px] uppercase tracking-[0.16em] font-bold text-[#1E5A54] block">
+                      PHASE DELIVERABLES
+                    </span>
+                    <ul className="space-y-1.5 text-xs font-medium text-[#1E5A54]/85">
+                      {st.deliverables.map((item, dIdx) => (
+                        <li key={dIdx} className="flex items-center gap-2">
+                          <span className="h-1.5 w-1.5 rounded-full bg-[#F7623D] shrink-0" />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </TiltCard>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </section>
   );
 }
-

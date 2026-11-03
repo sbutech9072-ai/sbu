@@ -16,14 +16,14 @@ export default function AdminLayout({
   // If on admin login page, display login without full admin sidebar
   if (pathname === '/admin/login') {
     return (
-      <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col justify-center">
+      <div className="min-h-screen bg-[#EEE6E2] text-[#1E5A54] flex flex-col justify-center">
         {children}
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex bg-[#090d16] text-slate-100 selection:bg-blue-600 selection:text-white">
+    <div className="min-h-screen flex bg-[#EEE6E2] text-[#1E5A54] selection:bg-[#1E5A54] selection:text-[#EEE6E2]">
       <AdminSidebar
         mobileOpen={mobileMenuOpen}
         onCloseMobile={() => setMobileMenuOpen(false)}
@@ -38,4 +38,3 @@ export default function AdminLayout({
     </div>
   );
 }
-

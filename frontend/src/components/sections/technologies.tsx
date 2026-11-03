@@ -60,64 +60,61 @@ export function Technologies() {
       : techCategories.filter((c) => c.category === activeCategory);
 
   return (
-    <section className="py-20 md:py-28 border-b border-slate-800/80">
+    <section className="py-20 md:py-28 border-b border-[#1E5A54]/18 bg-[#EEE6E2]">
       <div className="container mx-auto px-4 max-w-7xl space-y-12">
         <SectionHeading
           badge="Technology Stack"
-          title="Engineered with the Industry's Most Modern Tools"
-          subtitle="We select technologies that maximize developer productivity, operational reliability, and user-facing speed."
+          title="Engineered With Modern, High-Performance Tools"
+          subtitle="We select battle-tested, high-concurrency technologies designed for security, velocity, and sub-second response times."
         />
 
-        {/* Filter buttons */}
+        {/* Category Filter Tabs */}
         <div className="flex flex-wrap items-center justify-center gap-2">
-          <button
-            onClick={() => setActiveCategory('all')}
-            className={cn(
-              'px-4 py-2 rounded-xl text-xs font-semibold transition-colors',
-              activeCategory === 'all'
-                ? 'bg-blue-600 text-white shadow-md shadow-blue-600/20'
-                : 'bg-slate-900 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-700'
-            )}
-          >
-            All Technologies
-          </button>
-          {techCategories.map((cat) => (
+          {[
+            { id: 'all', label: 'All Technologies' },
+            { id: 'frontend', label: 'Frontend' },
+            { id: 'backend', label: 'Backend' },
+            { id: 'cloud', label: 'Cloud & DevOps' },
+            { id: 'ai', label: 'AI & Data' },
+          ].map((tab) => (
             <button
-              key={cat.category}
-              onClick={() => setActiveCategory(cat.category as any)}
+              key={tab.id}
+              onClick={() => setActiveCategory(tab.id as any)}
               className={cn(
-                'px-4 py-2 rounded-xl text-xs font-semibold transition-colors',
-                activeCategory === cat.category
-                  ? 'bg-blue-600 text-white shadow-md shadow-blue-600/20'
-                  : 'bg-slate-900 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-700'
+                'px-5 py-2 rounded-full text-xs font-bold uppercase tracking-[0.16em] transition-all',
+                activeCategory === tab.id
+                  ? 'bg-[#1E5A54] text-[#EEE6E2]'
+                  : 'border border-[#1E5A54]/25 bg-transparent text-[#1E5A54] hover:bg-[#1E5A54]/5'
               )}
             >
-              {cat.label}
+              {tab.label}
             </button>
           ))}
         </div>
 
-        {/* Categorized Tech Grid */}
-        <div className="space-y-8">
-          {filteredCategories.map((group) => (
-            <div key={group.category} className="space-y-4">
-              <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-blue-400" />
-                {group.label}
-              </h3>
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                {group.items.map((tech) => (
+        {/* Tech Grid */}
+        <div className="space-y-10">
+          {filteredCategories.map((catGroup) => (
+            <div key={catGroup.category} className="space-y-4">
+              <h4 className="font-headline text-lg font-bold uppercase tracking-wider text-[#1E5A54] flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#F7623D]" />
+                <span>{catGroup.label}</span>
+              </h4>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                {catGroup.items.map((item, iIdx) => (
                   <div
-                    key={tech.name}
-                    className="p-5 rounded-xl border border-slate-800/80 bg-slate-900/40 hover:bg-slate-900/90 hover:border-slate-700 transition-all duration-200 space-y-1.5"
+                    key={iIdx}
+                    className="p-5 rounded-2xl border border-[#1E5A54]/18 bg-[#EEE6E2] hover:border-[#1E5A54]/35 transition-colors space-y-2"
                   >
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-bold text-white">{tech.name}</span>
-                      <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-800 text-slate-400">
-                        {tech.tag}
+                      <span className="font-headline text-base font-bold uppercase tracking-tight text-[#1E5A54]">
+                        {item.name}
+                      </span>
+                      <span className="text-[10px] uppercase tracking-[0.16em] font-bold text-[#1E5A54]/60">
+                        {item.tag}
                       </span>
                     </div>
-                    <p className="text-[11px] text-slate-400 leading-tight">{tech.desc}</p>
+                    <p className="text-xs text-[#1E5A54]/80 leading-relaxed font-sans">{item.desc}</p>
                   </div>
                 ))}
               </div>
@@ -128,4 +125,3 @@ export function Technologies() {
     </section>
   );
 }
-

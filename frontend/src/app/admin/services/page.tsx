@@ -98,43 +98,43 @@ export default function AdminServicesPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-800">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#1E5A54]/20">
         <div>
-          <h1 className="text-2xl font-bold text-white tracking-tight flex items-center gap-2">
-            <Cpu className="h-6 w-6 text-cyan-400" />
+          <h1 className="font-headline text-3xl uppercase text-[#1E5A54] tracking-tight flex items-center gap-2">
+            <Cpu className="h-6 w-6 text-[#F7623D]" />
             <span>Manage Service Offerings</span>
           </h1>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-[#1E5A54]/85 mt-1">
             Configure core engineering practice areas and capabilities.
           </p>
         </div>
 
-        <Button onClick={handleOpenCreate} size="sm" className="gap-1.5 text-xs">
+        <Button onClick={handleOpenCreate} size="sm" className="gap-1.5 text-xs rounded-full">
           <Plus className="h-4 w-4" />
           <span>Add Service</span>
         </Button>
       </div>
 
       {feedback && (
-        <div className="flex items-center gap-2 p-3.5 rounded-xl border border-emerald-500/30 bg-emerald-500/10 text-emerald-300 text-xs">
-          <CheckCircle2 className="h-4 w-4 shrink-0" />
+        <div className="flex items-center gap-2 p-3.5 rounded-2xl border border-[#1E5A54]/30 bg-[#F8F4F2] text-[#1E5A54] text-xs font-medium">
+          <CheckCircle2 className="h-4 w-4 text-[#F7623D] shrink-0" />
           <span>{feedback}</span>
         </div>
       )}
 
       <div className="relative max-w-sm">
-        <Search className="absolute left-3 top-2.5 h-4 w-4 text-slate-500" />
+        <Search className="absolute left-3.5 top-2.5 h-4 w-4 text-[#1E5A54]/70" />
         <Input
           placeholder="Filter services by name or category..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="pl-9 h-9 text-xs"
+          className="pl-10 h-9 text-xs rounded-full bg-[#F8F4F2] border-[#1E5A54]/25"
         />
       </div>
 
-      <Card className="overflow-hidden border-slate-800 bg-slate-900/40">
+      <Card className="overflow-hidden border-[#1E5A54]/25 bg-[#F8F4F2] rounded-3xl">
         <table className="w-full text-left text-xs">
-          <thead className="border-b border-slate-800 bg-slate-950/60 text-slate-400 font-mono uppercase tracking-wider text-[10px]">
+          <thead className="border-b border-[#1E5A54]/20 bg-[#E2D7D1] text-[#1E5A54] font-mono uppercase tracking-wider text-[10px]">
             <tr>
               <th className="py-3.5 px-4">Service & Slug</th>
               <th className="py-3.5 px-4">Category</th>
@@ -142,12 +142,12 @@ export default function AdminServicesPage() {
               <th className="py-3.5 px-4 text-right">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-800/80">
+          <tbody className="divide-y divide-[#1E5A54]/15">
             {filtered.map((svc) => (
-              <tr key={svc.id} className="hover:bg-slate-900/60 transition-colors">
+              <tr key={svc.id} className="hover:bg-[#E2D7D1]/50 transition-colors">
                 <td className="py-3.5 px-4">
-                  <span className="font-semibold text-white block">{svc.title}</span>
-                  <span className="text-[10px] font-mono text-slate-500">
+                  <span className="font-bold text-[#1E5A54] block">{svc.title}</span>
+                  <span className="text-[10px] font-mono text-[#1E5A54]/85">
                     /services/{svc.slug}
                   </span>
                 </td>
@@ -156,7 +156,7 @@ export default function AdminServicesPage() {
                     {svc.category}
                   </Badge>
                 </td>
-                <td className="py-3.5 px-4 text-slate-400 font-mono">
+                <td className="py-3.5 px-4 text-[#1E5A54]/85 font-mono">
                   {svc.technologies.length} Technologies
                 </td>
                 <td className="py-3.5 px-4 text-right">
@@ -164,14 +164,14 @@ export default function AdminServicesPage() {
                     <Link
                       href={`/services/${svc.slug}`}
                       target="_blank"
-                      className="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800"
+                      className="p-1.5 text-[#1E5A54]/85 hover:text-[#1E5A54] rounded-full hover:bg-[#E2D7D1]"
                       title="View Public Page"
                     >
                       <ExternalLink className="h-3.5 w-3.5" />
                     </Link>
                     <button
                       onClick={() => handleOpenEdit(svc)}
-                      className="p-1.5 text-blue-400 hover:text-blue-300 rounded-lg hover:bg-blue-500/10"
+                      className="p-1.5 text-[#1E5A54] hover:bg-[#E2D7D1] rounded-full"
                       title="Edit Service"
                     >
                       <Edit2 className="h-3.5 w-3.5" />
@@ -192,7 +192,7 @@ export default function AdminServicesPage() {
       >
         <form onSubmit={handleSave} className="space-y-4 text-xs">
           <div className="space-y-1">
-            <label className="font-semibold text-slate-300">Service Title *</label>
+            <label className="font-semibold text-[#1E5A54]">Service Title *</label>
             <Input
               value={formData.title}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
@@ -202,7 +202,7 @@ export default function AdminServicesPage() {
           </div>
 
           <div className="space-y-1">
-            <label className="font-semibold text-slate-300">Category</label>
+            <label className="font-semibold text-[#1E5A54]">Category</label>
             <Input
               value={formData.category}
               onChange={(e) => setFormData({ ...formData, category: e.target.value })}
@@ -212,7 +212,7 @@ export default function AdminServicesPage() {
           </div>
 
           <div className="space-y-1">
-            <label className="font-semibold text-slate-300">Brief Summary</label>
+            <label className="font-semibold text-[#1E5A54]">Brief Summary</label>
             <Textarea
               rows={2}
               value={formData.shortDescription}
@@ -222,7 +222,7 @@ export default function AdminServicesPage() {
           </div>
 
           <div className="space-y-1">
-            <label className="font-semibold text-slate-300">Full Description</label>
+            <label className="font-semibold text-[#1E5A54]">Full Description</label>
             <Textarea
               rows={3}
               value={formData.fullDescription}
@@ -231,16 +231,17 @@ export default function AdminServicesPage() {
             />
           </div>
 
-          <div className="flex items-center justify-end gap-2 pt-4 border-t border-slate-800">
+          <div className="flex items-center justify-end gap-2 pt-4 border-t border-[#1E5A54]/20">
             <Button
               type="button"
               variant="outline"
               size="sm"
               onClick={() => setIsModalOpen(false)}
+              className="rounded-full"
             >
               Cancel
             </Button>
-            <Button type="submit" size="sm">
+            <Button type="submit" size="sm" className="rounded-full">
               {editingService ? 'Save Updates' : 'Add Service'}
             </Button>
           </div>
@@ -249,4 +250,3 @@ export default function AdminServicesPage() {
     </div>
   );
 }
-

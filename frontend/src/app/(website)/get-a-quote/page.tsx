@@ -12,24 +12,24 @@ export const metadata: Metadata = {
 export default function GetAQuotePage() {
   const processSteps = [
     {
-      icon: <FileText className="h-5 w-5 text-blue-400" />,
+      icon: <FileText className="h-5 w-5 text-[#1E5A54]" />,
       title: '1. Scope Review',
       desc: 'Our lead architects evaluate your feature list, technology constraints, and timeline.',
     },
     {
-      icon: <Clock className="h-5 w-5 text-cyan-400" />,
+      icon: <Clock className="h-5 w-5 text-[#1E5A54]" />,
       title: '2. 30-Min Discovery Call',
       desc: 'We clarify technical unknowns, database models, and API integrations.',
     },
     {
-      icon: <CheckCircle2 className="h-5 w-5 text-emerald-400" />,
+      icon: <CheckCircle2 className="h-5 w-5 text-[#1E5A54]" />,
       title: '3. Architectural Proposal',
       desc: 'You receive a detailed milestone breakdown, sprint schedule, and fixed-price or dedicated team budget.',
     },
   ];
 
   return (
-    <div className="space-y-16 pb-20">
+    <div className="space-y-16 pb-20 bg-[#EEE6E2] text-[#1E5A54]">
       <PageHeader
         badge="Project Estimator"
         title="Request a Custom Project Estimate"
@@ -43,23 +43,22 @@ export default function GetAQuotePage() {
           {processSteps.map((step, idx) => (
             <div
               key={idx}
-              className="p-6 rounded-2xl border border-slate-800 bg-slate-900/40 space-y-2.5"
+              className="p-6 rounded-3xl border border-[#1E5A54]/25 bg-[#EEE6E2] space-y-2.5"
             >
-              <div className="h-10 w-10 rounded-xl bg-slate-800 border border-slate-700/80 flex items-center justify-center">
+              <div className="h-10 w-10 rounded-full border border-[#1E5A54]/30 flex items-center justify-center">
                 {step.icon}
               </div>
-              <h4 className="text-sm font-bold text-white">{step.title}</h4>
-              <p className="text-xs text-slate-400 leading-relaxed">{step.desc}</p>
+              <h4 className="font-headline text-base uppercase tracking-tight text-[#1E5A54]">{step.title}</h4>
+              <p className="text-xs text-[#1E5A54]/80 leading-relaxed">{step.desc}</p>
             </div>
           ))}
         </div>
 
         {/* The Quote Form Card */}
-        <div className="p-8 md:p-12 rounded-3xl border border-slate-800 bg-slate-900/40 shadow-xl">
+        <div className="p-8 md:p-12 rounded-3xl border border-[#1E5A54]/25 bg-[#EEE6E2] shadow-sm">
           <QuoteForm />
         </div>
       </div>
     </div>
   );
 }
-

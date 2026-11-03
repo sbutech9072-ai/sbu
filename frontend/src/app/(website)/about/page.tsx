@@ -55,29 +55,29 @@ export default function AboutPage() {
 
   const coreValues = [
     {
-      icon: <Zap className="h-6 w-6 text-amber-400" />,
+      icon: <Zap className="h-5 w-5 text-[#1E5A54]" />,
       title: 'Radical Engineering Quality',
       desc: 'We do not take shortcuts. We prioritize strict types, comprehensive automated testing, and architectures that endure long after launch.',
     },
     {
-      icon: <Users className="h-6 w-6 text-blue-400" />,
+      icon: <Users className="h-5 w-5 text-[#1E5A54]" />,
       title: 'Direct Senior Access',
       desc: 'Our clients interface directly with principal engineers and architects—no account managers diluting technical precision.',
     },
     {
-      icon: <ShieldCheck className="h-6 w-6 text-emerald-400" />,
+      icon: <ShieldCheck className="h-5 w-5 text-[#1E5A54]" />,
       title: 'Zero Intellectual Lock-In',
       desc: 'Every repository, cloud manifest, and asset belongs fully to you with clear documentation for your internal teams.',
     },
     {
-      icon: <Target className="h-6 w-6 text-purple-400" />,
+      icon: <Target className="h-5 w-5 text-[#1E5A54]" />,
       title: 'Measurable Business Alignment',
       desc: 'Engineering is only successful when it drives tangible metrics—conversion rates, lower infrastructure bills, or reduced latency.',
     },
   ];
 
   return (
-    <div className="space-y-20 pb-20">
+    <div className="space-y-20 pb-20 bg-[#EEE6E2] text-[#1E5A54]">
       <PageHeader
         badge="About Sbu Tech"
         title="Engineering Precision for High-Stakes Digital Products"
@@ -89,59 +89,62 @@ export default function AboutPage() {
       <section className="container mx-auto px-4 max-w-7xl">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           <div className="lg:col-span-6 space-y-6">
-            <span className="text-xs font-mono uppercase tracking-wider font-semibold text-blue-400">
-              Our Purpose
-            </span>
-            <h2 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight leading-tight">
+            <div className="flex items-center gap-2">
+              <span className="w-8 h-[2px] bg-[#1E5A54]" />
+              <span className="text-xs uppercase tracking-[0.18em] font-semibold text-[#1E5A54]">
+                Our Purpose
+              </span>
+            </div>
+            <h2 className="font-headline text-3xl md:text-5xl uppercase tracking-tight text-[#1E5A54] leading-[0.95]">
               Bridging the Gulf Between Beautiful Interfaces and Bulletproof Cloud Backends
             </h2>
-            <p className="text-slate-300 leading-relaxed">
+            <p className="text-[#1E5A54]/80 leading-relaxed text-sm">
               Too often, companies are forced to choose between design agencies with flimsy codebases
               or legacy IT consultancies that move at glacial speeds. Sbu Tech was formed to bridge
               this divide.
             </p>
-            <p className="text-slate-400 leading-relaxed text-sm">
+            <p className="text-[#1E5A54]/80 leading-relaxed text-sm">
               We assemble agile squads of veteran engineers, UX researchers, and cloud architects who
               build production systems meant to withstand sudden surges in traffic, complex compliance
               audits, and rapid feature iteration.
             </p>
 
-            <div className="grid grid-cols-2 gap-4 pt-4 border-t border-slate-800">
+            <div className="grid grid-cols-2 gap-4 pt-6 border-t border-[#1E5A54]/18">
               <div>
-                <span className="text-2xl font-bold text-white block">100%</span>
-                <span className="text-xs text-slate-400">In-House Senior Engineers</span>
+                <span className="font-headline text-3xl md:text-4xl text-[#1E5A54] block">100%</span>
+                <span className="text-xs uppercase tracking-[0.14em] font-semibold text-[#1E5A54]/70">In-House Senior Engineers</span>
               </div>
               <div>
-                <span className="text-2xl font-bold text-white block">45+</span>
-                <span className="text-xs text-slate-400">Enterprise Clients Served</span>
+                <span className="font-headline text-3xl md:text-4xl text-[#1E5A54] block">45+</span>
+                <span className="text-xs uppercase tracking-[0.14em] font-semibold text-[#1E5A54]/70">Enterprise Clients Served</span>
               </div>
             </div>
           </div>
 
-          <div className="lg:col-span-6 p-8 rounded-2xl border border-slate-800 bg-slate-900/50 space-y-6">
-            <h3 className="text-lg font-bold text-white flex items-center gap-2">
-              <Rocket className="h-5 w-5 text-blue-400" />
+          <div className="lg:col-span-6 p-8 rounded-3xl border border-[#1E5A54]/25 bg-[#EEE6E2] space-y-6">
+            <h3 className="font-headline text-xl md:text-2xl uppercase tracking-tight text-[#1E5A54] flex items-center gap-2">
+              <Rocket className="h-5 w-5 text-[#1E5A54]" />
               <span>What We Guarantee on Every Project</span>
             </h3>
-            <ul className="space-y-4 text-sm text-slate-300">
+            <ul className="space-y-4 text-sm text-[#1E5A54]/80">
               <li className="flex items-start gap-3">
-                <CheckCircle2 className="h-5 w-5 text-blue-400 shrink-0 mt-0.5" />
+                <span className="w-1.5 h-1.5 rounded-full bg-[#F7623D] shrink-0 mt-2" />
                 <span>
-                  <strong>Full Intellectual Property Ownership:</strong> You retain complete
+                  <strong className="text-[#1E5A54]">Full Intellectual Property Ownership:</strong> You retain complete
                   ownership of git repositories, design systems, and cloud manifests.
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <CheckCircle2 className="h-5 w-5 text-blue-400 shrink-0 mt-0.5" />
+                <span className="w-1.5 h-1.5 rounded-full bg-[#F7623D] shrink-0 mt-2" />
                 <span>
-                  <strong>Automated CI/CD Delivery:</strong> Staging builds updated on every commit
+                  <strong className="text-[#1E5A54]">Automated CI/CD Delivery:</strong> Staging builds updated on every commit
                   with automated preview environments.
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <CheckCircle2 className="h-5 w-5 text-blue-400 shrink-0 mt-0.5" />
+                <span className="w-1.5 h-1.5 rounded-full bg-[#F7623D] shrink-0 mt-2" />
                 <span>
-                  <strong>Clean Type-Safe Architecture:</strong> Modern Next.js, TypeScript, and
+                  <strong className="text-[#1E5A54]">Clean Type-Safe Architecture:</strong> Modern Next.js, TypeScript, and
                   decoupled services ready for handover.
                 </span>
               </li>
@@ -162,13 +165,13 @@ export default function AboutPage() {
           {coreValues.map((v, idx) => (
             <div
               key={idx}
-              className="p-6 rounded-2xl border border-slate-800 bg-slate-900/40 hover:bg-slate-900/80 transition-colors space-y-3"
+              className="p-6 rounded-3xl border border-[#1E5A54]/25 bg-[#EEE6E2] space-y-3"
             >
-              <div className="h-12 w-12 rounded-xl bg-slate-800 border border-slate-700/80 flex items-center justify-center">
+              <div className="h-10 w-10 rounded-full border border-[#1E5A54]/30 flex items-center justify-center">
                 {v.icon}
               </div>
-              <h3 className="text-base font-bold text-white">{v.title}</h3>
-              <p className="text-xs text-slate-400 leading-relaxed">{v.desc}</p>
+              <h3 className="font-headline text-lg uppercase tracking-tight text-[#1E5A54]">{v.title}</h3>
+              <p className="text-xs text-[#1E5A54]/80 leading-relaxed">{v.desc}</p>
             </div>
           ))}
         </div>
@@ -186,13 +189,13 @@ export default function AboutPage() {
           {milestones.map((m, idx) => (
             <div
               key={idx}
-              className="p-6 rounded-2xl border border-slate-800/80 bg-slate-900/30 space-y-3 relative"
+              className="p-6 rounded-3xl border border-[#1E5A54]/25 bg-[#EEE6E2] space-y-3 relative"
             >
-              <span className="text-3xl font-extrabold font-mono text-blue-400/30">
+              <span className="font-headline text-3xl text-[#1E5A54]/30">
                 {m.year}
               </span>
-              <h3 className="text-base font-bold text-white">{m.title}</h3>
-              <p className="text-xs text-slate-400 leading-relaxed">{m.description}</p>
+              <h3 className="font-headline text-lg uppercase tracking-tight text-[#1E5A54]">{m.title}</h3>
+              <p className="text-xs text-[#1E5A54]/80 leading-relaxed">{m.description}</p>
             </div>
           ))}
         </div>
@@ -207,10 +210,12 @@ export default function AboutPage() {
             title="Meet Our Founders & Directors"
             subtitle="Experienced technology leaders who set the standard for quality across all client engagements."
           />
-          <Button asChild variant="outline" className="self-start md:self-auto gap-1.5">
+          <Button asChild variant="outline" className="self-start md:self-auto gap-2">
             <Link href="/team">
               <span>View All Team Members</span>
-              <ArrowRight className="h-4 w-4" />
+              <span className="w-5 h-5 rounded-full bg-[#F7623D] flex items-center justify-center text-white shrink-0">
+                <ArrowRight className="h-3 w-3" />
+              </span>
             </Link>
           </Button>
         </div>
@@ -224,18 +229,20 @@ export default function AboutPage() {
 
       {/* CTA */}
       <section className="container mx-auto px-4 max-w-5xl text-center space-y-6 pt-10">
-        <h2 className="text-2xl md:text-3xl font-bold text-white">
+        <h2 className="font-headline text-3xl md:text-5xl uppercase tracking-tight text-[#1E5A54]">
           Interested in Partnering with Sbu Tech?
         </h2>
-        <p className="text-sm text-slate-400 max-w-xl mx-auto">
+        <p className="text-sm text-[#1E5A54]/80 max-w-xl mx-auto">
           We are currently taking on select client projects for the upcoming quarters. Let’s discuss
           your technical goals.
         </p>
-        <Button asChild size="lg" className="rounded-xl px-8 shadow-xl shadow-blue-600/20">
-          <Link href="/get-a-quote">Request an Architecture Consultation</Link>
+        <Button asChild size="lg">
+          <Link href="/get-a-quote" className="gap-2">
+            <span>Request an Architecture Consultation</span>
+            <ArrowRight className="h-4 w-4" />
+          </Link>
         </Button>
       </section>
     </div>
   );
 }
-

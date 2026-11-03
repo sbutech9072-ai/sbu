@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <div className="space-y-16 pb-20">
+    <div className="space-y-16 pb-20 bg-[#EEE6E2] text-[#1E5A54]">
       <PageHeader
         badge="Connect"
         title="Start a Technical Conversation"
@@ -24,25 +24,25 @@ export default function ContactPage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           {/* Contact Information */}
           <div className="lg:col-span-5 space-y-8">
-            <div className="p-8 rounded-2xl border border-slate-800 bg-slate-900/40 space-y-6">
-              <h3 className="text-xl font-bold text-white">Direct Contacts</h3>
-              <p className="text-xs text-slate-400 leading-relaxed">
+            <div className="p-8 rounded-3xl border border-[#1E5A54]/25 bg-[#EEE6E2] space-y-6">
+              <h3 className="font-headline text-2xl uppercase tracking-tight text-[#1E5A54]">Direct Contacts</h3>
+              <p className="text-xs text-[#1E5A54]/80 leading-relaxed">
                 Connect directly with our solutions architecture desk. We sign standard mutual NDAs
                 prior to technical discovery upon request.
               </p>
 
               <div className="space-y-4 pt-2">
                 <div className="flex items-start gap-3">
-                  <div className="h-9 w-9 rounded-xl bg-slate-800 border border-slate-700/80 flex items-center justify-center text-blue-400 shrink-0">
+                  <div className="h-9 w-9 rounded-full border border-[#1E5A54]/30 flex items-center justify-center text-[#1E5A54] shrink-0">
                     <Mail className="h-4 w-4" />
                   </div>
                   <div>
-                    <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400 block">
+                    <span className="text-[10px] uppercase tracking-[0.16em] font-semibold text-[#1E5A54]/70 block">
                       General & Inquiries
                     </span>
                     <a
                       href={`mailto:${siteConfig.contact.email}`}
-                      className="text-sm font-medium text-white hover:text-blue-400 transition-colors"
+                      className="text-sm font-medium text-[#1E5A54] hover:underline transition-colors"
                     >
                       {siteConfig.contact.email}
                     </a>
@@ -50,16 +50,16 @@ export default function ContactPage() {
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <div className="h-9 w-9 rounded-xl bg-slate-800 border border-slate-700/80 flex items-center justify-center text-cyan-400 shrink-0">
+                  <div className="h-9 w-9 rounded-full border border-[#1E5A54]/30 flex items-center justify-center text-[#1E5A54] shrink-0">
                     <Mail className="h-4 w-4" />
                   </div>
                   <div>
-                    <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400 block">
+                    <span className="text-[10px] uppercase tracking-[0.16em] font-semibold text-[#1E5A54]/70 block">
                       Client Partnerships
                     </span>
                     <a
                       href={`mailto:${siteConfig.contact.salesEmail}`}
-                      className="text-sm font-medium text-white hover:text-blue-400 transition-colors"
+                      className="text-sm font-medium text-[#1E5A54] hover:underline transition-colors"
                     >
                       {siteConfig.contact.salesEmail}
                     </a>
@@ -67,53 +67,53 @@ export default function ContactPage() {
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <div className="h-9 w-9 rounded-xl bg-slate-800 border border-slate-700/80 flex items-center justify-center text-indigo-400 shrink-0">
+                  <div className="h-9 w-9 rounded-full border border-[#1E5A54]/30 flex items-center justify-center text-[#1E5A54] shrink-0">
                     <Phone className="h-4 w-4" />
                   </div>
                   <div>
-                    <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400 block">
+                    <span className="text-[10px] uppercase tracking-[0.16em] font-semibold text-[#1E5A54]/70 block">
                       Telephone
                     </span>
-                    <span className="text-sm font-medium text-white">
+                    <span className="text-sm font-medium text-[#1E5A54]">
                       {siteConfig.contact.phone}
                     </span>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <div className="h-9 w-9 rounded-xl bg-slate-800 border border-slate-700/80 flex items-center justify-center text-amber-400 shrink-0">
+                  <div className="h-9 w-9 rounded-full border border-[#1E5A54]/30 flex items-center justify-center text-[#1E5A54] shrink-0">
                     <MapPin className="h-4 w-4" />
                   </div>
                   <div>
-                    <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400 block">
+                    <span className="text-[10px] uppercase tracking-[0.16em] font-semibold text-[#1E5A54]/70 block">
                       Office Address
                     </span>
-                    <span className="text-xs text-slate-300 leading-relaxed block">
+                    <span className="text-xs text-[#1E5A54]/80 leading-relaxed block">
                       {siteConfig.contact.address}
                     </span>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <div className="h-9 w-9 rounded-xl bg-slate-800 border border-slate-700/80 flex items-center justify-center text-emerald-400 shrink-0">
+                  <div className="h-9 w-9 rounded-full border border-[#1E5A54]/30 flex items-center justify-center text-[#1E5A54] shrink-0">
                     <Clock className="h-4 w-4" />
                   </div>
                   <div>
-                    <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400 block">
+                    <span className="text-[10px] uppercase tracking-[0.16em] font-semibold text-[#1E5A54]/70 block">
                       Active Hours
                     </span>
-                    <span className="text-xs text-slate-300">{siteConfig.contact.workingHours}</span>
+                    <span className="text-xs text-[#1E5A54]/80">{siteConfig.contact.workingHours}</span>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="p-6 rounded-2xl border border-slate-800 bg-slate-900/30 space-y-3">
-              <div className="flex items-center gap-2 text-xs font-semibold text-emerald-400">
+            <div className="p-6 rounded-3xl border border-[#1E5A54]/25 bg-[#EEE6E2] space-y-3">
+              <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-[#1E5A54]">
                 <ShieldCheck className="h-4 w-4" />
                 <span>Confidentiality Guaranteed</span>
               </div>
-              <p className="text-xs text-slate-400 leading-relaxed">
+              <p className="text-xs text-[#1E5A54]/80 leading-relaxed">
                 All client discussions and architectural diagrams are treated under strict
                 confidentiality. We are happy to countersign your mutual NDA.
               </p>
@@ -121,10 +121,10 @@ export default function ContactPage() {
           </div>
 
           {/* Contact Form Container */}
-          <div className="lg:col-span-7 p-8 md:p-10 rounded-2xl border border-slate-800 bg-slate-900/40 space-y-6">
+          <div className="lg:col-span-7 p-8 md:p-10 rounded-3xl border border-[#1E5A54]/25 bg-[#EEE6E2] space-y-6">
             <div>
-              <h3 className="text-2xl font-bold text-white">Submit an Inquiry</h3>
-              <p className="text-xs text-slate-400 mt-1 leading-relaxed">
+              <h3 className="font-headline text-3xl uppercase tracking-tight text-[#1E5A54]">Submit an Inquiry</h3>
+              <p className="text-xs text-[#1E5A54]/80 mt-1 leading-relaxed">
                 Provide as much context as possible. An engineering lead will follow up with you
                 promptly.
               </p>
@@ -136,4 +136,3 @@ export default function ContactPage() {
     </div>
   );
 }
-

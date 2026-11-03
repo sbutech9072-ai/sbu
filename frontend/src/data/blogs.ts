@@ -6,7 +6,7 @@ export const blogsData: BlogPost[] = [
     slug: 'scaling-nextjs-enterprise-best-practices',
     title: 'Scaling Next.js App Router for High-Throughput Enterprise Platforms',
     excerpt:
-      'A deep dive into caching strategies, server actions, streaming SSR, and edge middleware patterns for mission-critical web applications.',
+      'Field notes on caching boundaries, React Server Components, streaming Suspense, and edge auth routing on high-traffic Next.js deployments.',
     category: 'Engineering',
     readTime: '6 min read',
     publishedAt: '2025-10-15',
@@ -18,34 +18,34 @@ export const blogsData: BlogPost[] = [
     tags: ['Next.js', 'React', 'Performance', 'Architecture'],
     isFeatured: true,
     content: `
-### The Evolution of Modern Enterprise Frontends
+### Why Large Client Bundles Hurt B2B Consoles
 
-As enterprise web applications scale in complexity and user traffic, traditional single-page application (SPA) architectures often buckle under heavy bundle sizes and slow initial paint times. Next.js App Router with React Server Components provides a paradigm shift that fundamentally improves performance metrics.
+When an enterprise web application grows past a hundred routes, traditional single-page application (SPA) architectures start showing cracks. Users download megabytes of JavaScript just to render a read-only table, and initial page loads stall on waterfall API requests. Moving to the Next.js App Router with React Server Components fixes this at the architectural level, provided your team respects server/client boundaries.
 
-#### 1. Leveraging React Server Components (RSC)
-By default, components in the Next.js App Router are Server Components. They execute solely on the server and render zero JavaScript bytes into client bundles. This dramatically reduces Time to Interactive (TTI), especially on resource-constrained mobile devices.
+#### 1. Keeping Data Fetching in React Server Components (RSC)
+In the App Router, components run on the server by default and ship zero JavaScript to the browser. We keep heavy data formatting, markdown parsing, and permission checks strictly inside Server Components, passing only serialized props down to small interactive client islands.
 
 \`\`\`typescript
-// Server Component directly fetching with granular caching
+// Server Component fetching internal telemetry with explicit tag revalidation
 async function DashboardData() {
   const response = await fetch('https://api.internal/telemetry', {
-    next: { revalidate: 60 }
+    next: { revalidate: 60, tags: ['telemetry-summary'] }
   });
   const data = await response.json();
   return <MetricsTable items={data} />;
 }
 \`\`\`
 
-#### 2. Streaming SSR with Suspense Boundaries
-Rather than forcing users to wait for the slowest database query before seeing any content, wrap slower segments in React \`<Suspense>\`. Next.js streams the critical layout instantly, filling in interactive tables as background tasks resolve.
+#### 2. Streaming Slow Queries Behind Suspense Boundaries
+Instead of blocking the entire HTTP response on your slowest analytical SQL query, wrap expensive widgets in React \`<Suspense>\`. The browser paints the navigation shell and fast summary cards immediately while the slower time-series payload streams over the same connection.
 
-#### 3. Edge Middleware for Authentication & Routing
-Moving auth verification and regional routing to the edge eliminates redundant roundtrips to central servers, cutting redirect latency by upwards of 70%.
+#### 3. Verifying Sessions at the Edge
+Checking JWT signatures and tenant routing rules in Edge Middleware avoids unnecessary roundtrips to your origin database, cutting redirect latency by roughly 70% for globally distributed teams.
 
-### Key Takeaways
-- Segregate client interactivity from read-only data presentation.
-- Implement tagged cache invalidation using Next.js \`revalidateTag\`.
-- Keep third-party client dependencies isolated to leaf nodes.
+### Checklist Before You Ship
+- Push \`'use client'\` directives as far down the component tree as possible.
+- Invalidate cached fetches explicitly with \`revalidateTag\` on mutations rather than disabling caching globally.
+- Audit bundle sizes in CI so a single chart library does not sneak into the shared root layout.
     `,
   },
   {
@@ -53,7 +53,7 @@ Moving auth verification and regional routing to the edge eliminates redundant r
     slug: 'rag-architecture-enterprise-documentation',
     title: 'Architecting Private Enterprise RAG: Beyond Naive Vector Search',
     excerpt:
-      'Why naive semantic search fails in enterprise contexts, and how hybrid search with reranking delivers 99%+ answer accuracy.',
+      'Why pure cosine similarity fails on technical documents, and how BM25 hybrid retrieval with cross-encoder reranking pushes citation accuracy past 99%.',
     category: 'AI & Tech',
     readTime: '8 min read',
     publishedAt: '2025-09-28',
@@ -65,19 +65,19 @@ Moving auth verification and regional routing to the edge eliminates redundant r
     tags: ['AI', 'Vector Search', 'LangChain', 'Python'],
     isFeatured: true,
     content: `
-### Why Standard Vector Search Falls Short
+### Where Standard Vector Search Breaks Down
 
-Retrieval-Augmented Generation (RAG) is the primary method for grounding LLMs on proprietary data. However, many production setups suffer when relying purely on cosine similarity over standard embeddings.
+Retrieval-Augmented Generation (RAG) is the standard pattern for answering questions over internal company documents. Yet most prototypes fail within days of meeting real users because they rely solely on dense vector embeddings and fixed-character chunking.
 
-#### The Pitfalls of Naive Embeddings:
-1. **Loss of Keyword Precision:** Exact product codes, serial numbers, and legal citations get lost in continuous vector spaces.
-2. **Context Window Clutter:** Returning loosely related chunks confuses the generator model and increases token bills.
-3. **Outdated Temporal Records:** Vectors alone do not distinguish between last week's policy change and five-year-old superseded memos.
+#### Three Failure Modes We See in Production:
+1. **Missed Exact Identifiers:** Dense embeddings blur exact part numbers, error codes, and legal statute references.
+2. **Broken Table Context:** Splitting a PDF every 500 tokens slices financial tables and indemnity clauses right down the middle.
+3. **Stale Policy Documents:** Cosine similarity alone cannot tell whether a memo was written last Tuesday or superseded four years ago.
 
-#### The Three-Pillar Solution:
-- **Hybrid Search (BM25 + Dense Vectors):** Combine sparse term-frequency matching with semantic embeddings via Reciprocal Rank Fusion (RRF).
-- **Cross-Encoder Reranking:** Run candidate passages through a cross-encoder model like Cohere or BGE-Reranker before feeding them into the context window.
-- **Strict Citation Verification:** Force the generator to cite chunk IDs and reject outputs that cannot be verified against retrieved text.
+#### The Production Architecture We Ship:
+- **Hybrid Retrieval (BM25 + Dense Vectors):** Run sparse keyword matching alongside dense vector search, merging results with Reciprocal Rank Fusion (RRF).
+- **Cross-Encoder Reranking:** Score the top 40 candidate chunks with a dedicated reranker (such as BGE-Reranker or Cohere Rerank) and pass only the top 5 into the LLM prompt.
+- **Deterministic Citation Verification:** Require the model to output structured JSON referencing exact source chunk IDs, and reject any sentence whose citation span does not appear in the retrieved passage.
     `,
   },
   {
@@ -85,7 +85,7 @@ Retrieval-Augmented Generation (RAG) is the primary method for grounding LLMs on
     slug: 'zero-downtime-kubernetes-migration-guide',
     title: 'Zero-Downtime Kubernetes Migration: Strategies for Live Production Systems',
     excerpt:
-      'Lessons learned migrating 40+ microservices and multi-terabyte stateful databases without interrupting end-user transactions.',
+      'How we migrated 45 live microservices and 12TB of transactional state to AWS EKS without dropping a single customer request.',
     category: 'Architecture',
     readTime: '7 min read',
     publishedAt: '2025-08-14',
@@ -97,15 +97,15 @@ Retrieval-Augmented Generation (RAG) is the primary method for grounding LLMs on
     tags: ['DevOps', 'Kubernetes', 'AWS', 'IaC'],
     isFeatured: false,
     content: `
-### Planning the Shift Without Taking the System Offline
+### Replacing the Engine While the Plane Is Flying
 
-Moving a high-throughput enterprise infrastructure to Kubernetes is not merely a technical overhaul; it is a live surgical operation. Here is the field-tested playbook we use at Sbu Tech to guarantee zero downtime.
+Migrating a live logistics or financial platform onto Kubernetes cannot rely on a "big bang" weekend maintenance window. When seaport trucks or payment terminals depend on your API 24/7, the cutover has to happen incrementally under real load.
 
-#### The Phased Migration Pattern
-1. **Shadow Traffic Validation:** Duplicate production ingress requests to the new Kubernetes cluster using Envoy or service mesh mirrors.
-2. **Dual Database Writes:** Write updates to both legacy and new databases with asynchronous reconciliation workers.
-3. **DNS Canary Shifts:** Transition 1%, then 5%, then 25%, and finally 100% of live traffic via Route53 weighted records.
-4. **Instant Rollback Gates:** Keep the old infrastructure warm for 72 hours following cutover before commencing teardown.
+#### Our Four-Stage Cutover Playbook
+1. **Shadow Traffic Mirroring:** Replay a read-only copy of live production requests against the new EKS cluster using Envoy traffic mirroring to catch serialization and latency regressions early.
+2. **Dual-Write Database Sync:** Write mutations to both legacy and target databases simultaneously while a background worker verifies row-level checksums.
+3. **Weighted DNS Shifting:** Move live traffic in controlled steps (1%, 5%, 25%, 100%) via Route53 weighted records while watching error rates in Prometheus.
+4. **Warm Standby Window:** Keep the legacy servers receiving replicated writes for 72 hours post-cutover so rollback remains a single DNS flip away.
     `,
   },
   {
@@ -113,7 +113,7 @@ Moving a high-throughput enterprise infrastructure to Kubernetes is not merely a
     slug: 'design-systems-that-engineers-actually-use',
     title: 'Building Design Systems That Engineers and Designers Both Love',
     excerpt:
-      'How to bridge the Figma-to-code gap using design tokens, strict component contracts, and automated visual regression testing.',
+      'How shared token naming, compound React primitives, and Storybook visual regression tests stop Figma files from drifting away from production code.',
     category: 'Design',
     readTime: '5 min read',
     publishedAt: '2025-07-20',
@@ -125,14 +125,14 @@ Moving a high-throughput enterprise infrastructure to Kubernetes is not merely a
     tags: ['Design Systems', 'Figma', 'UI/UX', 'Tailwind CSS'],
     isFeatured: false,
     content: `
-### The Disconnect Between Design and Code
+### Why Most Figma Libraries Gather Dust
 
-All too often, companies spend months designing a beautiful Figma design system, only for frontend developers to create custom CSS hacks that drift out of sync within weeks.
+Teams often spend months polishing a Figma component library, only to find frontend engineers writing one-off Tailwind overrides two weeks later. The problem is rarely bad intent; it is usually a mismatch between how designers group layers and how engineers compose DOM nodes.
 
-#### Principles of High-Adoption Design Systems:
-- **Shared Vocabulary:** Tokens in Figma must match the Tailwind config variable names 1:1.
-- **Strict Composition Over Configuration:** Prefer compound components and slots over components with 40 distinct Boolean props.
-- **Living Storybook Documentation:** Treat component documentation as a first-class citizen with automated visual diffs on every pull request.
+#### Rules That Keep Design and Code in Lockstep:
+- **Identical Token Names:** If a surface color is called \`bg-surface-muted\` in Tailwind, it must have the exact same variable name in Figma. No mental translation tables.
+- **Composition Over Prop Explosion:** Build small, composable sub-components (like \`Dialog.Root\`, \`Dialog.Header\`, \`Dialog.Footer\`) instead of a single monolithic component with 35 boolean props.
+- **Automated Visual Diffs in CI:** Treat Storybook as the source of truth and run Playwright visual snapshots on every pull request so spacing regressions are caught before code review.
     `,
   },
 ];

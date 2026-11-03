@@ -3,43 +3,95 @@
 @tailwind utilities;
 
 :root {
-  --background: #090d16;
-  --foreground: #f8fafc;
+  --background: #EEE6E2;
+  --foreground: #1E5A54;
+  --cream: #EEE6E2;
+  --cream-light: #F8F4F2;
+  --cream-dark: #E2D7D1;
+  --teal: #1E5A54;
+  --orange: #F7623D;
+  --font-anton: 'Anton', Impact, 'League Gothic', sans-serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --ease-studio: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 * {
-  border-color: #1e293b;
+  border-color: rgba(30, 90, 84, 0.18);
 }
 
 html {
   scroll-behavior: smooth;
+  background-color: #EEE6E2;
+  color: #1E5A54;
 }
 
 body {
-  color: var(--foreground);
-  background-color: var(--background);
-  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  color: #1E5A54;
+  background-color: #EEE6E2;
+  font-family: var(--font-sans), 'Inter', system-ui, sans-serif;
   min-height: 100vh;
   overflow-x: hidden;
+  position: relative;
 }
 
-/* Custom scrollbar */
+/* Subtle paper-grain texture overlay (about 4-6% opacity, fixed, pointer-events: none) */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* Display / Headings: ultra-condensed, heavy, UPPERCASE grotesque */
+h1, h2, h3, h4, h5, h6, .font-headline {
+  font-family: var(--font-anton), 'Anton', Impact, 'League Gothic', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  color: #1E5A54;
+  line-height: 0.95;
+}
+
+/* Body paragraphs stay in sentence case, regular weight, readable size */
+p {
+  color: rgba(30, 90, 84, 0.85);
+}
+
+/* Small labels & nav links: UPPERCASE with wide letter-spacing (about 0.12-0.2em) */
+.tracking-caps {
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-weight: 600;
+}
+
+/* Clear, high-contrast keyboard focus ring */
+:focus-visible {
+  outline: 2px solid #F7623D;
+  outline-offset: 3px;
+}
+
+/* Custom scrollbar in cream & teal */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #090d16;
+  background: #EEE6E2;
 }
 ::-webkit-scrollbar-thumb {
-  background: #1e293b;
-  border-radius: 4px;
+  background: rgba(30, 90, 84, 0.25);
+  border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #334155;
+  background: rgba(30, 90, 84, 0.5);
 }
 
 ::selection {
-  background: #2563eb;
-  color: #ffffff;
+  background-color: #F7623D;
+  color: #EEE6E2;
 }
