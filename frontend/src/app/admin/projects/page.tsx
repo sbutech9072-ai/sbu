@@ -143,10 +143,10 @@ export default function AdminProjectsPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#1E5A54]/20">
         <div>
           <h1 className="font-headline text-3xl uppercase text-[#1E5A54] tracking-tight flex items-center gap-2">
-            <FolderGit2 className="h-6 w-6 text-[#F7623D]" />
+            <FolderGit2 className="h-6 w-6 text-[#1E5A54] decoration-[#F7623D]" />
             <span>Manage Portfolio Case Studies</span>
           </h1>
-          <p className="text-xs text-[#1E5A54]/85 mt-1">
+          <p className="text-xs text-[#1E5A54] mt-1">
             Create, edit, and organize client case studies displayed on the public site.
           </p>
         </div>
@@ -167,7 +167,7 @@ export default function AdminProjectsPage() {
 
       {/* Search Bar */}
       <div className="relative max-w-sm">
-        <Search className="absolute left-3.5 top-2.5 h-4 w-4 text-[#1E5A54]/70" />
+        <Search className="absolute left-3.5 top-2.5 h-4 w-4 text-[#1E5A54]" />
         <Input
           placeholder="Filter by title, client, or category..."
           value={searchQuery}
@@ -194,7 +194,7 @@ export default function AdminProjectsPage() {
                 <tr key={proj.id} className="hover:bg-[#E2D7D1]/50 transition-colors">
                   <td className="py-3.5 px-4">
                     <span className="font-bold text-[#1E5A54] block">{proj.title}</span>
-                    <span className="text-[10px] font-mono text-[#1E5A54]/85">
+                    <span className="text-[10px] font-mono text-[#1E5A54]">
                       /projects/{proj.slug}
                     </span>
                   </td>
@@ -204,13 +204,13 @@ export default function AdminProjectsPage() {
                       {proj.category}
                     </Badge>
                   </td>
-                  <td className="py-3.5 px-4 text-[#1E5A54]/85 font-mono">{proj.year}</td>
+                  <td className="py-3.5 px-4 text-[#1E5A54] font-mono">{proj.year}</td>
                   <td className="py-3.5 px-4 text-right">
                     <div className="inline-flex items-center gap-1.5">
                       <Link
                         href={`/projects/${proj.slug}`}
                         target="_blank"
-                        className="p-1.5 text-[#1E5A54]/85 hover:text-[#1E5A54] rounded-full hover:bg-[#E2D7D1]"
+                        className="p-1.5 text-[#1E5A54] hover:text-[#1E5A54] rounded-full hover:bg-[#E2D7D1]"
                         title="View Public Page"
                       >
                         <ExternalLink className="h-3.5 w-3.5" />
@@ -224,7 +224,7 @@ export default function AdminProjectsPage() {
                       </button>
                       <button
                         onClick={() => handleDelete(proj.id, proj.title)}
-                        className="p-1.5 text-[#F7623D] hover:bg-[#E2D7D1] rounded-full"
+                        className="p-1.5 text-[#1E5A54] decoration-[#F7623D] hover:bg-[#E2D7D1] rounded-full"
                         title="Delete Project"
                       >
                         <Trash2 className="h-3.5 w-3.5" />
@@ -235,7 +235,7 @@ export default function AdminProjectsPage() {
               ))}
               {filtered.length === 0 && (
                 <tr>
-                  <td colSpan={5} className="py-8 text-center text-[#1E5A54]/85">
+                  <td colSpan={5} className="py-8 text-center text-[#1E5A54]">
                     No matching projects located.
                   </td>
                 </tr>

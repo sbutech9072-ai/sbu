@@ -31,7 +31,7 @@ export function StatsCard({
     >
       <div className="flex items-start justify-between">
         <div className="space-y-1">
-          <span className="text-xs font-mono font-semibold uppercase tracking-wider text-[#1E5A54]/85">
+          <span className="text-xs font-mono font-semibold uppercase tracking-wider text-[#1E5A54]">
             {title}
           </span>
           <div className="font-headline text-3xl sm:text-4xl uppercase text-[#1E5A54] tracking-tight">
@@ -50,16 +50,16 @@ export function StatsCard({
               className={cn(
                 'inline-flex items-center gap-1 font-semibold',
                 changeType === 'positive' && 'text-[#1E5A54]',
-                changeType === 'negative' && 'text-[#F7623D]',
-                changeType === 'neutral' && 'text-[#1E5A54]/85'
+                changeType === 'negative' && 'text-[#1E5A54] decoration-[#F7623D]',
+                changeType === 'neutral' && 'text-[#1E5A54]'
               )}
             >
-              {changeType === 'positive' && <TrendingUp className="h-3 w-3 text-[#F7623D]" />}
-              {changeType === 'negative' && <TrendingDown className="h-3 w-3 text-[#F7623D]" />}
+              {changeType === 'positive' && <TrendingUp className="h-3 w-3 text-[#1E5A54] decoration-[#F7623D]" />}
+              {changeType === 'negative' && <TrendingDown className="h-3 w-3 text-[#1E5A54] decoration-[#F7623D]" />}
               {change}
             </span>
           )}
-          {helper && <span className="text-[#1E5A54]/85 truncate">{helper}</span>}
+          {helper && <span className="text-[#1E5A54] truncate">{helper}</span>}
         </div>
       )}
     </Card>

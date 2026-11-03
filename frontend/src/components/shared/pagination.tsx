@@ -47,7 +47,7 @@ export function Pagination({
           className={cn(
             'h-9 w-9 p-0 font-mono text-xs',
             p === currentPage
-              ? 'pointer-events-none bg-[#F7623D] text-[#EEE6E2]'
+              ? 'pointer-events-none bg-[#1E5A54] border-2 border-[#F7623D] text-[#EEE6E2]'
               : 'border-[#1E5A54]/30 text-[#1E5A54]'
           )}
         >

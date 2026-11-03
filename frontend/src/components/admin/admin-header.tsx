@@ -60,7 +60,7 @@ export function AdminHeader({ onOpenMobileMenu }: AdminHeaderProps) {
           </div>
           <div className="hidden sm:flex flex-col text-left">
             <span className="text-xs font-semibold text-[#1E5A54]">Admin Operator</span>
-            <span className="text-[10px] font-mono text-[#1E5A54]/85">Mock Session</span>
+            <span className="text-[10px] font-mono text-[#1E5A54]">Mock Session</span>
           </div>
         </div>
       </div>

@@ -78,7 +78,7 @@ export function DevelopmentProcess() {
                 <TiltCard className="p-6 md:p-7 rounded-2xl border border-[#1E5A54]/25 bg-[#F8F4F2] hover:border-[#1E5A54]/50 transition-colors flex flex-col justify-between space-y-6">
                   <div className="space-y-4">
                     <div className="flex items-center justify-between border-b border-[#1E5A54]/15 pb-3">
-                      <span className="font-headline text-4xl font-black text-[#F7623D] leading-none">
+                      <span className="font-headline text-4xl font-black text-[#1E5A54] decoration-[#F7623D] leading-none">
                         {st.num}
                       </span>
                       <span className="px-2.5 py-1 rounded-full bg-[#E2D7D1] font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-[#1E5A54]">
@@ -90,7 +90,7 @@ export function DevelopmentProcess() {
                       {st.title}
                     </h3>
 
-                    <p className="text-xs sm:text-sm text-[#1E5A54]/85 leading-relaxed font-sans">
+                    <p className="text-xs sm:text-sm text-[#1E5A54] leading-relaxed font-sans">
                       {st.desc}
                     </p>
                   </div>
@@ -99,7 +99,7 @@ export function DevelopmentProcess() {
                     <span className="font-mono text-[10px] uppercase tracking-[0.16em] font-bold text-[#1E5A54] block">
                       PHASE DELIVERABLES
                     </span>
-                    <ul className="space-y-1.5 text-xs font-medium text-[#1E5A54]/85">
+                    <ul className="space-y-1.5 text-xs font-medium text-[#1E5A54]">
                       {st.deliverables.map((item, dIdx) => (
                         <li key={dIdx} className="flex items-center gap-2">
                           <span className="h-1.5 w-1.5 rounded-full bg-[#F7623D] shrink-0" />

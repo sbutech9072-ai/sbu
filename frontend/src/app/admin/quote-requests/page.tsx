@@ -59,12 +59,12 @@ export default function AdminQuoteRequestsPage() {
             <FileSpreadsheet className="h-6 w-6 text-[#F7623D]" />
             <span>Incoming Project Scopes & Quotes</span>
           </h1>
-          <p className="text-xs text-[#1E5A54]/85 mt-1">
+          <p className="text-xs text-[#1E5A54] mt-1">
             Review detailed project scopes, budgets, feature sets, and target timelines.
           </p>
         </div>
 
-        <div className="text-xs text-[#1E5A54]/85 font-mono">
+        <div className="text-xs text-[#1E5A54] font-mono">
           Submissions: <span className="text-[#1E5A54] font-bold">{quotes.length}</span>
         </div>
       </div>
@@ -77,7 +77,7 @@ export default function AdminQuoteRequestsPage() {
       )}
 
       <div className="relative max-w-sm">
-        <Search className="absolute left-3.5 top-2.5 h-4 w-4 text-[#1E5A54]/70" />
+        <Search className="absolute left-3.5 top-2.5 h-4 w-4 text-[#1E5A54]" />
         <Input
           placeholder="Filter by company, name, or service..."
           value={searchQuery}
@@ -103,13 +103,13 @@ export default function AdminQuoteRequestsPage() {
               <tr key={q.id} className="hover:bg-[#E2D7D1]/50 transition-colors">
                 <td className="py-3.5 px-4">
                   <span className="font-bold text-[#1E5A54] block">{q.companyName}</span>
-                  <span className="text-[10px] text-[#1E5A54]/85">{q.fullName}</span>
+                  <span className="text-[10px] text-[#1E5A54]">{q.fullName}</span>
                 </td>
                 <td className="py-3.5 px-4 text-[#1E5A54] font-medium">{q.serviceCategory}</td>
-                <td className="py-3.5 px-4 text-[#F7623D] font-mono font-bold">
+                <td className="py-3.5 px-4 text-[#1E5A54] decoration-[#F7623D] font-mono font-bold">
                   {q.budgetRange}
                 </td>
-                <td className="py-3.5 px-4 text-[#1E5A54]/85">{q.timeline}</td>
+                <td className="py-3.5 px-4 text-[#1E5A54]">{q.timeline}</td>
                 <td className="py-3.5 px-4">
                   <Badge
                     variant={
@@ -135,7 +135,7 @@ export default function AdminQuoteRequestsPage() {
                     </button>
                     <button
                       onClick={() => handleDelete(q.id)}
-                      className="p-1.5 text-[#F7623D] hover:bg-[#E2D7D1] rounded-full"
+                      className="p-1.5 text-[#1E5A54] decoration-[#F7623D] hover:bg-[#E2D7D1] rounded-full"
                       title="Archive Scope"
                     >
                       <Trash2 className="h-3.5 w-3.5" />
@@ -162,15 +162,15 @@ export default function AdminQuoteRequestsPage() {
           <div className="space-y-6 text-xs">
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3 p-4 rounded-2xl bg-[#EEE6E2] border border-[#1E5A54]/25">
               <div>
-                <span className="text-[#1E5A54]/85 block mb-0.5">Budget Estimate</span>
+                <span className="text-[#1E5A54] block mb-0.5">Budget Estimate</span>
                 <span className="font-bold text-[#1E5A54] text-sm">{selectedQuote.budgetRange}</span>
               </div>
               <div>
-                <span className="text-[#1E5A54]/85 block mb-0.5">Target Delivery</span>
+                <span className="text-[#1E5A54] block mb-0.5">Target Delivery</span>
                 <span className="font-semibold text-[#1E5A54]">{selectedQuote.timeline}</span>
               </div>
               <div>
-                <span className="text-[#1E5A54]/85 block mb-0.5">Phone Contact</span>
+                <span className="text-[#1E5A54] block mb-0.5">Phone Contact</span>
                 <span className="font-mono text-[#1E5A54]">
                   {selectedQuote.phone || 'Not provided'}
                 </span>
@@ -200,7 +200,7 @@ export default function AdminQuoteRequestsPage() {
 
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-4 border-t border-[#1E5A54]/20">
               <div className="flex items-center gap-2">
-                <span className="text-[#1E5A54]/85">Current status:</span>
+                <span className="text-[#1E5A54]">Current status:</span>
                 <Badge variant="default" className="capitalize">
                   {selectedQuote.status}
                 </Badge>

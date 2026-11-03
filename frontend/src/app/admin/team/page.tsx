@@ -108,7 +108,7 @@ export default function AdminTeamPage() {
             <Users className="h-6 w-6 text-[#F7623D]" />
             <span>Manage Team Profiles</span>
           </h1>
-          <p className="text-xs text-[#1E5A54]/85 mt-1">
+          <p className="text-xs text-[#1E5A54] mt-1">
             Organize engineering staff, leadership profiles, and public bios.
           </p>
         </div>
@@ -127,7 +127,7 @@ export default function AdminTeamPage() {
       )}
 
       <div className="relative max-w-sm">
-        <Search className="absolute left-3.5 top-2.5 h-4 w-4 text-[#1E5A54]/70" />
+        <Search className="absolute left-3.5 top-2.5 h-4 w-4 text-[#1E5A54]" />
         <Input
           placeholder="Filter by name, role, department..."
           value={searchQuery}
@@ -151,15 +151,15 @@ export default function AdminTeamPage() {
             {filtered.map((member) => (
               <tr key={member.id} className="hover:bg-[#E2D7D1]/50 transition-colors">
                 <td className="py-3.5 px-4 font-bold text-[#1E5A54]">{member.name}</td>
-                <td className="py-3.5 px-4 text-[#1E5A54]/85 font-medium">{member.role}</td>
+                <td className="py-3.5 px-4 text-[#1E5A54] font-medium">{member.role}</td>
                 <td className="py-3.5 px-4">
                   <Badge variant="default" className="text-[10px]">
                     {member.department}
                   </Badge>
                 </td>
-                <td className="py-3.5 px-4 text-[#1E5A54]/85">
+                <td className="py-3.5 px-4 text-[#1E5A54]">
                   {member.isLeadership ? (
-                    <span className="text-[#F7623D] font-bold">Leadership</span>
+                    <span className="text-[#1E5A54] decoration-[#F7623D] font-bold">Leadership</span>
                   ) : (
                     <span>Staff</span>
                   )}
@@ -175,7 +175,7 @@ export default function AdminTeamPage() {
                     </button>
                     <button
                       onClick={() => handleDelete(member.id, member.name)}
-                      className="p-1.5 text-[#F7623D] hover:bg-[#E2D7D1] rounded-full"
+                      className="p-1.5 text-[#1E5A54] decoration-[#F7623D] hover:bg-[#E2D7D1] rounded-full"
                       title="Delete Member"
                     >
                       <Trash2 className="h-3.5 w-3.5" />

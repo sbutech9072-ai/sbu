@@ -110,14 +110,14 @@ export function QuoteForm() {
       {/* Step 1: Project Scope */}
       <div className="space-y-4">
         <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-[#1E5A54]">
-          <Calculator className="h-4 w-4 stroke-[1.75] text-[#F7623D]" />
+          <Calculator className="h-4 w-4 stroke-[1.75] text-[#1E5A54] decoration-[#F7623D]" />
           <span>1. Discipline, Budget & Timeline</span>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="space-y-1.5">
             <label className="text-xs font-bold uppercase tracking-[0.16em] text-[#1E5A54]">
-              Primary Discipline <span className="text-[#F7623D]">*</span>
+              Primary Discipline <span className="text-[#1E5A54] decoration-[#F7623D]">*</span>
             </label>
             <Select {...register('serviceCategory')} error={!!errors.serviceCategory}>
               {servicesData.map((s) => (
@@ -127,13 +127,13 @@ export function QuoteForm() {
               ))}
             </Select>
             {errors.serviceCategory && (
-              <p className="text-xs text-[#F7623D]">{errors.serviceCategory.message}</p>
+              <p className="text-xs text-[#1E5A54] decoration-[#F7623D]">{errors.serviceCategory.message}</p>
             )}
           </div>
 
           <div className="space-y-1.5">
             <label className="text-xs font-bold uppercase tracking-[0.16em] text-[#1E5A54]">
-              Estimated Budget <span className="text-[#F7623D]">*</span>
+              Estimated Budget <span className="text-[#1E5A54] decoration-[#F7623D]">*</span>
             </label>
             <Select {...register('budgetRange')} error={!!errors.budgetRange}>
               <option value="$10,000 - $25,000" className="bg-[#EEE6E2] text-[#1E5A54]">
@@ -150,13 +150,13 @@ export function QuoteForm() {
               </option>
             </Select>
             {errors.budgetRange && (
-              <p className="text-xs text-[#F7623D]">{errors.budgetRange.message}</p>
+              <p className="text-xs text-[#1E5A54] decoration-[#F7623D]">{errors.budgetRange.message}</p>
             )}
           </div>
 
           <div className="space-y-1.5">
             <label className="text-xs font-bold uppercase tracking-[0.16em] text-[#1E5A54]">
-              Target Delivery <span className="text-[#F7623D]">*</span>
+              Target Delivery <span className="text-[#1E5A54] decoration-[#F7623D]">*</span>
             </label>
             <Select {...register('timeline')} error={!!errors.timeline}>
               <option value="1 - 2 Months" className="bg-[#EEE6E2] text-[#1E5A54]">
@@ -172,7 +172,7 @@ export function QuoteForm() {
                 Ongoing Retainer (Embedded Team)
               </option>
             </Select>
-            {errors.timeline && <p className="text-xs text-[#F7623D]">{errors.timeline.message}</p>}
+            {errors.timeline && <p className="text-xs text-[#1E5A54] decoration-[#F7623D]">{errors.timeline.message}</p>}
           </div>
         </div>
 
@@ -180,7 +180,7 @@ export function QuoteForm() {
         <div className="space-y-2 pt-2">
           <label className="text-xs font-bold uppercase tracking-[0.16em] text-[#1E5A54] flex items-center justify-between">
             <span>System Capabilities Needed</span>
-            <span className="text-[11px] text-[#1E5A54]/85 lowercase tracking-normal font-semibold">
+            <span className="text-[11px] text-[#1E5A54] lowercase tracking-normal font-semibold">
               pick all that apply
             </span>
           </label>
@@ -216,7 +216,7 @@ export function QuoteForm() {
 
         <div className="space-y-1.5">
           <label className="text-xs font-bold uppercase tracking-[0.16em] text-[#1E5A54]">
-            System Overview <span className="text-[#F7623D]">*</span>
+            System Overview <span className="text-[#1E5A54] decoration-[#F7623D]">*</span>
           </label>
           <Textarea
             rows={4}
@@ -225,7 +225,7 @@ export function QuoteForm() {
             error={!!errors.projectOverview}
           />
           {errors.projectOverview && (
-            <p className="text-xs text-[#F7623D] flex items-center gap-1 font-medium">
+            <p className="text-xs text-[#1E5A54] decoration-[#F7623D] flex items-center gap-1 font-medium">
               <AlertCircle className="h-3 w-3 stroke-[1.75]" />
               {errors.projectOverview.message}
             </p>
@@ -243,11 +243,11 @@ export function QuoteForm() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-1.5">
             <label className="text-xs font-bold uppercase tracking-[0.16em] text-[#1E5A54]">
-              Full Name <span className="text-[#F7623D]">*</span>
+              Full Name <span className="text-[#1E5A54] decoration-[#F7623D]">*</span>
             </label>
             <Input placeholder="Michael Chang" {...register('fullName')} error={!!errors.fullName} />
             {errors.fullName && (
-              <p className="text-xs text-[#F7623D] flex items-center gap-1 font-medium">
+              <p className="text-xs text-[#1E5A54] decoration-[#F7623D] flex items-center gap-1 font-medium">
                 <AlertCircle className="h-3 w-3 stroke-[1.75]" />
                 {errors.fullName.message}
               </p>
@@ -256,7 +256,7 @@ export function QuoteForm() {
 
           <div className="space-y-1.5">
             <label className="text-xs font-bold uppercase tracking-[0.16em] text-[#1E5A54]">
-              Company <span className="text-[#F7623D]">*</span>
+              Company <span className="text-[#1E5A54] decoration-[#F7623D]">*</span>
             </label>
             <Input
               placeholder="Acme Systems Inc."
@@ -264,7 +264,7 @@ export function QuoteForm() {
               error={!!errors.companyName}
             />
             {errors.companyName && (
-              <p className="text-xs text-[#F7623D] flex items-center gap-1 font-medium">
+              <p className="text-xs text-[#1E5A54] decoration-[#F7623D] flex items-center gap-1 font-medium">
                 <AlertCircle className="h-3 w-3 stroke-[1.75]" />
                 {errors.companyName.message}
               </p>
@@ -275,7 +275,7 @@ export function QuoteForm() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-1.5">
             <label className="text-xs font-bold uppercase tracking-[0.16em] text-[#1E5A54]">
-              Work Email <span className="text-[#F7623D]">*</span>
+              Work Email <span className="text-[#1E5A54] decoration-[#F7623D]">*</span>
             </label>
             <Input
               type="email"
@@ -284,7 +284,7 @@ export function QuoteForm() {
               error={!!errors.email}
             />
             {errors.email && (
-              <p className="text-xs text-[#F7623D] flex items-center gap-1 font-medium">
+              <p className="text-xs text-[#1E5A54] decoration-[#F7623D] flex items-center gap-1 font-medium">
                 <AlertCircle className="h-3 w-3 stroke-[1.75]" />
                 {errors.email.message}
               </p>
@@ -303,7 +303,7 @@ export function QuoteForm() {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full h-12 rounded-full bg-[#F7623D] hover:bg-[#1E5A54] text-[#F8F4F2] text-xs font-bold uppercase tracking-[0.16em] inline-flex items-center justify-center gap-2 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] disabled:opacity-50 cursor-pointer"
+        className="w-full h-12 rounded-full bg-[#1E5A54] border-2 border-[#F7623D] hover:bg-[#16443F] text-[#EEE6E2] text-xs font-bold uppercase tracking-[0.16em] inline-flex items-center justify-center gap-2 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] disabled:opacity-50 cursor-pointer"
       >
         {isSubmitting ? (
           <>

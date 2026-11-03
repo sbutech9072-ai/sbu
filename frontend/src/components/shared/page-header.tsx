@@ -36,7 +36,7 @@ export function PageHeader({
           <div className="max-w-3xl">
             {breadcrumbs && breadcrumbs.length > 0 && (
               <nav aria-label="Breadcrumb" className="mb-4">
-                <ol className="flex items-center space-x-2 text-xs font-semibold uppercase tracking-[0.15em] text-[#1E5A54]/85">
+                <ol className="flex items-center space-x-2 text-xs font-semibold uppercase tracking-[0.15em] text-[#1E5A54]">
                   <li>
                     <Link href="/" className="hover:text-[#F7623D] transition-colors">
                       Home
@@ -44,7 +44,7 @@ export function PageHeader({
                   </li>
                   {breadcrumbs.map((item, index) => (
                     <li key={index} className="flex items-center space-x-2">
-                      <ChevronRight className="h-3.5 w-3.5 text-[#1E5A54]/70" />
+                      <ChevronRight className="h-3.5 w-3.5 text-[#1E5A54]" />
                       {item.href ? (
                         <Link href={item.href} className="hover:text-[#F7623D] transition-colors">
                           {item.label}
@@ -77,7 +77,7 @@ export function PageHeader({
               </div>
             </div>
 
-            <p className="text-base md:text-lg text-[#1E5A54]/85 max-w-3xl leading-relaxed font-sans">
+            <p className="text-base md:text-lg text-[#1E5A54] max-w-3xl leading-relaxed font-sans">
               {description}
             </p>
           </div>

@@ -45,7 +45,7 @@ export function ServicesOverview() {
             <Link
               key={service.id}
               href={`/services/${service.slug}`}
-              className="group block py-8 md:py-10 px-4 md:px-6 -mx-4 md:-mx-6 rounded-2xl transition-colors duration-200 hover:bg-[#F8F4F2]"
+              className="group block py-8 md:py-10 px-4 md:px-6 rounded-2xl transition-colors duration-200 hover:bg-[#F8F4F2]"
             >
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start lg:items-center">
                 {/* Index & Category Pill */}
@@ -67,7 +67,7 @@ export function ServicesOverview() {
 
                 {/* Plain-Spoken Summary & Stack Tags */}
                 <div className="lg:col-span-5 space-y-3">
-                  <p className="text-sm text-[#1E5A54]/85 leading-relaxed font-sans">
+                  <p className="text-sm text-[#1E5A54] leading-relaxed font-sans">
                     {service.shortDescription}
                   </p>
                   <div className="flex flex-wrap items-center gap-1.5">

@@ -64,9 +64,9 @@ export function AdminSidebar({ mobileOpen, onCloseMobile }: AdminSidebarProps) {
             </div>
             <div>
               <span className="font-headline text-lg uppercase text-[#1E5A54] tracking-tight flex items-center gap-1 leading-none">
-                Sbu<span className="text-[#F7623D]">Tech</span>
+                Sbu<span className="text-[#1E5A54] decoration-[#F7623D]">Tech</span>
               </span>
-              <span className="text-[10px] font-mono tracking-widest text-[#1E5A54]/85 uppercase block mt-0.5">
+              <span className="text-[10px] font-mono tracking-widest text-[#1E5A54] uppercase block mt-0.5">
                 Admin Desk
               </span>
             </div>
@@ -96,7 +96,7 @@ export function AdminSidebar({ mobileOpen, onCloseMobile }: AdminSidebarProps) {
                   'flex items-center gap-3 px-3.5 py-2.5 rounded-full text-xs font-medium transition-colors',
                   isActive
                     ? 'bg-[#1E5A54] text-[#EEE6E2] font-semibold'
-                    : 'text-[#1E5A54]/85 hover:text-[#1E5A54] hover:bg-[#EEE6E2]'
+                    : 'text-[#1E5A54] hover:text-[#1E5A54] hover:bg-[#EEE6E2]'
                 )}
               >
                 {iconMap[item.title] || <LayoutDashboard className="h-4 w-4" />}
@@ -112,7 +112,7 @@ export function AdminSidebar({ mobileOpen, onCloseMobile }: AdminSidebarProps) {
         <Link
           href="/"
           target="_blank"
-          className="flex items-center justify-between px-3.5 py-2 text-xs font-medium text-[#1E5A54]/85 hover:text-[#1E5A54] hover:bg-[#EEE6E2] rounded-full transition-colors"
+          className="flex items-center justify-between px-3.5 py-2 text-xs font-medium text-[#1E5A54] hover:text-[#1E5A54] hover:bg-[#EEE6E2] rounded-full transition-colors"
         >
           <span className="flex items-center gap-2">
             <ExternalLink className="h-3.5 w-3.5" />
@@ -125,7 +125,7 @@ export function AdminSidebar({ mobileOpen, onCloseMobile }: AdminSidebarProps) {
 
         <Link
           href="/admin/login"
-          className="flex items-center gap-2 px-3.5 py-2 text-xs font-semibold text-[#F7623D] hover:bg-[#EEE6E2] rounded-full transition-colors"
+          className="flex items-center gap-2 px-3.5 py-2 text-xs font-semibold text-[#1E5A54] decoration-[#F7623D] hover:bg-[#EEE6E2] rounded-full transition-colors"
         >
           <LogOut className="h-3.5 w-3.5" />
           <span>Exit / Re-authenticate</span>
@@ -135,7 +135,7 @@ export function AdminSidebar({ mobileOpen, onCloseMobile }: AdminSidebarProps) {
           <Shield className="h-4 w-4 text-[#F7623D] shrink-0 mt-0.5" />
           <div>
             <span className="font-semibold text-[#1E5A54] block">Mock Admin Mode</span>
-            <span className="text-[#1E5A54]/85">
+            <span className="text-[#1E5A54]">
               All forms run in browser state. No live database connected.
             </span>
           </div>

@@ -40,7 +40,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
           </div>
 
           <div>
-            <span className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#1E5A54]/85 block mb-1">
+            <span className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#1E5A54] block mb-1">
               {project.client}
             </span>
             <h3 className="font-headline text-xl font-bold uppercase tracking-tight text-[#1E5A54] leading-tight line-clamp-2">
@@ -62,7 +62,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
                   key={idx}
                   className="rounded-xl p-3 border border-[#1E5A54]/20 bg-[#EEE6E2]"
                 >
-                  <span className="text-[10px] uppercase tracking-[0.14em] font-bold text-[#1E5A54]/85 block">
+                  <span className="text-[10px] uppercase tracking-[0.14em] font-bold text-[#1E5A54] block">
                     {m.label}
                   </span>
                   <span className="font-headline text-lg font-bold text-[#1E5A54] block mt-0.5">

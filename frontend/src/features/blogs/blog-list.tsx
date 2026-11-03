@@ -57,7 +57,7 @@ export function BlogList({ initialPosts }: BlogListProps) {
         </div>
 
         <div className="relative w-full md:w-72">
-          <Search className="absolute left-4 top-3 h-4 w-4 text-[#1E5A54]/85" />
+          <Search className="absolute left-4 top-3 h-4 w-4 text-[#1E5A54]" />
           <Input
             placeholder="Filter notes by topic or tag..."
             value={searchQuery}

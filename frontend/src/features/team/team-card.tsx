@@ -39,7 +39,7 @@ export function TeamCard({ member }: TeamCardProps) {
           <h3 className="font-headline text-2xl font-bold uppercase tracking-tight text-[#1E5A54] leading-tight">
             {member.name}
           </h3>
-          <p className="text-xs font-bold uppercase tracking-[0.14em] text-[#F7623D] mt-1">
+          <p className="text-xs font-bold uppercase tracking-[0.14em] text-[#1E5A54] decoration-[#F7623D] mt-1">
             {member.role}
           </p>
         </div>
@@ -63,7 +63,7 @@ export function TeamCard({ member }: TeamCardProps) {
 
       {/* Social links */}
       <div className="px-6 py-3.5 border-t border-[#1E5A54]/15 bg-[#EEE6E2]/60 flex items-center justify-between">
-        <span className="font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-[#1E5A54]/85">
+        <span className="font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-[#1E5A54]">
           Direct Links
         </span>
         <div className="flex items-center gap-3">
@@ -72,7 +72,7 @@ export function TeamCard({ member }: TeamCardProps) {
               href={member.socials.github}
               target="_blank"
               rel="noreferrer"
-              className="text-[#1E5A54]/85 hover:text-[#F7623D] transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]"
+              className="text-[#1E5A54] hover:text-[#F7623D] transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]"
               aria-label={`${member.name} GitHub`}
             >
               <Github className="h-4 w-4 stroke-[1.75]" />
@@ -83,7 +83,7 @@ export function TeamCard({ member }: TeamCardProps) {
               href={member.socials.linkedin}
               target="_blank"
               rel="noreferrer"
-              className="text-[#1E5A54]/85 hover:text-[#F7623D] transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]"
+              className="text-[#1E5A54] hover:text-[#F7623D] transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]"
               aria-label={`${member.name} LinkedIn`}
             >
               <Linkedin className="h-4 w-4 stroke-[1.75]" />
@@ -94,7 +94,7 @@ export function TeamCard({ member }: TeamCardProps) {
               href={member.socials.twitter}
               target="_blank"
               rel="noreferrer"
-              className="text-[#1E5A54]/85 hover:text-[#F7623D] transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]"
+              className="text-[#1E5A54] hover:text-[#F7623D] transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]"
               aria-label={`${member.name} Twitter`}
             >
               <Twitter className="h-4 w-4 stroke-[1.75]" />

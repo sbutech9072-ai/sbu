@@ -101,7 +101,7 @@ export default function AdminTestimonialsPage() {
             <Quote className="h-6 w-6 text-[#F7623D]" />
             <span>Manage Client Testimonials</span>
           </h1>
-          <p className="text-xs text-[#1E5A54]/85 mt-1">
+          <p className="text-xs text-[#1E5A54] mt-1">
             Curate executive reviews and quotes featured across public pages.
           </p>
         </div>
@@ -120,7 +120,7 @@ export default function AdminTestimonialsPage() {
       )}
 
       <div className="relative max-w-sm">
-        <Search className="absolute left-3.5 top-2.5 h-4 w-4 text-[#1E5A54]/70" />
+        <Search className="absolute left-3.5 top-2.5 h-4 w-4 text-[#1E5A54]" />
         <Input
           placeholder="Filter by author or company..."
           value={searchQuery}
@@ -145,17 +145,17 @@ export default function AdminTestimonialsPage() {
               <tr key={t.id} className="hover:bg-[#E2D7D1]/50 transition-colors">
                 <td className="py-3.5 px-4">
                   <span className="font-bold text-[#1E5A54] block">{t.author}</span>
-                  <span className="text-[10px] text-[#1E5A54]/85">{t.title}</span>
+                  <span className="text-[10px] text-[#1E5A54]">{t.title}</span>
                 </td>
                 <td className="py-3.5 px-4 text-[#1E5A54] font-medium">{t.company}</td>
                 <td className="py-3.5 px-4">
-                  <div className="flex items-center gap-0.5 text-[#F7623D]">
+                  <div className="flex items-center gap-0.5 text-[#1E5A54] decoration-[#F7623D]">
                     {Array.from({ length: t.rating }).map((_, i) => (
                       <Star key={i} className="h-3 w-3 fill-[#F7623D]" />
                     ))}
                   </div>
                 </td>
-                <td className="py-3.5 px-4 text-[#1E5A54]/85 max-w-xs truncate">
+                <td className="py-3.5 px-4 text-[#1E5A54] max-w-xs truncate">
                   &ldquo;{t.quote}&rdquo;
                 </td>
                 <td className="py-3.5 px-4 text-right">
@@ -169,7 +169,7 @@ export default function AdminTestimonialsPage() {
                     </button>
                     <button
                       onClick={() => handleDelete(t.id, t.author)}
-                      className="p-1.5 text-[#F7623D] hover:bg-[#E2D7D1] rounded-full"
+                      className="p-1.5 text-[#1E5A54] decoration-[#F7623D] hover:bg-[#E2D7D1] rounded-full"
                       title="Delete Testimonial"
                     >
                       <Trash2 className="h-3.5 w-3.5" />

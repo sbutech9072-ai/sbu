@@ -143,19 +143,19 @@ export function StudioStamp({
   };
 
   const variantClasses: Record<NonNullable<StudioStampProps['variant']>, string> = {
-    orange: 'bg-[#F7623D] text-[#EEE6E2] border-[#1E5A54]/30',
+    orange: 'bg-[#F8F4F2] text-[#1E5A54] border-2 border-[#F7623D]',
     teal: 'bg-[#1E5A54] text-[#EEE6E2] border-[#1E5A54]',
     cream: 'bg-[#F8F4F2] text-[#1E5A54] border-[#1E5A54]/45',
   };
 
   const innerBorderClasses: Record<NonNullable<StudioStampProps['variant']>, string> = {
-    orange: 'border-[#EEE6E2]/55',
+    orange: 'border-[#F7623D]/60',
     teal: 'border-[#EEE6E2]/40',
     cream: 'border-[#1E5A54]/35',
   };
 
   const dotClasses: Record<NonNullable<StudioStampProps['variant']>, string> = {
-    orange: 'bg-[#EEE6E2]',
+    orange: 'bg-[#F7623D]',
     teal: 'bg-[#F7623D]',
     cream: 'bg-[#F7623D]',
   };
@@ -199,7 +199,7 @@ export function StudioStamp({
             {text}
           </span>
           {subtext && (
-            <span className="mt-0.5 font-mono text-[8px] uppercase tracking-[0.14em] opacity-80">
+            <span className="mt-0.5 font-mono text-[8px] uppercase tracking-[0.14em] opacity-90">
               {subtext}
             </span>
           )}

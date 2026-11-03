@@ -52,7 +52,7 @@ export function Footer() {
                   <HandUnderline className="h-2.5 w-full" />
                 </div>
               </div>
-              <p className="text-sm text-[#1E5A54]/85 max-w-md font-sans">
+              <p className="text-sm text-[#1E5A54] max-w-md font-sans">
                 One practical dispatch per month covering Next.js architecture, Go services, and production AI pipelines. Written by our engineers, never by marketers.
               </p>
             </div>
@@ -75,7 +75,7 @@ export function Footer() {
                   <MagneticWrap>
                     <button
                       type="submit"
-                      className="h-11 px-6 w-full sm:w-auto whitespace-nowrap rounded-full bg-[#F7623D] hover:bg-[#E05330] text-white text-xs font-bold uppercase tracking-[0.15em] inline-flex items-center justify-center gap-2 transition-colors shrink-0"
+                      className="h-11 px-6 w-full sm:w-auto whitespace-nowrap rounded-full bg-[#1E5A54] border-2 border-[#F7623D] hover:bg-[#16443F] text-[#EEE6E2] text-xs font-bold uppercase tracking-[0.15em] inline-flex items-center justify-center gap-2 transition-colors shrink-0"
                     >
                       <span>Subscribe</span>
                       <ArrowRight className="h-4 w-4" />
@@ -99,14 +99,14 @@ export function Footer() {
               </div>
               <div className="flex flex-col">
                 <span className="font-headline text-2xl font-bold tracking-tight text-[#1E5A54] uppercase flex items-center gap-1 leading-none">
-                  Sbu <span className="text-[#F7623D]">Tech</span>
+                  Sbu <span className="text-[#1E5A54] decoration-[#F7623D]">Tech</span>
                 </span>
-                <span className="text-[10px] uppercase font-bold tracking-[0.2em] text-[#1E5A54]/85 mt-0.5">
+                <span className="text-[10px] uppercase font-bold tracking-[0.2em] text-[#1E5A54] mt-0.5">
                   Software Studio
                 </span>
               </div>
             </Link>
-            <p className="text-sm text-[#1E5A54]/85 max-w-sm leading-relaxed font-sans">
+            <p className="text-sm text-[#1E5A54] max-w-sm leading-relaxed font-sans">
               Senior-led software engineering studio in San Francisco. We design and ship web applications, cloud infrastructure, and private AI workflows that your team owns outright.
             </p>
             <div className="pt-1">
@@ -158,7 +158,7 @@ export function Footer() {
                 <li key={service.id}>
                   <Link
                     href={`/services/${service.slug}`}
-                    className="text-[#1E5A54]/85 hover:text-[#F7623D] transition-colors"
+                    className="text-[#1E5A54] hover:text-[#F7623D] transition-colors"
                   >
                     {service.title}
                   </Link>
@@ -174,32 +174,32 @@ export function Footer() {
             </h4>
             <ul className="space-y-2.5 text-xs font-bold uppercase tracking-[0.14em]">
               <li>
-                <Link href="/about" className="text-[#1E5A54]/85 hover:text-[#F7623D] transition-colors">
+                <Link href="/about" className="text-[#1E5A54] hover:text-[#F7623D] transition-colors">
                   About Studio
                 </Link>
               </li>
               <li>
-                <Link href="/projects" className="text-[#1E5A54]/85 hover:text-[#F7623D] transition-colors">
+                <Link href="/projects" className="text-[#1E5A54] hover:text-[#F7623D] transition-colors">
                   Case Studies
                 </Link>
               </li>
               <li>
-                <Link href="/team" className="text-[#1E5A54]/85 hover:text-[#F7623D] transition-colors">
+                <Link href="/team" className="text-[#1E5A54] hover:text-[#F7623D] transition-colors">
                   Principals & Team
                 </Link>
               </li>
               <li>
-                <Link href="/blog" className="text-[#1E5A54]/85 hover:text-[#F7623D] transition-colors">
+                <Link href="/blog" className="text-[#1E5A54] hover:text-[#F7623D] transition-colors">
                   Engineering Notes
                 </Link>
               </li>
               <li>
-                <Link href="/get-a-quote" className="text-[#1E5A54]/85 hover:text-[#F7623D] transition-colors">
+                <Link href="/get-a-quote" className="text-[#1E5A54] hover:text-[#F7623D] transition-colors">
                   Project Scope
                 </Link>
               </li>
               <li>
-                <Link href="/privacy-policy" className="text-[#1E5A54]/85 hover:text-[#F7623D] transition-colors">
+                <Link href="/privacy-policy" className="text-[#1E5A54] hover:text-[#F7623D] transition-colors">
                   Privacy Policy
                 </Link>
               </li>
@@ -239,13 +239,13 @@ export function Footer() {
         </div>
 
         {/* Bottom Credits */}
-        <div className="mt-16 pt-8 border-t border-[#1E5A54]/20 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-bold uppercase tracking-[0.14em] text-[#1E5A54]/85">
+        <div className="mt-16 pt-8 border-t border-[#1E5A54]/20 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-bold uppercase tracking-[0.14em] text-[#1E5A54]">
           <p>© {new Date().getFullYear()} Sbu Tech Inc. Built in San Francisco.</p>
           <div className="flex items-center gap-6">
             <Link href="/privacy-policy" className="hover:text-[#F7623D] transition-colors">
               Privacy Policy
             </Link>
-            <span className="text-[#F7623D]">•</span>
+            <span className="text-[#1E5A54] decoration-[#F7623D]">•</span>
             <Link href="/contact" className="hover:text-[#F7623D] transition-colors">
               Terms of Engagement
             </Link>

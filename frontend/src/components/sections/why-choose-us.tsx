@@ -73,10 +73,10 @@ export function WhyChooseUs() {
             />
 
             <div className="p-5 rounded-2xl border border-[#1E5A54]/20 bg-[#F8F4F2] space-y-2">
-              <span className="font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-[#F7623D] block">
+              <span className="font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-[#1E5A54] decoration-[#F7623D] block">
                 STUDIO COMMITMENT
               </span>
-              <p className="text-xs text-[#1E5A54]/85 leading-relaxed font-sans">
+              <p className="text-xs text-[#1E5A54] leading-relaxed font-sans">
                 Every contract includes full source repository ownership, documented Terraform
                 infrastructure, and a structured post-launch handoff runbook.
               </p>
@@ -93,10 +93,10 @@ export function WhyChooseUs() {
                 {/* Index & Spec Code */}
                 <div className="md:col-span-4 space-y-1">
                   <div className="flex items-baseline gap-2.5">
-                    <span className="font-headline text-3xl font-black text-[#F7623D] leading-none">
+                    <span className="font-headline text-3xl font-black text-[#1E5A54] decoration-[#F7623D] leading-none">
                       {tenet.num}
                     </span>
-                    <span className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-[#1E5A54]/85">
+                    <span className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-[#1E5A54]">
                       {tenet.spec}
                     </span>
                   </div>
@@ -112,7 +112,7 @@ export function WhyChooseUs() {
                   <h3 className="font-headline text-2xl sm:text-3xl font-bold uppercase tracking-tight text-[#1E5A54] leading-tight">
                     {tenet.title}
                   </h3>
-                  <p className="text-sm text-[#1E5A54]/85 leading-relaxed font-sans">
+                  <p className="text-sm text-[#1E5A54] leading-relaxed font-sans">
                     {tenet.desc}
                   </p>
                 </div>

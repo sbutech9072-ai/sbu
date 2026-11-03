@@ -31,7 +31,7 @@ export default function AdminDashboardOverviewPage() {
           <h1 className="font-headline text-3xl md:text-4xl uppercase text-[#1E5A54] tracking-tight">
             Studio Operations Ledger
           </h1>
-          <p className="text-xs text-[#1E5A54]/85 mt-1">
+          <p className="text-xs text-[#1E5A54] mt-1">
             Review case studies, service lines, engineering staff, and incoming project scopes.
           </p>
         </div>
@@ -109,7 +109,7 @@ export default function AdminDashboardOverviewPage() {
                 <div className="flex items-start justify-between gap-2">
                   <div>
                     <h4 className="text-sm font-bold text-[#1E5A54]">{req.companyName}</h4>
-                    <span className="text-xs text-[#1E5A54]/85">
+                    <span className="text-xs text-[#1E5A54]">
                       Contact: {req.fullName} ({req.email})
                     </span>
                   </div>
@@ -127,11 +127,11 @@ export default function AdminDashboardOverviewPage() {
                   </Badge>
                 </div>
 
-                <p className="text-xs text-[#1E5A54]/85 line-clamp-2 leading-relaxed">
+                <p className="text-xs text-[#1E5A54] line-clamp-2 leading-relaxed">
                   {req.projectOverview}
                 </p>
 
-                <div className="flex items-center justify-between pt-1 text-[11px] text-[#1E5A54]/85 font-mono">
+                <div className="flex items-center justify-between pt-1 text-[11px] text-[#1E5A54] font-mono">
                   <span>Scope: {req.serviceCategory}</span>
                   <span className="text-[#1E5A54] font-bold">{req.budgetRange}</span>
                 </div>
@@ -168,8 +168,8 @@ export default function AdminDashboardOverviewPage() {
                     {msg.status}
                   </Badge>
                 </div>
-                <h5 className="text-xs font-semibold text-[#F7623D] truncate">{msg.subject}</h5>
-                <p className="text-xs text-[#1E5A54]/85 line-clamp-2">{msg.message}</p>
+                <h5 className="text-xs font-semibold text-[#1E5A54] decoration-[#F7623D] truncate">{msg.subject}</h5>
+                <p className="text-xs text-[#1E5A54] line-clamp-2">{msg.message}</p>
               </div>
             ))}
           </Card>
@@ -178,7 +178,7 @@ export default function AdminDashboardOverviewPage() {
 
       {/* Quick Navigation Cards */}
       <div className="pt-4 border-t border-[#1E5A54]/20">
-        <h3 className="text-xs font-mono font-semibold uppercase tracking-wider text-[#1E5A54]/85 mb-4">
+        <h3 className="text-xs font-mono font-semibold uppercase tracking-wider text-[#1E5A54] mb-4">
           Quick Management Portals
         </h3>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
@@ -186,9 +186,9 @@ export default function AdminDashboardOverviewPage() {
             href="/admin/projects"
             className="p-5 rounded-3xl border border-[#1E5A54]/25 bg-[#F8F4F2] hover:bg-[#E2D7D1] transition-all space-y-1 block"
           >
-            <FolderGit2 className="h-5 w-5 text-[#F7623D] mb-2" />
+            <FolderGit2 className="h-5 w-5 text-[#1E5A54] decoration-[#F7623D] mb-2" />
             <h4 className="font-headline text-lg uppercase text-[#1E5A54]">Projects</h4>
-            <p className="text-xs text-[#1E5A54]/85">{projectsData.length} Case studies</p>
+            <p className="text-xs text-[#1E5A54]">{projectsData.length} Case studies</p>
           </Link>
 
           <Link
@@ -197,7 +197,7 @@ export default function AdminDashboardOverviewPage() {
           >
             <Cpu className="h-5 w-5 text-[#1E5A54] mb-2" />
             <h4 className="font-headline text-lg uppercase text-[#1E5A54]">Services</h4>
-            <p className="text-xs text-[#1E5A54]/85">{servicesData.length} Practice areas</p>
+            <p className="text-xs text-[#1E5A54]">{servicesData.length} Practice areas</p>
           </Link>
 
           <Link
@@ -206,16 +206,16 @@ export default function AdminDashboardOverviewPage() {
           >
             <Users className="h-5 w-5 text-[#1E5A54] mb-2" />
             <h4 className="font-headline text-lg uppercase text-[#1E5A54]">Team Members</h4>
-            <p className="text-xs text-[#1E5A54]/85">{teamData.length} Staff profiles</p>
+            <p className="text-xs text-[#1E5A54]">{teamData.length} Staff profiles</p>
           </Link>
 
           <Link
             href="/admin/blogs"
             className="p-5 rounded-3xl border border-[#1E5A54]/25 bg-[#F8F4F2] hover:bg-[#E2D7D1] transition-all space-y-1 block"
           >
-            <BookOpen className="h-5 w-5 text-[#F7623D] mb-2" />
+            <BookOpen className="h-5 w-5 text-[#1E5A54] decoration-[#F7623D] mb-2" />
             <h4 className="font-headline text-lg uppercase text-[#1E5A54]">Blog Posts</h4>
-            <p className="text-xs text-[#1E5A54]/85">{blogsData.length} Articles</p>
+            <p className="text-xs text-[#1E5A54]">{blogsData.length} Articles</p>
           </Link>
         </div>
       </div>

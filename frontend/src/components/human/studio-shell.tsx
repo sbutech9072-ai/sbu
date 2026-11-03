@@ -124,7 +124,7 @@ export function StudioShell({ children }: StudioShellProps) {
           className={cn(
             '-translate-x-1/2 -translate-y-1/2 flex items-center justify-center rounded-full border',
             isHoveringInteractive
-              ? 'h-9 w-9 border-[#F7623D] bg-[#F7623D]/10'
+              ? 'h-9 w-9 border-[#F7623D] bg-[#1E5A54] border-2 border-[#F7623D]/10'
               : 'h-4 w-4 border-[#1E5A54]/45 bg-transparent'
           )}
         >

@@ -3,66 +3,86 @@ import { Mail, Phone, MapPin, Clock, MessageSquare } from 'lucide-react';
 import { SectionHeading } from '@/components/shared/section-heading';
 import { ContactForm } from '@/features/contact/contact-form';
 import { siteConfig } from '@/config/site';
+import { HandArrow, StudioStamp } from '@/components/human/hand-crafted-svg';
 
 export function ContactSection() {
   return (
     <section className="py-20 md:py-28 bg-[#EEE6E2]">
-      <div className="container mx-auto px-4 max-w-7xl space-y-16">
-        <SectionHeading
-          badge="Get in Touch"
-          title="Let's Discuss Your Next Architectural Milestone"
-          subtitle="Have a technical inquiry, request for proposal, or open project discussion? Connect directly with our team."
-        />
+      <div className="container mx-auto px-4 max-w-7xl space-y-14">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <SectionHeading
+            align="left"
+            badge="Studio Dispatch Desk"
+            title="Start a Technical Conversation"
+            subtitle="Have an architecture brief, RFP, or migration timeline? Reach our San Francisco engineering desk directly."
+          />
 
+          <StudioStamp
+            text="SF DISPATCH // 37.7749 N"
+            subtext="DIRECT PRINCIPAL INBOX"
+            rotate="slight-right"
+            variant="cream"
+          />
+        </div>
+
+        {/* Clean 5/7 Studio Dispatch Desk */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-          {/* Contact Details Card */}
-          <div className="lg:col-span-5 space-y-6 p-8 rounded-2xl border border-[#1E5A54]/18 bg-[#EEE6E2]">
-            <div>
-              <h3 className="font-headline text-2xl font-bold uppercase text-[#1E5A54] leading-tight">
-                Direct Channel
-              </h3>
-              <p className="text-xs text-[#1E5A54]/80 mt-1 leading-relaxed font-sans">
-                Reach our team directly via email, phone, or our San Francisco headquarters.
-              </p>
+          {/* Left 5 Cols: Direct Coordinates Ledger */}
+          <div className="lg:col-span-5 space-y-6 p-7 sm:p-8 rounded-2xl border border-[#1E5A54]/25 bg-[#F8F4F2]">
+            <div className="flex items-center justify-between border-b border-[#1E5A54]/15 pb-4">
+              <div>
+                <span className="font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-[#1E5A54] decoration-[#F7623D] block">
+                  COORDINATES // 01
+                </span>
+                <h3 className="font-headline text-2xl sm:text-3xl font-bold uppercase text-[#1E5A54] leading-tight mt-0.5">
+                  Direct Studio Channels
+                </h3>
+              </div>
+              <HandArrow direction="right" className="hidden sm:block w-12 h-5" />
             </div>
 
-            <div className="space-y-4 pt-2">
-              <div className="flex items-start gap-3">
-                <div className="h-9 w-9 rounded-full border border-[#1E5A54] flex items-center justify-center text-[#1E5A54] shrink-0">
-                  <Mail className="h-4 w-4 stroke-[1.5]" />
+            <div className="divide-y divide-[#1E5A54]/15">
+              <div className="py-4 flex items-start gap-3.5">
+                <div className="h-9 w-9 rounded-full border border-[#1E5A54] bg-[#EEE6E2] flex items-center justify-center text-[#1E5A54] shrink-0">
+                  <Mail className="h-4 w-4 stroke-[1.75]" />
                 </div>
                 <div>
-                  <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#1E5A54]/60 block">
-                    Direct Email
+                  <span className="font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[#1E5A54] block">
+                    Direct Engineering Inbox
                   </span>
                   <a
                     href={`mailto:${siteConfig.contact.email}`}
-                    className="text-sm font-medium text-[#1E5A54] hover:text-[#F7623D] transition-colors"
+                    className="text-sm font-bold text-[#1E5A54] hover:text-[#F7623D] transition-colors"
                   >
                     {siteConfig.contact.email}
                   </a>
                 </div>
               </div>
 
-              <div className="flex items-start gap-3">
-                <div className="h-9 w-9 rounded-full border border-[#1E5A54] flex items-center justify-center text-[#1E5A54] shrink-0">
-                  <Phone className="h-4 w-4 stroke-[1.5]" />
+              <div className="py-4 flex items-start gap-3.5">
+                <div className="h-9 w-9 rounded-full border border-[#1E5A54] bg-[#EEE6E2] flex items-center justify-center text-[#1E5A54] shrink-0">
+                  <Phone className="h-4 w-4 stroke-[1.75]" />
                 </div>
                 <div>
-                  <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#1E5A54]/60 block">
-                    Direct Phone
+                  <span className="font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[#1E5A54] block">
+                    Studio Telephone
                   </span>
-                  <span className="text-sm font-medium text-[#1E5A54]">{siteConfig.contact.phone}</span>
+                  <a
+                    href={`tel:${siteConfig.contact.phone}`}
+                    className="text-sm font-bold text-[#1E5A54] hover:text-[#F7623D] transition-colors"
+                  >
+                    {siteConfig.contact.phone}
+                  </a>
                 </div>
               </div>
 
-              <div className="flex items-start gap-3">
-                <div className="h-9 w-9 rounded-full border border-[#1E5A54] flex items-center justify-center text-[#1E5A54] shrink-0">
-                  <MapPin className="h-4 w-4 stroke-[1.5]" />
+              <div className="py-4 flex items-start gap-3.5">
+                <div className="h-9 w-9 rounded-full border border-[#1E5A54] bg-[#EEE6E2] flex items-center justify-center text-[#1E5A54] shrink-0">
+                  <MapPin className="h-4 w-4 stroke-[1.75]" />
                 </div>
                 <div>
-                  <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#1E5A54]/60 block">
-                    Studio Location
+                  <span className="font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[#1E5A54] block">
+                    San Francisco Studio
                   </span>
                   <span className="text-sm font-medium text-[#1E5A54] leading-relaxed">
                     {siteConfig.contact.address}
@@ -70,13 +90,13 @@ export function ContactSection() {
                 </div>
               </div>
 
-              <div className="flex items-start gap-3">
-                <div className="h-9 w-9 rounded-full border border-[#1E5A54] flex items-center justify-center text-[#1E5A54] shrink-0">
-                  <Clock className="h-4 w-4 stroke-[1.5]" />
+              <div className="py-4 flex items-start gap-3.5">
+                <div className="h-9 w-9 rounded-full border border-[#1E5A54] bg-[#EEE6E2] flex items-center justify-center text-[#1E5A54] shrink-0">
+                  <Clock className="h-4 w-4 stroke-[1.75]" />
                 </div>
                 <div>
-                  <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#1E5A54]/60 block">
-                    Operating Hours
+                  <span className="font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[#1E5A54] block">
+                    Operating Window
                   </span>
                   <span className="text-sm font-medium text-[#1E5A54]">
                     Mon - Fri: 8:00 AM - 6:00 PM PST
@@ -85,31 +105,34 @@ export function ContactSection() {
               </div>
             </div>
 
-            <div className="pt-6 border-t border-[#1E5A54]/15">
-              <div className="p-4 rounded-xl border border-[#1E5A54]/18 bg-[#EEE6E2] space-y-1">
-                <div className="flex items-center gap-2">
-                  <MessageSquare className="h-4 w-4 text-[#F7623D] stroke-[1.5]" />
-                  <span className="text-xs font-bold uppercase tracking-[0.14em] text-[#1E5A54]">
-                    Fast Architectural Response
-                  </span>
-                </div>
-                <p className="text-xs text-[#1E5A54]/80 leading-relaxed font-sans">
-                  All enterprise RFPs and technical project inquiries receive a response from a senior
-                  engineering partner within 24 business hours.
-                </p>
+            <div className="p-4 rounded-xl border border-[#1E5A54]/20 bg-[#EEE6E2] space-y-1.5">
+              <div className="flex items-center gap-2">
+                <MessageSquare className="h-4 w-4 text-[#F7623D] stroke-[1.75]" />
+                <span className="font-mono text-xs font-bold uppercase tracking-[0.14em] text-[#1E5A54]">
+                  24-Hour Principal Turnaround
+                </span>
               </div>
+              <p className="text-xs text-[#1E5A54] leading-relaxed font-sans">
+                Every technical inquiry is reviewed directly by a partner architect within one
+                business day.
+              </p>
             </div>
           </div>
 
-          {/* Form Card */}
-          <div className="lg:col-span-7 p-8 rounded-2xl border border-[#1E5A54]/18 bg-[#EEE6E2]">
-            <div className="mb-6">
-              <h3 className="font-headline text-2xl font-bold uppercase text-[#1E5A54] leading-tight">
-                Send an Inquiry
-              </h3>
-              <p className="text-xs text-[#1E5A54]/80 mt-1 font-sans">
-                Fill out the form below and an engineer will review your project requirements.
-              </p>
+          {/* Right 7 Cols: Dispatch Form Card */}
+          <div className="lg:col-span-7 p-7 sm:p-9 rounded-2xl border border-[#1E5A54]/25 bg-[#F8F4F2]">
+            <div className="mb-6 border-b border-[#1E5A54]/15 pb-4 flex flex-wrap items-center justify-between gap-2">
+              <div>
+                <span className="font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-[#1E5A54] decoration-[#F7623D] block">
+                  DISPATCH FORM // 02
+                </span>
+                <h3 className="font-headline text-2xl sm:text-3xl font-bold uppercase text-[#1E5A54] leading-tight mt-0.5">
+                  Send a Project Brief
+                </h3>
+              </div>
+              <span className="px-3 py-1 rounded-full bg-[#E2D7D1] font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-[#1E5A54]">
+                DIRECT TO ENGINEERING
+              </span>
             </div>
             <ContactForm />
           </div>

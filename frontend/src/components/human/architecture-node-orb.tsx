@@ -276,7 +276,7 @@ export function ArchitectureNodeOrb({
       </div>
 
       {/* Bottom Studio Telemetry Strip */}
-      <div className="relative z-10 flex flex-wrap items-center justify-between gap-2 border-t border-[#1E5A54]/15 pt-3 font-mono text-[10px] uppercase tracking-[0.15em] text-[#1E5A54]/80">
+      <div className="relative z-10 flex flex-wrap items-center justify-between gap-2 border-t border-[#1E5A54]/15 pt-3 font-mono text-[10px] uppercase tracking-[0.15em] text-[#1E5A54]">
         <div className="flex items-center gap-3">
           <span>
             PITCH: <strong className="text-[#1E5A54]">{telemetry.rx} DEG</strong>

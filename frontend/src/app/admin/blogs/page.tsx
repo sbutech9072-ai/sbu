@@ -129,10 +129,10 @@ export default function AdminBlogsPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#1E5A54]/20">
         <div>
           <h1 className="font-headline text-3xl uppercase text-[#1E5A54] tracking-tight flex items-center gap-2">
-            <BookOpen className="h-6 w-6 text-[#F7623D]" />
+            <BookOpen className="h-6 w-6 text-[#1E5A54] decoration-[#F7623D]" />
             <span>Manage Blog Articles</span>
           </h1>
-          <p className="text-xs text-[#1E5A54]/85 mt-1">
+          <p className="text-xs text-[#1E5A54] mt-1">
             Author and publish architectural notes and technical writeups.
           </p>
         </div>
@@ -151,7 +151,7 @@ export default function AdminBlogsPage() {
       )}
 
       <div className="relative max-w-sm">
-        <Search className="absolute left-3.5 top-2.5 h-4 w-4 text-[#1E5A54]/70" />
+        <Search className="absolute left-3.5 top-2.5 h-4 w-4 text-[#1E5A54]" />
         <Input
           placeholder="Filter by title, category, or author..."
           value={searchQuery}
@@ -176,7 +176,7 @@ export default function AdminBlogsPage() {
               <tr key={post.id} className="hover:bg-[#E2D7D1]/50 transition-colors">
                 <td className="py-3.5 px-4">
                   <span className="font-bold text-[#1E5A54] block">{post.title}</span>
-                  <span className="text-[10px] font-mono text-[#1E5A54]/85">
+                  <span className="text-[10px] font-mono text-[#1E5A54]">
                     /blog/{post.slug}
                   </span>
                 </td>
@@ -186,7 +186,7 @@ export default function AdminBlogsPage() {
                   </Badge>
                 </td>
                 <td className="py-3.5 px-4 text-[#1E5A54] font-medium">{post.author.name}</td>
-                <td className="py-3.5 px-4 text-[#1E5A54]/85 font-mono text-[11px]">
+                <td className="py-3.5 px-4 text-[#1E5A54] font-mono text-[11px]">
                   {formatDate(post.publishedAt)}
                 </td>
                 <td className="py-3.5 px-4 text-right">
@@ -194,7 +194,7 @@ export default function AdminBlogsPage() {
                     <Link
                       href={`/blog/${post.slug}`}
                       target="_blank"
-                      className="p-1.5 text-[#1E5A54]/85 hover:text-[#1E5A54] rounded-full hover:bg-[#E2D7D1]"
+                      className="p-1.5 text-[#1E5A54] hover:text-[#1E5A54] rounded-full hover:bg-[#E2D7D1]"
                       title="View Article"
                     >
                       <ExternalLink className="h-3.5 w-3.5" />
@@ -208,7 +208,7 @@ export default function AdminBlogsPage() {
                     </button>
                     <button
                       onClick={() => handleDelete(post.id, post.title)}
-                      className="p-1.5 text-[#F7623D] hover:bg-[#E2D7D1] rounded-full"
+                      className="p-1.5 text-[#1E5A54] decoration-[#F7623D] hover:bg-[#E2D7D1] rounded-full"
                       title="Delete Article"
                     >
                       <Trash2 className="h-3.5 w-3.5" />

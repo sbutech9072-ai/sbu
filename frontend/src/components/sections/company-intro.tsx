@@ -61,7 +61,7 @@ export function CompanyIntro() {
               subtitle="Founded by principal systems architects in 2021, Sbu Tech bridges product design and heavy backend engineering."
             />
 
-            <p className="text-sm md:text-base text-[#1E5A54]/85 leading-relaxed font-sans">
+            <p className="text-sm md:text-base text-[#1E5A54] leading-relaxed font-sans">
               Whether you are launching a venture-backed web platform or untangling a legacy
               monolith into Go and Kubernetes services, you work directly with the engineers
               designing the schema and writing the pull requests.
@@ -90,10 +90,10 @@ export function CompanyIntro() {
                 <TiltCard className="p-7 rounded-2xl border border-[#1E5A54]/20 bg-[#F8F4F2] hover:border-[#1E5A54]/45 transition-colors flex flex-col justify-between space-y-5">
                   <div className="space-y-4">
                     <div className="flex items-center justify-between border-b border-[#1E5A54]/15 pb-3">
-                      <span className="font-mono text-xs font-bold uppercase tracking-[0.16em] text-[#1E5A54]/85">
+                      <span className="font-mono text-xs font-bold uppercase tracking-[0.16em] text-[#1E5A54]">
                         {pillar.tag}
                       </span>
-                      <span className="font-headline text-3xl font-black text-[#F7623D] leading-none">
+                      <span className="font-headline text-3xl font-black text-[#1E5A54] decoration-[#F7623D] leading-none">
                         {pillar.num}
                       </span>
                     </div>
@@ -102,7 +102,7 @@ export function CompanyIntro() {
                       {pillar.title}
                     </h3>
 
-                    <p className="text-sm text-[#1E5A54]/85 leading-relaxed font-sans">
+                    <p className="text-sm text-[#1E5A54] leading-relaxed font-sans">
                       {pillar.desc}
                     </p>
                   </div>

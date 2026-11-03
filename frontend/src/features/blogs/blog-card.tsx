@@ -18,7 +18,7 @@ export function BlogCard({ post }: BlogCardProps) {
           <span className="font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-[#1E5A54]">
             NOTE // {post.id.toUpperCase()}
           </span>
-          <span className="flex items-center gap-1 font-bold text-[11px] uppercase tracking-wider text-[#1E5A54]/85">
+          <span className="flex items-center gap-1 font-bold text-[11px] uppercase tracking-wider text-[#1E5A54]">
             <Clock className="h-3 w-3 stroke-[1.75] text-[#F7623D]" />
             {post.readTime}
           </span>
@@ -31,7 +31,7 @@ export function BlogCard({ post }: BlogCardProps) {
           >
             {post.category}
           </Badge>
-          <span className="text-[11px] text-[#1E5A54]/85 flex items-center gap-1 font-bold uppercase tracking-wider">
+          <span className="text-[11px] text-[#1E5A54] flex items-center gap-1 font-bold uppercase tracking-wider">
             <Calendar className="h-3 w-3 stroke-[1.75]" />
             {formatDate(post.publishedAt)}
           </span>
@@ -53,7 +53,7 @@ export function BlogCard({ post }: BlogCardProps) {
           </div>
           <div className="flex flex-col">
             <span className="text-xs font-bold text-[#1E5A54]">{post.author.name}</span>
-            <span className="text-[11px] text-[#1E5A54]/85 font-semibold">
+            <span className="text-[11px] text-[#1E5A54] font-semibold">
               {post.author.role}
             </span>
           </div>

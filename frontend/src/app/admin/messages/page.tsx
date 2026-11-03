@@ -62,12 +62,12 @@ export default function AdminMessagesPage() {
             <Mail className="h-6 w-6 text-[#F7623D]" />
             <span>Contact Messages & Inquiries</span>
           </h1>
-          <p className="text-xs text-[#1E5A54]/85 mt-1">
+          <p className="text-xs text-[#1E5A54] mt-1">
             Review incoming consultation requests and correspondence from the public site.
           </p>
         </div>
 
-        <div className="text-xs text-[#1E5A54]/85 font-mono">
+        <div className="text-xs text-[#1E5A54] font-mono">
           Total Inquiries: <span className="text-[#1E5A54] font-bold">{messages.length}</span>
         </div>
       </div>
@@ -80,7 +80,7 @@ export default function AdminMessagesPage() {
       )}
 
       <div className="relative max-w-sm">
-        <Search className="absolute left-3.5 top-2.5 h-4 w-4 text-[#1E5A54]/70" />
+        <Search className="absolute left-3.5 top-2.5 h-4 w-4 text-[#1E5A54]" />
         <Input
           placeholder="Filter by sender, email, or subject..."
           value={searchQuery}
@@ -105,12 +105,12 @@ export default function AdminMessagesPage() {
               <tr key={msg.id} className="hover:bg-[#E2D7D1]/50 transition-colors">
                 <td className="py-3.5 px-4">
                   <span className="font-bold text-[#1E5A54] block">{msg.name}</span>
-                  <span className="text-[10px] text-[#1E5A54]/85">{msg.email}</span>
+                  <span className="text-[10px] text-[#1E5A54]">{msg.email}</span>
                 </td>
                 <td className="py-3.5 px-4 text-[#1E5A54] font-medium max-w-xs truncate">
                   {msg.subject}
                 </td>
-                <td className="py-3.5 px-4 text-[#1E5A54]/85 font-mono text-[11px]">
+                <td className="py-3.5 px-4 text-[#1E5A54] font-mono text-[11px]">
                   {formatDate(msg.createdAt)}
                 </td>
                 <td className="py-3.5 px-4">
@@ -138,7 +138,7 @@ export default function AdminMessagesPage() {
                     </button>
                     <button
                       onClick={() => handleDelete(msg.id)}
-                      className="p-1.5 text-[#F7623D] hover:bg-[#E2D7D1] rounded-full"
+                      className="p-1.5 text-[#1E5A54] decoration-[#F7623D] hover:bg-[#E2D7D1] rounded-full"
                       title="Delete"
                     >
                       <Trash2 className="h-3.5 w-3.5" />
@@ -176,7 +176,7 @@ export default function AdminMessagesPage() {
 
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-4 border-t border-[#1E5A54]/20">
               <div className="flex items-center gap-2">
-                <span className="text-[#1E5A54]/85">Current status:</span>
+                <span className="text-[#1E5A54]">Current status:</span>
                 <Badge variant="default" className="capitalize">
                   {selectedMessage.status}
                 </Badge>

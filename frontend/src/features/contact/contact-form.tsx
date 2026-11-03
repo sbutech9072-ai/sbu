@@ -74,7 +74,7 @@ export function ContactForm() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-1.5">
           <label className="text-xs font-bold uppercase tracking-[0.16em] text-[#1E5A54]">
-            Your Name <span className="text-[#F7623D]">*</span>
+            Your Name <span className="text-[#1E5A54] decoration-[#F7623D]">*</span>
           </label>
           <Input
             placeholder="Sarah Jenkins"
@@ -82,7 +82,7 @@ export function ContactForm() {
             error={!!errors.name}
           />
           {errors.name && (
-            <p className="text-xs text-[#F7623D] flex items-center gap-1 font-medium">
+            <p className="text-xs text-[#1E5A54] decoration-[#F7623D] flex items-center gap-1 font-medium">
               <AlertCircle className="h-3 w-3 stroke-[1.75]" />
               {errors.name.message}
             </p>
@@ -91,7 +91,7 @@ export function ContactForm() {
 
         <div className="space-y-1.5">
           <label className="text-xs font-bold uppercase tracking-[0.16em] text-[#1E5A54]">
-            Work Email <span className="text-[#F7623D]">*</span>
+            Work Email <span className="text-[#1E5A54] decoration-[#F7623D]">*</span>
           </label>
           <Input
             type="email"
@@ -100,7 +100,7 @@ export function ContactForm() {
             error={!!errors.email}
           />
           {errors.email && (
-            <p className="text-xs text-[#F7623D] flex items-center gap-1 font-medium">
+            <p className="text-xs text-[#1E5A54] decoration-[#F7623D] flex items-center gap-1 font-medium">
               <AlertCircle className="h-3 w-3 stroke-[1.75]" />
               {errors.email.message}
             </p>
@@ -122,7 +122,7 @@ export function ContactForm() {
 
         <div className="space-y-1.5">
           <label className="text-xs font-bold uppercase tracking-[0.16em] text-[#1E5A54]">
-            Subject <span className="text-[#F7623D]">*</span>
+            Subject <span className="text-[#1E5A54] decoration-[#F7623D]">*</span>
           </label>
           <Input
             placeholder="EKS migration or web platform build"
@@ -130,7 +130,7 @@ export function ContactForm() {
             error={!!errors.subject}
           />
           {errors.subject && (
-            <p className="text-xs text-[#F7623D] flex items-center gap-1 font-medium">
+            <p className="text-xs text-[#1E5A54] decoration-[#F7623D] flex items-center gap-1 font-medium">
               <AlertCircle className="h-3 w-3 stroke-[1.75]" />
               {errors.subject.message}
             </p>
@@ -140,7 +140,7 @@ export function ContactForm() {
 
       <div className="space-y-1.5">
         <label className="text-xs font-bold uppercase tracking-[0.16em] text-[#1E5A54]">
-          What Are You Building? <span className="text-[#F7623D]">*</span>
+          What Are You Building? <span className="text-[#1E5A54] decoration-[#F7623D]">*</span>
         </label>
         <Textarea
           rows={5}
@@ -149,7 +149,7 @@ export function ContactForm() {
           error={!!errors.message}
         />
         {errors.message && (
-          <p className="text-xs text-[#F7623D] flex items-center gap-1 font-medium">
+          <p className="text-xs text-[#1E5A54] decoration-[#F7623D] flex items-center gap-1 font-medium">
             <AlertCircle className="h-3 w-3 stroke-[1.75]" />
             {errors.message.message}
           </p>
@@ -159,7 +159,7 @@ export function ContactForm() {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full h-11 rounded-full bg-[#F7623D] hover:bg-[#1E5A54] text-[#F8F4F2] text-xs font-bold uppercase tracking-[0.16em] inline-flex items-center justify-center gap-2 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] disabled:opacity-50 cursor-pointer"
+        className="w-full h-11 rounded-full bg-[#1E5A54] border-2 border-[#F7623D] hover:bg-[#16443F] text-[#EEE6E2] text-xs font-bold uppercase tracking-[0.16em] inline-flex items-center justify-center gap-2 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] disabled:opacity-50 cursor-pointer"
       >
         {isSubmitting ? (
           <>

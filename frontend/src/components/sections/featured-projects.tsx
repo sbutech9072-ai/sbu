@@ -47,7 +47,7 @@ export function FeaturedProjects() {
                       rotate="slight-left"
                       variant="orange"
                     />
-                    <span className="font-mono text-xs font-bold uppercase tracking-[0.15em] text-[#1E5A54]/85">
+                    <span className="font-mono text-xs font-bold uppercase tracking-[0.15em] text-[#1E5A54]">
                       CLIENT: {flagship.client} • {flagship.duration}
                     </span>
                   </div>
@@ -58,16 +58,16 @@ export function FeaturedProjects() {
                     </h3>
                   </Link>
 
-                  <p className="text-base text-[#1E5A54]/85 leading-relaxed font-sans">
+                  <p className="text-base text-[#1E5A54] leading-relaxed font-sans">
                     {flagship.fullDescription}
                   </p>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
                     <div className="p-4 rounded-xl border border-[#1E5A54]/18 bg-[#EEE6E2] space-y-1">
-                      <span className="font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[#F7623D] block">
+                      <span className="font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[#1E5A54] decoration-[#F7623D] block">
                         THE BOTTLENECK
                       </span>
-                      <p className="text-xs text-[#1E5A54]/85 leading-relaxed font-sans">
+                      <p className="text-xs text-[#1E5A54] leading-relaxed font-sans">
                         {flagship.challenge}
                       </p>
                     </div>
@@ -75,7 +75,7 @@ export function FeaturedProjects() {
                       <span className="font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[#1E5A54] block">
                         ARCHITECTURAL FIX
                       </span>
-                      <p className="text-xs text-[#1E5A54]/85 leading-relaxed font-sans">
+                      <p className="text-xs text-[#1E5A54] leading-relaxed font-sans">
                         {flagship.solution}
                       </p>
                     </div>
@@ -110,7 +110,7 @@ export function FeaturedProjects() {
                   <span className="font-mono text-xs font-bold uppercase tracking-[0.18em] text-[#EEE6E2]">
                     PRODUCTION BENCHMARKS
                   </span>
-                  <span className="px-2.5 py-0.5 rounded-full bg-[#F7623D] text-[10px] font-mono font-bold uppercase tracking-[0.14em] text-white">
+                  <span className="px-2.5 py-0.5 rounded-full bg-[#1E5A54] border-2 border-[#F7623D] text-[10px] font-mono font-bold uppercase tracking-[0.14em] text-[#EEE6E2]">
                     VERIFIED
                   </span>
                 </div>
@@ -121,7 +121,7 @@ export function FeaturedProjects() {
                       key={m.label}
                       className="p-4 rounded-xl border border-[#EEE6E2]/20 bg-[#EEE6E2]/5 space-y-1 relative"
                     >
-                      <span className="font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-[#EEE6E2]/85 block">
+                      <span className="font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-[#EEE6E2] block">
                         {m.label}
                       </span>
                       <div className="relative inline-block">
@@ -137,10 +137,10 @@ export function FeaturedProjects() {
                 </div>
 
                 <div className="space-y-2 border-t border-[#EEE6E2]/20 pt-4">
-                  <span className="font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[#F7623D] block">
+                  <span className="font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[#EEE6E2] block">
                     KEY OUTCOMES
                   </span>
-                  <ul className="space-y-1.5 text-xs text-[#EEE6E2]/90 font-sans">
+                  <ul className="space-y-1.5 text-xs text-[#EEE6E2] font-sans">
                     {flagship.results.map((res, rIdx) => (
                       <li key={rIdx} className="flex items-start gap-2">
                         <span className="h-1.5 w-1.5 rounded-full bg-[#F7623D] mt-1.5 shrink-0" />
@@ -169,7 +169,7 @@ export function FeaturedProjects() {
                 <div className="space-y-4">
                   <div className="flex items-center justify-between gap-2 border-b border-[#1E5A54]/15 pb-3">
                     <span className="font-mono text-xs font-bold uppercase tracking-[0.16em] text-[#1E5A54]">
-                      0{idx + 2} // {project.category}
+                      {`0${idx + 2} // ${project.category}`}
                     </span>
                     <span className="px-2.5 py-0.5 rounded-full bg-[#E2D7D1] font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-[#1E5A54]">
                       {project.year} • {project.duration}
@@ -182,7 +182,7 @@ export function FeaturedProjects() {
                     </h3>
                   </Link>
 
-                  <p className="text-sm text-[#1E5A54]/85 leading-relaxed font-sans">
+                  <p className="text-sm text-[#1E5A54] leading-relaxed font-sans">
                     {project.shortDescription}
                   </p>
 
@@ -196,7 +196,7 @@ export function FeaturedProjects() {
                         <div className="font-headline text-xl font-black text-[#1E5A54] leading-none">
                           {metric.value}
                         </div>
-                        <div className="text-[10px] font-mono font-bold uppercase tracking-[0.12em] text-[#1E5A54]/85 mt-1">
+                        <div className="text-[10px] font-mono font-bold uppercase tracking-[0.12em] text-[#1E5A54] mt-1">
                           {metric.label}
                         </div>
                       </div>

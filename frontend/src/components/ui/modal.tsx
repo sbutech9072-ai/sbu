@@ -47,7 +47,7 @@ export function Modal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      {/* Solid studio ink overlay without backdrop-blur */}
+      {/* Solid studio ink overlay */}
       <div
         className="fixed inset-0 bg-[#1E5A54]/75 transition-opacity duration-200"
         onClick={onClose}
@@ -73,7 +73,7 @@ export function Modal({
               {title}
             </h3>
             {description && (
-              <p className="mt-1 text-xs leading-relaxed text-[#1E5A54]/75">
+              <p className="mt-1 text-xs leading-relaxed text-[#1E5A54]">
                 {description}
               </p>
             )}
@@ -81,7 +81,7 @@ export function Modal({
           <button
             type="button"
             onClick={onClose}
-            className="rounded-full border border-[#1E5A54]/20 p-1.5 text-[#1E5A54]/80 transition-colors hover:border-[#F7623D] hover:bg-[#F7623D] hover:text-[#EEE6E2]"
+            className="rounded-full border border-[#1E5A54]/20 p-1.5 text-[#1E5A54] transition-colors hover:border-[#F7623D] hover:bg-[#F7623D] hover:text-[#EEE6E2]"
             aria-label="Close modal"
           >
             <X className="h-4 w-4" />

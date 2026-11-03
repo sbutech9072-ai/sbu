@@ -19,7 +19,7 @@ export function TestimonialCard({ testimonial }: TestimonialCardProps) {
             CLIENT RECORD // {testimonial.id.toUpperCase()}
           </span>
           {/* Rating stars */}
-          <div className="flex items-center gap-1 text-[#F7623D]">
+          <div className="flex items-center gap-1 text-[#1E5A54] decoration-[#F7623D]">
             {Array.from({ length: 5 }).map((_, i) => (
               <Star
                 key={i}
@@ -52,7 +52,7 @@ export function TestimonialCard({ testimonial }: TestimonialCardProps) {
                 </span>
               )}
             </div>
-            <p className="text-xs text-[#1E5A54]/85 font-medium">
+            <p className="text-xs text-[#1E5A54] font-medium">
               {testimonial.title}, {testimonial.company}
             </p>
           </div>

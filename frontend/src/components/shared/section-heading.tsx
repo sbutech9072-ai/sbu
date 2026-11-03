@@ -46,7 +46,7 @@ export function SectionHeading({
       {subtitle && (
         <p
           className={cn(
-            'text-sm md:text-base text-[#1E5A54]/85 leading-relaxed max-w-2xl font-sans',
+            'text-sm md:text-base text-[#1E5A54] leading-relaxed max-w-2xl font-sans',
             align === 'center' ? 'mx-auto' : ''
           )}
         >

@@ -24,10 +24,10 @@ export default function AdminSettingsPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#1E5A54]/20">
         <div>
           <h1 className="font-headline text-3xl uppercase text-[#1E5A54] tracking-tight flex items-center gap-2">
-            <Settings className="h-6 w-6 text-[#F7623D]" />
+            <Settings className="h-6 w-6 text-[#1E5A54] decoration-[#F7623D]" />
             <span>Website & Console Settings</span>
           </h1>
-          <p className="text-xs text-[#1E5A54]/85 mt-1">
+          <p className="text-xs text-[#1E5A54] mt-1">
             Global studio contact details, metadata defaults, and operational flags.
           </p>
         </div>
@@ -83,7 +83,7 @@ export default function AdminSettingsPage() {
         {/* Contact Coordinates */}
         <Card className="p-6 border-[#1E5A54]/25 bg-[#F8F4F2] rounded-3xl space-y-4">
           <div className="flex items-center gap-2 pb-2 border-b border-[#1E5A54]/20 font-headline text-xl uppercase text-[#1E5A54]">
-            <Bell className="h-4 w-4 text-[#F7623D]" />
+            <Bell className="h-4 w-4 text-[#1E5A54] decoration-[#F7623D]" />
             <span>Public Communication Channels</span>
           </div>
 
@@ -133,7 +133,7 @@ export default function AdminSettingsPage() {
             <div className="flex items-center justify-between p-4 rounded-2xl bg-[#EEE6E2] border border-[#1E5A54]/25">
               <div>
                 <span className="font-bold text-[#1E5A54] block">Maintenance Mode</span>
-                <span className="text-[#1E5A54]/85">
+                <span className="text-[#1E5A54]">
                   Temporarily display a maintenance banner across public routes
                 </span>
               </div>
@@ -150,7 +150,7 @@ export default function AdminSettingsPage() {
             <div className="flex items-center justify-between p-4 rounded-2xl bg-[#EEE6E2] border border-[#1E5A54]/25">
               <div>
                 <span className="font-bold text-[#1E5A54] block">Client Portal Self-Registration</span>
-                <span className="text-[#1E5A54]/85">
+                <span className="text-[#1E5A54]">
                   Allow external clients to initiate self-registration requests
                 </span>
               </div>

@@ -43,9 +43,9 @@ export function Navbar() {
           </div>
           <div className="flex flex-col">
             <span className="font-headline text-2xl font-bold tracking-tight text-[#1E5A54] uppercase flex items-center gap-1 leading-none">
-              Sbu <span className="text-[#F7623D]">Tech</span>
+              Sbu <span className="text-[#1E5A54] decoration-[#F7623D]">Tech</span>
             </span>
-            <span className="text-[10px] uppercase font-bold tracking-[0.2em] text-[#1E5A54]/85 mt-0.5">
+            <span className="text-[10px] uppercase font-bold tracking-[0.2em] text-[#1E5A54] mt-0.5">
               Software Studio
             </span>
           </div>
@@ -64,7 +64,7 @@ export function Navbar() {
                   'text-xs font-bold uppercase tracking-[0.18em] transition-colors py-1',
                   isActive
                     ? 'text-[#1E5A54] border-b-2 border-[#F7623D]'
-                    : 'text-[#1E5A54]/85 hover:text-[#F7623D]'
+                    : 'text-[#1E5A54] hover:text-[#F7623D]'
                 )}
               >
                 {item.title}
@@ -111,7 +111,7 @@ export function Navbar() {
         <div className="flex items-center gap-2 lg:hidden">
           <Link
             href="/get-a-quote"
-            className="rounded-full bg-[#F7623D] text-white text-xs font-bold uppercase tracking-[0.14em] px-3.5 py-2 inline-flex items-center gap-1"
+            className="rounded-full bg-[#1E5A54] border-2 border-[#F7623D] text-[#EEE6E2] text-xs font-bold uppercase tracking-[0.14em] px-3.5 py-2 inline-flex items-center gap-1"
           >
             <span>Quote</span>
           </Link>
@@ -154,7 +154,7 @@ export function Navbar() {
           <div className="pt-4 border-t border-[#1E5A54]/20 flex flex-col gap-2">
             <Link
               href="/get-a-quote"
-              className="w-full rounded-full bg-[#F7623D] text-white text-center py-3 text-xs font-bold uppercase tracking-[0.16em] inline-flex items-center justify-center gap-2"
+              className="w-full rounded-full bg-[#1E5A54] border-2 border-[#F7623D] text-[#EEE6E2] text-center py-3 text-xs font-bold uppercase tracking-[0.16em] inline-flex items-center justify-center gap-2"
             >
               <span>Get a Project Estimate</span>
               <ArrowUpRight className="h-4 w-4" />

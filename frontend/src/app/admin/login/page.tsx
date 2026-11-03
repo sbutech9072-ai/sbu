@@ -72,7 +72,7 @@ export default function AdminLoginPage() {
           <h1 className="font-headline text-3xl md:text-4xl uppercase text-[#1E5A54] tracking-tight">
             Administrator Sign In
           </h1>
-          <p className="text-xs text-[#1E5A54]/85">
+          <p className="text-xs text-[#1E5A54]">
             Internal console for managing case studies, practice areas, and client inquiries.
           </p>
         </div>
@@ -83,7 +83,7 @@ export default function AdminLoginPage() {
             <AlertCircle className="h-4 w-4 text-[#F7623D] shrink-0" />
             <span>Phase 01 Mock Interface</span>
           </div>
-          <p className="text-[11px] text-[#1E5A54]/85 leading-relaxed">
+          <p className="text-[11px] text-[#1E5A54] leading-relaxed">
             Live database authentication is not connected in this phase. You can sign in directly
             using any credentials or the pre-filled demo account.
           </p>
@@ -97,7 +97,7 @@ export default function AdminLoginPage() {
                 Staff Email Address
               </label>
               <div className="relative">
-                <Mail className="absolute left-3.5 top-3 h-4 w-4 text-[#1E5A54]/70" />
+                <Mail className="absolute left-3.5 top-3 h-4 w-4 text-[#1E5A54]" />
                 <Input
                   type="email"
                   className="pl-10 rounded-full bg-[#EEE6E2] border-[#1E5A54]/30 text-[#1E5A54]"
@@ -107,7 +107,7 @@ export default function AdminLoginPage() {
                 />
               </div>
               {errors.email && (
-                <p className="text-xs text-[#F7623D] font-medium">{errors.email.message}</p>
+                <p className="text-xs text-[#1E5A54] decoration-[#F7623D] font-medium">{errors.email.message}</p>
               )}
             </div>
 
@@ -116,7 +116,7 @@ export default function AdminLoginPage() {
                 Password
               </label>
               <div className="relative">
-                <Lock className="absolute left-3.5 top-3 h-4 w-4 text-[#1E5A54]/70" />
+                <Lock className="absolute left-3.5 top-3 h-4 w-4 text-[#1E5A54]" />
                 <Input
                   type={showPassword ? 'text' : 'password'}
                   className="pl-10 pr-10 rounded-full bg-[#EEE6E2] border-[#1E5A54]/30 text-[#1E5A54]"
@@ -127,21 +127,21 @@ export default function AdminLoginPage() {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3.5 top-3 text-[#1E5A54]/70 hover:text-[#1E5A54]"
+                  className="absolute right-3.5 top-3 text-[#1E5A54] hover:text-[#1E5A54]"
                   aria-label="Toggle password visibility"
                 >
                   {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
               </div>
               {errors.password && (
-                <p className="text-xs text-[#F7623D] font-medium">{errors.password.message}</p>
+                <p className="text-xs text-[#1E5A54] decoration-[#F7623D] font-medium">{errors.password.message}</p>
               )}
             </div>
 
             <Button
               type="submit"
               disabled={isSubmitting}
-              className="w-full h-11 text-xs font-semibold uppercase tracking-wider rounded-full gap-2 mt-2 bg-[#F7623D] hover:bg-[#e5522d] text-white"
+              className="w-full h-11 text-xs font-semibold uppercase tracking-wider rounded-full gap-2 mt-2 bg-[#1E5A54] border-2 border-[#F7623D] hover:bg-[#16443F] text-[#EEE6E2]"
             >
               {isSubmitting ? (
                 <>
@@ -157,11 +157,11 @@ export default function AdminLoginPage() {
             </Button>
           </form>
 
-          <div className="pt-3 border-t border-[#1E5A54]/20 flex items-center justify-between text-xs text-[#1E5A54]/85">
+          <div className="pt-3 border-t border-[#1E5A54]/20 flex items-center justify-between text-xs text-[#1E5A54]">
             <button
               type="button"
               onClick={handleFillDemo}
-              className="text-[#F7623D] hover:underline font-semibold"
+              className="text-[#1E5A54] decoration-[#F7623D] hover:underline font-semibold"
             >
               Fill Demo Credentials
             </button>
