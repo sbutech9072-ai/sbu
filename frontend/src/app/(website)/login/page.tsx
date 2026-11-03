@@ -18,7 +18,9 @@ import {
   Loader2,
   Sparkles,
   ArrowLeft,
+  ChevronDown,
 } from 'lucide-react';
+import { COUNTRIES } from '@/lib/countries';
 
 type AuthMode = 'client-login' | 'client-register' | 'owner-login';
 
@@ -91,8 +93,8 @@ export default function LoginPage() {
     if (!clientRegister.email.trim()) errs.email = 'Email is required';
     else if (!validateEmail(clientRegister.email)) errs.email = 'Invalid email address';
 
-    if (!clientRegister.country.trim() || clientRegister.country.trim().length < 2) {
-      errs.country = 'Country is required';
+    if (!clientRegister.country || !COUNTRIES.includes(clientRegister.country)) {
+      errs.country = 'Please select a valid country';
     }
 
     if (!clientRegister.password) errs.password = 'Password is required';
@@ -316,16 +318,26 @@ export default function LoginPage() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <div className="space-y-1.5">
-                  <label className="text-xs font-medium uppercase tracking-wider text-slate-300">Country</label>
+                  <label className="text-xs font-medium uppercase tracking-wider text-slate-300">
+                    Country <span className="text-rose-400">*</span>
+                  </label>
                   <div className="relative">
-                    <Globe className="absolute left-3.5 top-3 w-4 h-4 text-slate-500" />
-                    <input
-                      type="text"
-                      placeholder="United States"
+                    <Globe className="absolute left-3.5 top-3 w-4 h-4 text-slate-500 pointer-events-none z-10" />
+                    <select
                       value={clientRegister.country}
                       onChange={(e) => setClientRegister({ ...clientRegister, country: e.target.value })}
-                      className="w-full bg-slate-950 border border-slate-800 rounded-lg pl-10 pr-3.5 py-2.5 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-blue-500"
-                    />
+                      className="w-full bg-slate-950 border border-slate-800 rounded-lg pl-10 pr-10 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-blue-500 appearance-none cursor-pointer"
+                    >
+                      <option value="" disabled className="bg-slate-900 text-slate-400">
+                        Select your country...
+                      </option>
+                      {COUNTRIES.map((c) => (
+                        <option key={c} value={c} className="bg-slate-900 text-slate-100">
+                          {c}
+                        </option>
+                      ))}
+                    </select>
+                    <ChevronDown className="absolute right-3.5 top-3 w-4 h-4 text-slate-500 pointer-events-none" />
                   </div>
                   {errors.country && <p className="text-xs text-rose-400">• {errors.country}</p>}
                 </div>
