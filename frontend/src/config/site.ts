@@ -1,0 +1,46 @@
+export const siteConfig = {
+  name: 'Sbu Tech',
+  title: 'Sbu Tech | Modern Software Engineering & Digital Product Studio',
+  description:
+    'Sbu Tech builds scalable cloud software, enterprise web applications, and intuitive digital experiences for high-growth companies worldwide.',
+  url: 'https://sbutech.example.com',
+  ogImage: '/og-image.jpg',
+  links: {
+    github: 'https://github.com/sbutech',
+    twitter: 'https://twitter.com/sbutech',
+    linkedin: 'https://linkedin.com/company/sbutech',
+  },
+  contact: {
+    email: 'contact@sbutech.com',
+    salesEmail: 'hello@sbutech.com',
+    phone: '+1 (555) 382-4900',
+    address: '100 Innovation Way, Suite 400, San Francisco, CA 94107',
+    workingHours: 'Mon - Fri: 9:00 AM - 6:00 PM EST',
+  },
+  mainNav: [
+    { title: 'Home', href: '/' },
+    { title: 'About', href: '/about' },
+    { title: 'Services', href: '/services' },
+    { title: 'Projects', href: '/projects' },
+    { title: 'Team', href: '/team' },
+    { title: 'Blog', href: '/blog' },
+    { title: 'Contact', href: '/contact' },
+  ],
+  adminNav: [
+    { title: 'Overview', href: '/admin', icon: 'LayoutDashboard' },
+    { title: 'Projects', href: '/admin/projects', icon: 'FolderGit2' },
+    { title: 'Services', href: '/admin/services', icon: 'Cpu' },
+    { title: 'Team Members', href: '/admin/team', icon: 'Users' },
+    { title: 'Blog Posts', href: '/admin/blogs', icon: 'BookOpen' },
+    { title: 'Testimonials', href: '/admin/testimonials', icon: 'Quote' },
+    { title: 'Messages', href: '/admin/messages', icon: 'Mail' },
+    { title: 'Quote Requests', href: '/admin/quote-requests', icon: 'FileSpreadsheet' },
+    { title: 'Settings', href: '/admin/settings', icon: 'Settings' },
+  ],
+  stats: [
+    { label: 'Completed Projects', value: '140+', helper: 'Delivered with 99.4% satisfaction' },
+    { label: 'Enterprise Clients', value: '45+', helper: 'Across North America & Europe' },
+    { label: 'System Uptime SLA', value: '99.98%', helper: 'Mission critical performance' },
+    { label: 'Senior Engineers', value: '28+', helper: 'Full-stack & AI specialists' },
+  ],
+};
