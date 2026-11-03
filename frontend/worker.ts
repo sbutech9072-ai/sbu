@@ -1,9 +1,11 @@
 import { Server } from 'node:http';
 import { httpServerHandler } from 'cloudflare:node';
 import expressApp from '../backend/src/app.js';
+// @ts-ignore
 import openNextHandler from './.open-next/worker.js';
 
 // Re-export any OpenNext Durable Objects if needed by Next.js Cloudflare adapter
+// @ts-ignore
 export { DOQueueHandler, DOShardedTagCache, BucketCachePurge } from './.open-next/worker.js';
 
 const PORT = 8080;
@@ -46,4 +48,3 @@ export default {
     throw new Error('OpenNext handler does not expose a callable fetch method');
   },
 };
-
