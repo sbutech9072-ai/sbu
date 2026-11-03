@@ -12,6 +12,10 @@
     "binding": "ASSETS"
   },
   "alias": {
-    "iconv-lite": "./src/shims/iconv-lite-shim.ts"
+    "iconv-lite": "./src/shims/iconv-lite-shim.ts",
+    "express": "./node_modules/express",
+    "cors": "./node_modules/cors",
+    "dotenv": "./node_modules/dotenv",
+    "zod": "./node_modules/zod"
   }
 }
