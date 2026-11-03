@@ -3,7 +3,7 @@ export const siteConfig = {
   title: 'Sbu Tech | Modern Software Engineering & Digital Product Studio',
   description:
     'Sbu Tech builds scalable cloud software, enterprise web applications, and intuitive digital experiences for high-growth companies worldwide.',
-  url: 'https://sbutech.example.com',
+  url: process.env.NEXT_PUBLIC_SITE_URL || 'https://sbutech.com',
   ogImage: '/og-image.jpg',
   links: {
     github: 'https://github.com/sbutech',

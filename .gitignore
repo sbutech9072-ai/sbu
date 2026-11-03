@@ -9,6 +9,12 @@ dist
 */.next
 out
 */out
+.open-next
+*/.open-next
+.wrangler
+*/.wrangler
+.dev.vars*
+*/.dev.vars*
 
 # Environment variables
 .env
