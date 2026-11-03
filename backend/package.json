@@ -2,11 +2,13 @@
   "name": "sbuweb-backend",
   "version": "1.0.0",
   "description": "Minimal backend authentication module for sbuweb",
-  "main": "dist/app.js",
+  "main": "dist/server.js",
   "scripts": {
-    "dev": "tsx watch src/app.ts",
+    "dev": "tsx watch src/server.ts",
+    "dev:worker": "wrangler dev --port 8788",
     "build": "tsc",
-    "start": "node dist/app.js"
+    "deploy": "wrangler deploy",
+    "start": "node dist/server.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -15,10 +17,12 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "^4.20250224.0",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "@types/node": "^22.13.0",
     "tsx": "^4.19.2",
-    "typescript": "^5.7.3"
+    "typescript": "^5.7.3",
+    "wrangler": "^4.157.0"
   }
 }
