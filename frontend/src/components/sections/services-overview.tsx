@@ -11,7 +11,7 @@ export function ServicesOverview() {
   return (
     <section className="py-14 md:py-20 bg-[#EEE6E2]">
       <div className="site-container space-y-8 md:space-y-10">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
           <SectionHeading
             align="left"
             badge="Core Capabilities"
@@ -19,7 +19,7 @@ export function ServicesOverview() {
             subtitle="We handle system design, backend services, mobile clients, and private AI pipelines under one roof."
           />
 
-          <div className="flex flex-wrap items-center gap-4 self-start md:self-auto shrink-0">
+          <div className="flex flex-wrap items-center gap-4 self-start lg:self-auto shrink-0">
             <StudioStamp
               text="INDEX // 01-06"
               subtext="FIXED-SCOPE OR SPRINT"
