@@ -39,7 +39,7 @@ export function Hero() {
             </h1>
 
             {/* Plain-spoken Subtitle */}
-            <p className="text-base sm:text-lg md:text-xl xl:text-2xl text-[#1E5A54] max-w-3xl leading-relaxed font-sans">
+            <p className="text-base sm:text-lg md:text-xl xl:text-2xl text-[#1E5A54] max-w-3xl 2xl:max-w-4xl leading-relaxed font-sans">
               Sbu Tech is a senior software engineering studio in San Francisco. We work directly
               with founders and CTOs to design, build, and ship production web platforms,
               Kubernetes clusters, and private LLM workflows that hold up under real load.
