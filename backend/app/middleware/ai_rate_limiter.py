@@ -57,3 +57,4 @@ def check_ai_rate_limit(request: Request) -> None:
             status_code=status.HTTP_429_TOO_MANY_REQUESTS,
             detail="Rate limit exceeded for AI Assistant requests. Please wait a moment before sending another message.",
         )
+

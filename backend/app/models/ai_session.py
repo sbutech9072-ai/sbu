@@ -46,3 +46,4 @@ class ChatMessage(Base, TimestampMixin):
     sources_json: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
 
     session: Mapped["ChatSession"] = relationship("ChatSession", back_populates="messages")
+
