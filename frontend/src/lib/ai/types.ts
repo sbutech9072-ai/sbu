@@ -55,3 +55,4 @@ export interface EdgeAIEnv {
   AGENTROUTER_ROUTE_KEY?: string;
   [key: string]: any;
 }
+

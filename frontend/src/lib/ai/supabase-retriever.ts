@@ -60,3 +60,4 @@ export async function retrieveChunksFromSupabase(
     similarity: Number(r.similarity) || 0,
   }));
 }
+

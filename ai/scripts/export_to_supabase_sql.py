@@ -112,3 +112,4 @@ ON CONFLICT (chunk_id) DO UPDATE SET
 
 if __name__ == "__main__":
     generate_sql()
+
