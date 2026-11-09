@@ -15,11 +15,8 @@ export function ArchitectureOrbCanvas({
   onTelemetryUpdate,
 }: ArchitectureOrbCanvasProps) {
   const containerRef = React.useRef<HTMLDivElement>(null);
-
-  // Keep latest callbacks in refs so state updates in parent never recreate the WebGL context
   const onWebGLErrorRef = React.useRef(onWebGLError);
   const onTelemetryUpdateRef = React.useRef(onTelemetryUpdate);
-
   React.useEffect(() => {
     onWebGLErrorRef.current = onWebGLError;
     onTelemetryUpdateRef.current = onTelemetryUpdate;
@@ -31,6 +28,15 @@ export function ArchitectureOrbCanvas({
 
     let renderer: THREE.WebGLRenderer | null = null;
     try {
+      const testCanvas = document.createElement('canvas');
+      const gl =
+        testCanvas.getContext('webgl') ||
+        testCanvas.getContext('experimental-webgl');
+      if (!gl) {
+        onWebGLErrorRef.current?.();
+        return;
+      }
+
       renderer = new THREE.WebGLRenderer({
         antialias: true,
         alpha: true,
@@ -53,7 +59,7 @@ export function ArchitectureOrbCanvas({
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(38, width / height, 0.1, 100);
-    camera.position.set(0, 0, variant === 'hero' ? 6.0 : 6.4);
+    camera.position.set(0, 0, variant === 'hero' ? 6.2 : 6.6);
 
     const rootGroup = new THREE.Group();
     scene.add(rootGroup);
@@ -62,14 +68,14 @@ export function ArchitectureOrbCanvas({
     const materialsToDispose: THREE.Material[] = [];
 
     // Lighting in studio palette
-    const ambientLight = new THREE.AmbientLight(0xeee6e2, 1.45);
+    const ambientLight = new THREE.AmbientLight(0xeee6e2, 1.35);
     scene.add(ambientLight);
 
-    const keyLight = new THREE.DirectionalLight(0xeee6e2, 2.0);
+    const keyLight = new THREE.DirectionalLight(0xeee6e2, 1.8);
     keyLight.position.set(4, 5, 6);
     scene.add(keyLight);
 
-    const rimLight = new THREE.DirectionalLight(0xf7623d, 1.6);
+    const rimLight = new THREE.DirectionalLight(0xf7623d, 1.4);
     rimLight.position.set(-5, -3, 4);
     scene.add(rimLight);
 
@@ -79,7 +85,7 @@ export function ArchitectureOrbCanvas({
     const outerWireMat = new THREE.LineBasicMaterial({
       color: 0x1e5a54,
       transparent: true,
-      opacity: 0.5,
+      opacity: 0.45,
     });
     const outerWireMesh = new THREE.LineSegments(outerWireGeo, outerWireMat);
     rootGroup.add(outerWireMesh);
@@ -90,8 +96,8 @@ export function ArchitectureOrbCanvas({
     const coreGeo = new THREE.IcosahedronGeometry(0.96, 0);
     const coreMat = new THREE.MeshStandardMaterial({
       color: 0x1e5a54,
-      roughness: 0.55,
-      metalness: 0.18,
+      roughness: 0.62,
+      metalness: 0.12,
       flatShading: true,
     });
     const coreMesh = new THREE.Mesh(coreGeo, coreMat);
@@ -104,7 +110,7 @@ export function ArchitectureOrbCanvas({
     const coreEdgesMat = new THREE.LineBasicMaterial({
       color: 0xeee6e2,
       transparent: true,
-      opacity: 0.65,
+      opacity: 0.55,
     });
     const coreEdges = new THREE.LineSegments(coreEdgesGeo, coreEdgesMat);
     coreMesh.add(coreEdges);
@@ -112,11 +118,11 @@ export function ArchitectureOrbCanvas({
     materialsToDispose.push(coreEdgesMat);
 
     // 3. Two tilted orbital rings in #1E5A54 and #F7623D
-    const ringGeo1 = new THREE.TorusGeometry(2.15, 0.016, 16, 100);
+    const ringGeo1 = new THREE.TorusGeometry(2.15, 0.014, 12, 96);
     const ringMat1 = new THREE.MeshBasicMaterial({
       color: 0x1e5a54,
       transparent: true,
-      opacity: 0.6,
+      opacity: 0.55,
     });
     const ring1 = new THREE.Mesh(ringGeo1, ringMat1);
     ring1.rotation.x = Math.PI / 2.7;
@@ -125,11 +131,11 @@ export function ArchitectureOrbCanvas({
     geometriesToDispose.push(ringGeo1);
     materialsToDispose.push(ringMat1);
 
-    const ringGeo2 = new THREE.TorusGeometry(2.34, 0.018, 16, 100);
+    const ringGeo2 = new THREE.TorusGeometry(2.34, 0.016, 12, 96);
     const ringMat2 = new THREE.MeshBasicMaterial({
       color: 0xf7623d,
       transparent: true,
-      opacity: 0.85,
+      opacity: 0.72,
     });
     const ring2 = new THREE.Mesh(ringGeo2, ringMat2);
     ring2.rotation.x = -Math.PI / 3.1;
@@ -150,18 +156,17 @@ export function ArchitectureOrbCanvas({
     }
     geometriesToDispose.push(baseIco);
 
-    const nodeSphereGeo = new THREE.SphereGeometry(0.075, 16, 16);
+    const nodeSphereGeo = new THREE.SphereGeometry(0.068, 12, 12);
     const orangeNodeMat = new THREE.MeshBasicMaterial({ color: 0xf7623d });
     const tealNodeMat = new THREE.MeshBasicMaterial({ color: 0x1e5a54 });
     const strutMat = new THREE.LineBasicMaterial({
       color: 0x1e5a54,
       transparent: true,
-      opacity: 0.32,
+      opacity: 0.28,
     });
     geometriesToDispose.push(nodeSphereGeo);
     materialsToDispose.push(orangeNodeMat, tealNodeMat, strutMat);
 
-    const nodeMeshes: THREE.Mesh[] = [];
     uniqueVertices.slice(0, 12).forEach((vertex, idx) => {
       const isAccent = idx % 3 === 0;
       const nodeMesh = new THREE.Mesh(
@@ -170,7 +175,6 @@ export function ArchitectureOrbCanvas({
       );
       nodeMesh.position.copy(vertex);
       rootGroup.add(nodeMesh);
-      nodeMeshes.push(nodeMesh);
 
       const strutPoints = [
         vertex.clone().multiplyScalar(0.54),
@@ -182,17 +186,52 @@ export function ArchitectureOrbCanvas({
       geometriesToDispose.push(strutGeo);
     });
 
-    // Interaction state (hover + click-and-drag orbit)
+    // Theme reactivity: dynamically adapt 3D materials to light / dark theme
+    const updateColorsForTheme = () => {
+      const isDark = document.documentElement.classList.contains('dark');
+      if (isDark) {
+        outerWireMat.color.setHex(0x292d32);
+        coreMat.color.setHex(0x1d2025);
+        coreEdgesMat.color.setHex(0xd9dde2);
+        ringMat1.color.setHex(0x292d32);
+        ringMat2.color.setHex(0xff642d);
+        orangeNodeMat.color.setHex(0xff642d);
+        tealNodeMat.color.setHex(0xd9dde2);
+        strutMat.color.setHex(0x292d32);
+        ambientLight.color.setHex(0x15181c);
+        keyLight.color.setHex(0xf5f1ea);
+        rimLight.color.setHex(0xff642d);
+      } else {
+        outerWireMat.color.setHex(0x1e5a54);
+        coreMat.color.setHex(0x1e5a54);
+        coreEdgesMat.color.setHex(0xeee6e2);
+        ringMat1.color.setHex(0x1e5a54);
+        ringMat2.color.setHex(0xf7623d);
+        orangeNodeMat.color.setHex(0xf7623d);
+        tealNodeMat.color.setHex(0x1e5a54);
+        strutMat.color.setHex(0x1e5a54);
+        ambientLight.color.setHex(0xeee6e2);
+        keyLight.color.setHex(0xeee6e2);
+        rimLight.color.setHex(0xf7623d);
+      }
+    };
+    updateColorsForTheme();
+
+    const themeObserver = new MutationObserver(() => {
+      updateColorsForTheme();
+    });
+    themeObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class'],
+    });
+
+    // Interaction state
     let targetMouseX = 0;
     let targetMouseY = 0;
     let currentMouseX = 0;
     let currentMouseY = 0;
-    let isDragging = false;
-    let prevPointerX = 0;
-    let prevPointerY = 0;
-    let dragOffsetX = 0;
-    let dragOffsetY = 0;
     let scrollRotation = 0;
+    let isVisible = true;
     let frameCount = 0;
     let rafId = 0;
 
@@ -201,39 +240,12 @@ export function ArchitectureOrbCanvas({
       targetMouseY = -(e.clientY / window.innerHeight) * 2 + 1;
     };
 
-    const handlePointerDown = (e: PointerEvent) => {
-      isDragging = true;
-      prevPointerX = e.clientX;
-      prevPointerY = e.clientY;
-      container.setPointerCapture?.(e.pointerId);
-    };
-
-    const handlePointerMove = (e: PointerEvent) => {
-      if (!isDragging) return;
-      const dx = e.clientX - prevPointerX;
-      const dy = e.clientY - prevPointerY;
-      prevPointerX = e.clientX;
-      prevPointerY = e.clientY;
-      dragOffsetY += dx * 0.012;
-      dragOffsetX += dy * 0.012;
-    };
-
-    const handlePointerUp = (e: PointerEvent) => {
-      if (!isDragging) return;
-      isDragging = false;
-      container.releasePointerCapture?.(e.pointerId);
-    };
-
     const handleScroll = () => {
-      scrollRotation = window.scrollY * 0.0015;
+      scrollRotation = window.scrollY * 0.0012;
     };
 
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
     window.addEventListener('scroll', handleScroll, { passive: true });
-    container.addEventListener('pointerdown', handlePointerDown);
-    container.addEventListener('pointermove', handlePointerMove);
-    container.addEventListener('pointerup', handlePointerUp);
-    container.addEventListener('pointercancel', handlePointerUp);
 
     const resizeObserver = new ResizeObserver((entries) => {
       for (const entry of entries) {
@@ -248,53 +260,47 @@ export function ArchitectureOrbCanvas({
     });
     resizeObserver.observe(container);
 
+    const intersectionObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          isVisible = entry.isIntersecting;
+        });
+      },
+      { threshold: 0.05 }
+    );
+    intersectionObserver.observe(container);
+
     const clock = new THREE.Clock();
 
     const animate = () => {
       rafId = window.requestAnimationFrame(animate);
-      if (!renderer) return;
+      if (!isVisible || !renderer) return;
 
       const elapsed = clock.getElapsedTime();
 
-      currentMouseX += (targetMouseX - currentMouseX) * 0.08;
-      currentMouseY += (targetMouseY - currentMouseY) * 0.08;
+      currentMouseX += (targetMouseX - currentMouseX) * 0.06;
+      currentMouseY += (targetMouseY - currentMouseY) * 0.06;
 
-      // Smooth continuous 3D rotation + interactive pointer & drag control
       rootGroup.rotation.y =
-        elapsed * 0.42 + currentMouseX * 0.55 + dragOffsetY + scrollRotation;
+        elapsed * 0.18 + currentMouseX * 0.45 + scrollRotation;
       rootGroup.rotation.x =
-        Math.sin(elapsed * 0.5) * 0.22 -
-        currentMouseY * 0.45 +
-        dragOffsetX +
+        Math.sin(elapsed * 0.35) * 0.12 -
+        currentMouseY * 0.35 +
         scrollRotation * 0.4;
 
-      // Counter-rotating inner faceted core
-      coreMesh.rotation.y = -elapsed * 0.65;
-      coreMesh.rotation.z = elapsed * 0.35;
+      coreMesh.rotation.y = -elapsed * 0.28;
+      coreMesh.rotation.z = elapsed * 0.14;
 
-      // Dynamic orbital rings
-      ring1.rotation.z = elapsed * 0.55;
-      ring1.rotation.x = Math.PI / 2.7 + Math.sin(elapsed * 0.4) * 0.15;
-      ring2.rotation.z = -elapsed * 0.68;
-      ring2.rotation.y = -Math.PI / 5 + Math.cos(elapsed * 0.45) * 0.15;
-
-      // Subtle node pulse
-      const pulse = 1 + Math.sin(elapsed * 3.0) * 0.14;
-      nodeMeshes.forEach((mesh, idx) => {
-        if (idx % 3 === 0) {
-          mesh.scale.setScalar(pulse);
-        }
-      });
+      ring1.rotation.z = elapsed * 0.24;
+      ring2.rotation.z = -elapsed * 0.32;
 
       renderer.render(scene, camera);
 
       frameCount++;
-      if (frameCount % 12 === 0 && onTelemetryUpdateRef.current) {
-        const degX = ((rootGroup.rotation.x * 57.2958) % 360).toFixed(1);
-        const degY = (((rootGroup.rotation.y * 57.2958) % 360 + 360) % 360).toFixed(1);
-        onTelemetryUpdateRef.current({
-          rx: degX,
-          ry: degY,
+      if (frameCount % 20 === 0 && onTelemetryUpdate) {
+        onTelemetryUpdateRef.current?.({
+          rx: (rootGroup.rotation.x * 57.2958).toFixed(1),
+          ry: ((rootGroup.rotation.y * 57.2958) % 360).toFixed(1),
           nodes: 12,
         });
       }
@@ -306,11 +312,9 @@ export function ArchitectureOrbCanvas({
       window.cancelAnimationFrame(rafId);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('scroll', handleScroll);
-      container.removeEventListener('pointerdown', handlePointerDown);
-      container.removeEventListener('pointermove', handlePointerMove);
-      container.removeEventListener('pointerup', handlePointerUp);
-      container.removeEventListener('pointercancel', handlePointerUp);
       resizeObserver.disconnect();
+      intersectionObserver.disconnect();
+      themeObserver.disconnect();
 
       geometriesToDispose.forEach((g) => g.dispose());
       materialsToDispose.forEach((m) => m.dispose());
@@ -322,14 +326,15 @@ export function ArchitectureOrbCanvas({
         }
       }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [variant]);
 
   return (
     <div
       ref={containerRef}
       data-testid="orb-webgl-canvas"
-      title="Drag to rotate 3D Node Topology"
-      className="relative h-full w-full select-none cursor-grab active:cursor-grabbing touch-none"
+      className="relative h-full w-full select-none"
+      aria-hidden="true"
     />
   );
 }

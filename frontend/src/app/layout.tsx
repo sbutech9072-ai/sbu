@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Anton, Inter } from 'next/font/google';
 import { siteConfig } from '@/config/site';
+import { ThemeProvider } from '@/context/theme-context';
 import './globals.css';
 
 const anton = Anton({
@@ -66,9 +67,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${anton.variable} ${inter.variable} scroll-smooth`}>
+    <html lang="en" suppressHydrationWarning className={`${anton.variable} ${inter.variable} scroll-smooth`}>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('sbu-theme');if(t==='dark'){document.documentElement.classList.add('dark');}}catch(e){}})();`,
+          }}
+        />
+      </head>
       <body className="min-h-screen bg-[#EEE6E2] text-[#1E5A54] font-sans antialiased selection:bg-[#F7623D] selection:text-[#EEE6E2]">
-        {children}
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

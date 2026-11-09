@@ -4,6 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { Menu, Bell, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { ThemeToggle } from '@/components/shared/theme-toggle';
 
 interface AdminHeaderProps {
   onOpenMobileMenu: () => void;
@@ -29,6 +30,9 @@ export function AdminHeader({ onOpenMobileMenu }: AdminHeaderProps) {
       </div>
 
       <div className="flex items-center gap-3">
+        {/* Subtle Theme Toggle in Admin */}
+        <ThemeToggle />
+
         {/* Quick link to public website */}
         <Button
           asChild

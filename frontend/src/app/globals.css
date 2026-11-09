@@ -13,6 +13,40 @@
   --font-anton: 'Anton', Impact, 'League Gothic', sans-serif;
   --font-sans: 'Inter', system-ui, sans-serif;
   --ease-studio: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Light Theme tokens */
+  --theme-bg-main: #EEE6E2;
+  --theme-bg-secondary: #E2D7D1;
+  --theme-bg-card: #F8F4F2;
+  --theme-bg-elevated: #FFFFFF;
+  --theme-text-primary: #1E5A54;
+  --theme-text-secondary: rgba(30, 90, 84, 0.7);
+  --theme-accent-primary: #F7623D;
+  --theme-accent-hover: #E05330;
+  --theme-border: rgba(30, 90, 84, 0.18);
+  --theme-icon: #1E5A54;
+}
+
+.dark {
+  --background: #08090B;
+  --foreground: #F5F1EA;
+  --cream: #08090B;
+  --cream-light: #15181C;
+  --cream-dark: #101215;
+  --teal: #1D2025;
+  --orange: #FF642D;
+
+  /* Strict Dark Theme Color Palette */
+  --theme-bg-main: #08090B;
+  --theme-bg-secondary: #101215;
+  --theme-bg-card: #15181C;
+  --theme-bg-elevated: #1D2025;
+  --theme-text-primary: #F5F1EA;
+  --theme-text-secondary: #A9ADB3;
+  --theme-accent-primary: #FF642D;
+  --theme-accent-hover: #FF7950;
+  --theme-border: #292D32;
+  --theme-icon: #D9DDE2;
 }
 
 @layer base {
@@ -133,4 +167,242 @@ body::before {
 ::selection {
   background: #1E5A54;
   color: #EEE6E2;
+}
+
+/* ==========================================================================
+   STRICT DARK THEME (NEW BLACK THEME) OVERRIDES
+   Color Palette:
+   - Main Background:      #08090B
+   - Secondary Background: #101215
+   - Card Background:      #15181C
+   - Elevated Surface:     #1D2025
+   - Primary Text:         #F5F1EA
+   - Secondary Text:       #A9ADB3
+   - Primary Accent:       #FF642D
+   - Accent Hover:         #FF7950
+   - Border:               #292D32
+   - Icon Color:           #D9DDE2
+   ========================================================================== */
+
+/* 1. Base Document & Shell */
+html.dark,
+html.dark body {
+  background-color: #08090B !important;
+  color: #F5F1EA !important;
+}
+
+html.dark body::before {
+  opacity: 0.035 !important;
+  mix-blend-mode: overlay;
+}
+
+/* 2. Main Background (#08090B) */
+html.dark .bg-\[\#EEE6E2\],
+html.dark [class*="bg-[#EEE6E2]"],
+html.dark .bg-cream {
+  background-color: #08090B !important;
+}
+
+/* 3. Secondary Background (#101215) */
+html.dark .bg-\[\#E2D7D1\],
+html.dark [class*="bg-[#E2D7D1]"],
+html.dark .bg-cream-dark {
+  background-color: #101215 !important;
+}
+
+/* 4. Card Background (#15181C) */
+html.dark .bg-\[\#F8F4F2\],
+html.dark [class*="bg-[#F8F4F2]"],
+html.dark .bg-cream-light {
+  background-color: #15181C !important;
+}
+
+/* 5. Elevated Surface (#1D2025) */
+html.dark .bg-\[\#1E5A54\],
+html.dark [class*="bg-[#1E5A54]"]:not([class*="/"]),
+html.dark .bg-white,
+html.dark [class*="bg-white"] {
+  background-color: #1D2025 !important;
+}
+
+/* Low opacity teal background tints become sleek dark surfaces */
+html.dark [class*="bg-[#1E5A54]/5"],
+html.dark [class*="bg-[#1E5A54]/8"],
+html.dark [class*="bg-[#1E5A54]/10"],
+html.dark [class*="bg-[#1E5A54]/15"],
+html.dark [class*="bg-[#1E5A54]/20"] {
+  background-color: #15181C !important;
+}
+
+/* Translucent backdrop overlays remain soft and dark */
+html.dark [class*="bg-[#1E5A54]/40"],
+html.dark [class*="bg-[#1E5A54]/75"],
+html.dark [class*="bg-[#1E5A54]/80"] {
+  background-color: rgba(8, 9, 11, 0.82) !important;
+}
+
+/* 6. Primary Text (#F5F1EA) */
+html.dark .text-\[\#1E5A54\],
+html.dark [class*="text-[#1E5A54]"]:not([class*="/"]),
+html.dark .text-\[\#EEE6E2\],
+html.dark [class*="text-[#EEE6E2]"] {
+  color: #F5F1EA !important;
+}
+
+html.dark h1,
+html.dark h2,
+html.dark h3,
+html.dark h4,
+html.dark h5,
+html.dark h6,
+html.dark .font-headline {
+  color: #F5F1EA !important;
+}
+
+/* 7. Secondary Text (#A9ADB3) */
+html.dark [class*="text-[#1E5A54]/30"],
+html.dark [class*="text-[#1E5A54]/40"],
+html.dark [class*="text-[#1E5A54]/50"],
+html.dark [class*="text-[#1E5A54]/60"],
+html.dark [class*="text-[#1E5A54]/65"],
+html.dark [class*="text-[#1E5A54]/70"],
+html.dark [class*="text-[#1E5A54]/75"],
+html.dark [class*="text-[#1E5A54]/80"],
+html.dark [class*="text-[#1E5A54]/85"],
+html.dark [class*="text-[#1E5A54]/90"] {
+  color: #A9ADB3 !important;
+}
+
+/* 8. Primary Accent (#FF642D) */
+html.dark .text-\[\#F7623D\],
+html.dark [class*="text-[#F7623D]"],
+html.dark .text-\[\#FF642D\],
+html.dark [class*="text-[#FF642D]"],
+html.dark .text-orange {
+  color: #FF642D !important;
+}
+
+html.dark .bg-\[\#F7623D\],
+html.dark [class*="bg-[#F7623D]"],
+html.dark .bg-\[\#FF642D\],
+html.dark [class*="bg-[#FF642D]"],
+html.dark .bg-orange {
+  background-color: #FF642D !important;
+}
+
+html.dark .border-\[\#F7623D\],
+html.dark [class*="border-[#F7623D]"],
+html.dark .border-\[\#FF642D\],
+html.dark [class*="border-[#FF642D]"] {
+  border-color: #FF642D !important;
+}
+
+/* 9. Accent Hover (#FF7950) */
+html.dark [class*="hover:bg-[#F7623D]"]:hover,
+html.dark [class*="hover:bg-[#E05330]"]:hover,
+html.dark [class*="hover:bg-[#FF642D]"]:hover {
+  background-color: #FF7950 !important;
+}
+
+html.dark [class*="hover:text-[#F7623D]"]:hover,
+html.dark [class*="hover:text-[#FF642D]"]:hover {
+  color: #FF7950 !important;
+}
+
+/* Interactive Hover States */
+html.dark [class*="hover:bg-[#1E5A54]"]:hover,
+html.dark [class*="hover:bg-[#16443F]"]:hover,
+html.dark [class*="hover:bg-[#1E5A54]/5"]:hover,
+html.dark [class*="hover:bg-[#1E5A54]/10"]:hover {
+  background-color: #1D2025 !important;
+  color: #F5F1EA !important;
+}
+
+html.dark [class*="hover:bg-[#F8F4F2]"]:hover,
+html.dark [class*="hover:bg-[#F8F4F2]/60"]:hover {
+  background-color: #1D2025 !important;
+}
+
+html.dark [class*="hover:border-[#1E5A54]"]:hover,
+html.dark [class*="hover:border-[#1E5A54]/25"]:hover,
+html.dark [class*="hover:border-[#1E5A54]/45"]:hover {
+  border-color: #FF642D !important;
+}
+
+/* 10. Borders (#292D32) */
+html.dark [class*="border-[#1E5A54]"],
+html.dark [class*="border-[#1E5A54]/"] {
+  border-color: #292D32 !important;
+}
+
+/* 11. Icon Color (#D9DDE2) */
+html.dark svg:not([class*="text-[#F7623D]"]):not([class*="text-[#FF642D]"]):not([class*="stroke-[#F7623D]"]):not([class*="stroke-[#FF642D]"]):not([class*="text-white"]):not([class*="stroke-white"]) {
+  color: #D9DDE2;
+}
+
+html.dark svg path[stroke="#1E5A54"],
+html.dark svg circle[stroke="#1E5A54"],
+html.dark svg line[stroke="#1E5A54"] {
+  stroke: #292D32 !important;
+}
+
+html.dark svg path[stroke="#F7623D"] {
+  stroke: #FF642D !important;
+}
+
+html.dark svg path[fill="#1E5A54"],
+html.dark svg circle[fill="#1E5A54"] {
+  fill: #D9DDE2 !important;
+}
+
+html.dark svg path[fill="#F7623D"] {
+  fill: #FF642D !important;
+}
+
+/* 12. Forms, Inputs, Textareas, Selects */
+html.dark input,
+html.dark textarea,
+html.dark select {
+  background-color: #15181C !important;
+  color: #F5F1EA !important;
+  border-color: #292D32 !important;
+}
+
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+  color: #A9ADB3 !important;
+}
+
+html.dark input:focus,
+html.dark textarea:focus,
+html.dark select:focus {
+  border-color: #FF642D !important;
+  outline-color: #FF642D !important;
+}
+
+/* 13. Focus Ring */
+html.dark :focus-visible {
+  outline-color: #FF642D !important;
+}
+
+/* 14. Selection */
+html.dark ::selection {
+  background-color: #FF642D !important;
+  color: #08090B !important;
+}
+
+/* 15. Scrollbars */
+html.dark ::-webkit-scrollbar-track {
+  background-color: #08090B !important;
+}
+html.dark ::-webkit-scrollbar-thumb {
+  background-color: #292D32 !important;
+}
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background-color: #1D2025 !important;
+}
+
+/* 16. Box Shadows */
+html.dark [class*="shadow-"] {
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.6) !important;
 }
