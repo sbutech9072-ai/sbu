@@ -28,7 +28,7 @@ export function ContactSection() {
         {/* Clean 5/7 Studio Dispatch Desk */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 xl:gap-14 items-start">
           {/* Left 5 Cols: Direct Coordinates Ledger */}
-          <div className="lg:col-span-5 space-y-6 p-7 sm:p-8 xl:p-10 rounded-2xl border border-[#1E5A54]/25 bg-[#F8F4F2]">
+          <div className="lg:col-span-5 space-y-6 p-7 sm:p-8 xl:p-10 rounded-2xl border border-[#1E5A54]/25 bg-[#EEE6E2]">
             <div className="flex items-center justify-between border-b border-[#1E5A54]/15 pb-4">
               <div>
                 <span className="font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-[#1E5A54] decoration-[#F7623D] block">
@@ -43,7 +43,7 @@ export function ContactSection() {
 
             <div className="divide-y divide-[#1E5A54]/15">
               <div className="py-4 flex items-start gap-3.5">
-                <div className="h-9 w-9 rounded-full border border-[#1E5A54] bg-[#EEE6E2] flex items-center justify-center text-[#1E5A54] shrink-0">
+                <div className="h-9 w-9 rounded-full border border-[#1E5A54] bg-[#F8F4F2] flex items-center justify-center text-[#1E5A54] shrink-0">
                   <Mail className="h-4 w-4 stroke-[1.75]" />
                 </div>
                 <div>
@@ -60,7 +60,7 @@ export function ContactSection() {
               </div>
 
               <div className="py-4 flex items-start gap-3.5">
-                <div className="h-9 w-9 rounded-full border border-[#1E5A54] bg-[#EEE6E2] flex items-center justify-center text-[#1E5A54] shrink-0">
+                <div className="h-9 w-9 rounded-full border border-[#1E5A54] bg-[#F8F4F2] flex items-center justify-center text-[#1E5A54] shrink-0">
                   <Phone className="h-4 w-4 stroke-[1.75]" />
                 </div>
                 <div>
@@ -77,7 +77,7 @@ export function ContactSection() {
               </div>
 
               <div className="py-4 flex items-start gap-3.5">
-                <div className="h-9 w-9 rounded-full border border-[#1E5A54] bg-[#EEE6E2] flex items-center justify-center text-[#1E5A54] shrink-0">
+                <div className="h-9 w-9 rounded-full border border-[#1E5A54] bg-[#F8F4F2] flex items-center justify-center text-[#1E5A54] shrink-0">
                   <MapPin className="h-4 w-4 stroke-[1.75]" />
                 </div>
                 <div>
@@ -91,7 +91,7 @@ export function ContactSection() {
               </div>
 
               <div className="py-4 flex items-start gap-3.5">
-                <div className="h-9 w-9 rounded-full border border-[#1E5A54] bg-[#EEE6E2] flex items-center justify-center text-[#1E5A54] shrink-0">
+                <div className="h-9 w-9 rounded-full border border-[#1E5A54] bg-[#F8F4F2] flex items-center justify-center text-[#1E5A54] shrink-0">
                   <Clock className="h-4 w-4 stroke-[1.75]" />
                 </div>
                 <div>
@@ -105,7 +105,7 @@ export function ContactSection() {
               </div>
             </div>
 
-            <div className="p-4 rounded-xl border border-[#1E5A54]/20 bg-[#EEE6E2] space-y-1.5">
+            <div className="p-4 rounded-xl border border-[#1E5A54]/20 bg-[#F8F4F2] space-y-1.5">
               <div className="flex items-center gap-2">
                 <MessageSquare className="h-4 w-4 text-[#F7623D] stroke-[1.75]" />
                 <span className="font-mono text-xs font-bold uppercase tracking-[0.14em] text-[#1E5A54]">
@@ -120,7 +120,7 @@ export function ContactSection() {
           </div>
 
           {/* Right 7 Cols: Dispatch Form Card */}
-          <div className="lg:col-span-7 p-7 sm:p-9 rounded-2xl border border-[#1E5A54]/25 bg-[#F8F4F2]">
+          <div className="lg:col-span-7 p-7 sm:p-9 rounded-2xl border border-[#1E5A54]/25 bg-[#EEE6E2]">
             <div className="mb-6 border-b border-[#1E5A54]/15 pb-4 flex flex-wrap items-center justify-between gap-2">
               <div>
                 <span className="font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-[#1E5A54] decoration-[#F7623D] block">

@@ -68,7 +68,7 @@ export function ServiceCard({ service }: ServiceCardProps) {
         </div>
       </div>
 
-      <div className="pt-6 mt-6 border-t border-[#1E5A54]/15 flex items-center justify-between gap-3">
+      <div className="pt-6 mt-6 border-t border-[#1E5A54]/15 flex flex-wrap items-center justify-between gap-3">
         <span className="font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-[#1E5A54]">
           {service.deliverables.length} Deliverables · {service.processSteps.length} Phases
         </span>

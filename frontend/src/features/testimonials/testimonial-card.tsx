@@ -36,7 +36,7 @@ export function TestimonialCard({ testimonial }: TestimonialCardProps) {
         </p>
       </div>
 
-      <div className="pt-6 mt-6 border-t border-[#1E5A54]/15 flex items-center justify-between gap-3">
+      <div className="pt-6 mt-6 border-t border-[#1E5A54]/15 flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-3">
           <div className="h-10 w-10 rounded-full border border-[#1E5A54] bg-[#E2D7D1] flex items-center justify-center font-bold text-[#1E5A54] text-xs shrink-0">
             {testimonial.author.slice(0, 2).toUpperCase()}
