@@ -21,6 +21,8 @@ out
 .env.local
 .env.*.local
 *.env
+ai/.env
+
 
 # Logs
 *.log

@@ -1,7 +1,11 @@
 import os
+from pathlib import Path
 from typing import List, Union
 from pydantic import AnyHttpUrl, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+BACKEND_DIR = Path(__file__).resolve().parent.parent.parent
+DEFAULT_DB_PATH = (BACKEND_DIR / "sbuweb.db").as_posix()
 
 
 class Settings(BaseSettings):
@@ -27,7 +31,7 @@ class Settings(BaseSettings):
 
     # Database
     # Defaults to SQLite if PostgreSQL is not specified, enabling zero-config local operations
-    DATABASE_URL: str = os.getenv("DATABASE_URL", "sqlite:///./sbuweb.db")
+    DATABASE_URL: str = os.getenv("DATABASE_URL", f"sqlite:///{DEFAULT_DB_PATH}")
 
     # Supabase Integration (Preserving existing configuration)
     SUPABASE_URL: str = os.getenv("SUPABASE_URL", "https://rwvziiwpitsupexrijxv.supabase.co")

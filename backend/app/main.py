@@ -9,6 +9,7 @@ from app.core.config import settings
 from app.database.init_db import init_db
 from app.middleware.cors import setup_cors
 from app.api.v1.api import api_router
+from app.api.v1.endpoints import ai as ai_endpoint
 
 logging.basicConfig(
     level=logging.INFO,
@@ -79,6 +80,9 @@ async def http_exception_handler(request: Request, exc: StarletteHTTPException):
 
 # Mount API V1 routes
 app.include_router(api_router, prefix=settings.API_V1_STR)
+
+# Mount AI routes directly at /api/ai for standardized root API access
+app.include_router(ai_endpoint.router, prefix="/api")
 
 
 @app.get("/", tags=["Root"])

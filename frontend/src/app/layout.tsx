@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import { Anton, Inter } from 'next/font/google';
 import { siteConfig } from '@/config/site';
 import { ThemeProvider } from '@/context/theme-context';
+import ChatWidget from '@/components/ai/chat-widget';
 import './globals.css';
 
 const anton = Anton({
@@ -76,6 +77,7 @@ export default function RootLayout({
         />
         <ThemeProvider>
           {children}
+          <ChatWidget />
         </ThemeProvider>
       </body>
     </html>

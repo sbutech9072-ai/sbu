@@ -6,6 +6,7 @@ from app.models.user import User, UserRole
 from app.models.contact import ContactMessage
 from app.models.quote import QuoteRequest
 from app.models.cms import Service, SiteSettings
+from app.models.ai_session import ChatSession, ChatMessage
 from app.core.security import get_password_hash
 from app.database.seed_data import SEED_ADMIN, SEED_SERVICES, SEED_MESSAGES, SEED_QUOTES
 

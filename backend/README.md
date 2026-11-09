@@ -89,5 +89,22 @@ python run.py
 Server starts on `http://localhost:5000`.
 - Interactive Swagger UI: `http://localhost:5000/api/docs`
 - ReDoc Documentation: `http://localhost:5000/api/redoc`
-- OpenAPI JSON Spec: `http://localhost:5000/api/openapi.json`
+---
+
+## 🧠 Centralized AI & RAG Subsystem
+
+All AI datasets, PDF ingestion, chunking, embeddings, vector stores, and model architectures are centralized inside the root **[`/ai`](../ai)** directory.
+
+The backend provides the API integration layer at `/api/v1/ai/chat`.
+
+To run AI ingestion or tests from the project root:
+```bash
+# Execute Phase 1 ingestion
+python ai/scripts/run_ingestion.py
+
+# Run AI test suite
+python ai/tests/test_ingestion.py
+```
+
+For full documentation of the AI subsystem, refer to **[`ai/README.md`](../ai/README.md)**.
 

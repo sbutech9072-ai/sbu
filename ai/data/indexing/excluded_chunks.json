@@ -1,0 +1,18 @@
+{
+  "generated_at": "2026-11-09T18:06:24.157451+00:00",
+  "total_input_chunks": 19,
+  "approved_chunks_count": 18,
+  "excluded_chunks_count": 1,
+  "excluded_chunks": [
+    {
+      "chunk_id": "sbu_tech_kb_v1_p3_c017",
+      "document_id": "sbu_tech_kb_v1",
+      "page_number": 3,
+      "section_title": "9. Rules for the website AI assistant",
+      "reasons": [
+        "Internal AI assistant behavioral rules (intended as system prompt, not public vector index)."
+      ],
+      "content_snippet": "9. Rules for the website AI assistant\n• Answer from this knowledge base and approved connected records only. Do not invent owners, prices, p..."
+    }
+  ]
+}

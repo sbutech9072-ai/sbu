@@ -1,0 +1,168 @@
+{
+  "benchmark_name": "SBU TECH RAG Phase 3 Retrieval Benchmark",
+  "queries": [
+    {
+      "id": "q01_regression_owners_bn",
+      "category": "regression_test_a",
+      "language": "Bangla",
+      "query": "এসবিইউ টেকের প্রধান প্রতিষ্ঠাতা এবং অংশীদার কারা?",
+      "expected_sections": ["2. Owners & leadership", "| Name | Role |", "8. Frequently asked questions"],
+      "expected_chunk_prefixes": ["sbu_tech_kb_v1_p1_c003", "sbu_tech_kb_v1_p1_c005", "sbu_tech_kb_v1_p3_c016"],
+      "is_answerable": true
+    },
+    {
+      "id": "q02_regression_portal_en",
+      "category": "regression_test_b",
+      "language": "English",
+      "query": "How do clients log in to the SBU TECH client portal?",
+      "expected_sections": ["7. Website portal & login guidance", "| Portal / action | Instructions and limitations |", "8. Frequently asked questions"],
+      "expected_chunk_prefixes": ["sbu_tech_kb_v1_p3_c015", "sbu_tech_kb_v1_p3_c019", "sbu_tech_kb_v1_p3_c016"],
+      "is_answerable": true
+    },
+    {
+      "id": "q03_services_en",
+      "category": "core_services",
+      "language": "English",
+      "query": "What services does SBU TECH provide?",
+      "expected_sections": ["4. What SBU TECH does", "8. Frequently asked questions"],
+      "expected_chunk_prefixes": ["sbu_tech_kb_v1_p2_c006", "sbu_tech_kb_v1_p3_c016"],
+      "is_answerable": true
+    },
+    {
+      "id": "q04_about_en",
+      "category": "company_identity",
+      "language": "English",
+      "query": "What is SBU TECH?",
+      "expected_sections": ["4. What SBU TECH does", "8. Frequently asked questions", "1. Company identity & contact details"],
+      "expected_chunk_prefixes": ["sbu_tech_kb_v1_p2_c006", "sbu_tech_kb_v1_p3_c016", "sbu_tech_kb_v1_p1_c002"],
+      "is_answerable": true
+    },
+    {
+      "id": "q05_contact_en",
+      "category": "contact_info",
+      "language": "English",
+      "query": "How can I contact SBU TECH?",
+      "expected_sections": ["1. Company identity & contact details", "| Field | Company information |", "6. What to collect from a prospective client", "8. Frequently asked questions"],
+      "expected_chunk_prefixes": ["sbu_tech_kb_v1_p1_c002", "sbu_tech_kb_v1_p1_c004", "sbu_tech_kb_v1_p2_c013", "sbu_tech_kb_v1_p3_c016"],
+      "is_answerable": true
+    },
+    {
+      "id": "q06_quote_en",
+      "category": "project_intake",
+      "language": "English",
+      "query": "How do I request a project quote?",
+      "expected_sections": ["8. Frequently asked questions", "6. What to collect from a prospective client", "5. How a project typically works"],
+      "expected_chunk_prefixes": ["sbu_tech_kb_v1_p3_c016", "sbu_tech_kb_v1_p2_c013"],
+      "is_answerable": true
+    },
+    {
+      "id": "q07_tech_stack_en",
+      "category": "technical_stack",
+      "language": "English",
+      "query": "What technologies does SBU TECH use?",
+      "expected_sections": ["4. What SBU TECH does"],
+      "expected_chunk_prefixes": ["sbu_tech_kb_v1_p2_c006"],
+      "is_answerable": true
+    },
+    {
+      "id": "q08_services_bn",
+      "category": "multilingual_cross_lingual",
+      "language": "Bangla",
+      "query": "এসবিইউ টেক কী ধরণের সেবা প্রদান করে?",
+      "expected_sections": ["4. What SBU TECH does", "8. Frequently asked questions"],
+      "expected_chunk_prefixes": ["sbu_tech_kb_v1_p2_c006", "sbu_tech_kb_v1_p3_c016"],
+      "is_answerable": true
+    },
+    {
+      "id": "q09_services_ar",
+      "category": "multilingual_cross_lingual",
+      "language": "Arabic",
+      "query": "ما هي الخدمات الهندسية التي تقدمها شركة SBU TECH؟",
+      "expected_sections": ["4. What SBU TECH does", "8. Frequently asked questions"],
+      "expected_chunk_prefixes": ["sbu_tech_kb_v1_p2_c006"],
+      "is_answerable": true
+    },
+    {
+      "id": "q10_services_hi",
+      "category": "multilingual_cross_lingual",
+      "language": "Hindi",
+      "query": "एसबीयू टेक कौन सी सेवाएं प्रदान करता है?",
+      "expected_sections": ["4. What SBU TECH does", "8. Frequently asked questions"],
+      "expected_chunk_prefixes": ["sbu_tech_kb_v1_p2_c006"],
+      "is_answerable": true
+    },
+    {
+      "id": "q11_services_zh",
+      "category": "multilingual_cross_lingual",
+      "language": "Chinese",
+      "query": "SBU TECH 提供哪些软件工程服务？",
+      "expected_sections": ["4. What SBU TECH does"],
+      "expected_chunk_prefixes": ["sbu_tech_kb_v1_p2_c006"],
+      "is_answerable": true
+    },
+    {
+      "id": "q12_services_ja",
+      "category": "multilingual_cross_lingual",
+      "language": "Japanese",
+      "query": "SBU TECH はどのようなソフトウェア開発サービスを提供していますか？",
+      "expected_sections": ["4. What SBU TECH does"],
+      "expected_chunk_prefixes": ["sbu_tech_kb_v1_p2_c006"],
+      "is_answerable": true
+    },
+    {
+      "id": "q13_services_fr",
+      "category": "multilingual_cross_lingual",
+      "language": "French",
+      "query": "Quels services d'ingénierie logicielle propose SBU TECH ?",
+      "expected_sections": ["4. What SBU TECH does"],
+      "expected_chunk_prefixes": ["sbu_tech_kb_v1_p2_c006"],
+      "is_answerable": true
+    },
+    {
+      "id": "q14_services_de",
+      "category": "multilingual_cross_lingual",
+      "language": "German",
+      "query": "Welche Software-Engineering-Dienstleistungen bietet SBU TECH an?",
+      "expected_sections": ["4. What SBU TECH does"],
+      "expected_chunk_prefixes": ["sbu_tech_kb_v1_p2_c006"],
+      "is_answerable": true
+    },
+    {
+      "id": "q15_services_es",
+      "category": "multilingual_cross_lingual",
+      "language": "Spanish",
+      "query": "¿Qué servicios de ingeniería de software ofrece SBU TECH?",
+      "expected_sections": ["4. What SBU TECH does"],
+      "expected_chunk_prefixes": ["sbu_tech_kb_v1_p2_c006"],
+      "is_answerable": true
+    },
+    {
+      "id": "q16_ood_employees",
+      "category": "no_answer_abstention",
+      "language": "English",
+      "query": "How many employees does SBU TECH currently have?",
+      "expected_sections": [],
+      "expected_chunk_prefixes": [],
+      "is_answerable": false
+    },
+    {
+      "id": "q17_ood_recipe",
+      "category": "no_answer_abstention",
+      "language": "English",
+      "query": "What is the secret recipe for chocolate cake?",
+      "expected_sections": [],
+      "expected_chunk_prefixes": [],
+      "is_answerable": false
+    },
+    {
+      "id": "q18_ood_stock",
+      "category": "no_answer_abstention",
+      "language": "English",
+      "query": "What is SBU TECH's official stock ticker symbol on NASDAQ?",
+      "expected_sections": [],
+      "expected_chunk_prefixes": [],
+      "is_answerable": false
+    }
+  ]
+}
+

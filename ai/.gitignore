@@ -1,0 +1,35 @@
+# Python byte-code and caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Environment files
+.env
+*.env
+!.env.example
+
+# Virtual environments
+.venv/
+env/
+venv/
+ENV/
+
+# Model weights, downloaded embeddings & local LLM checkpoints
+models/*
+!models/.gitkeep
+
+# Persistent Qdrant vector database storage
+storage/qdrant/*
+!storage/qdrant/.gitkeep
+
+# Run logs
+logs/*.log
+!logs/.gitkeep
+
+# Temporary / intermediate scratch files
+*.tmp
+*.bak
+.DS_Store
+Thumbs.db
+
