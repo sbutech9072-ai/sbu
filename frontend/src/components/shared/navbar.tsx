@@ -22,7 +22,6 @@ import {
 import { siteConfig } from '@/config/site';
 import { MagneticWrap } from '@/components/human/magnetic-button';
 import { HamburgerButton } from '@/components/ui/hamburger-button';
-import { ThemeToggle } from '@/components/shared/theme-toggle';
 import { cn } from '@/lib/utils';
 
 const navIconMap: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -115,8 +114,6 @@ export function Navbar() {
 
           {/* Right Action Buttons */}
           <div className="flex items-center gap-2 sm:gap-3">
-            <ThemeToggle />
-
             <Link
               href="/login"
               className="hidden sm:flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-[0.16em] text-[#1E5A54] hover:bg-[#1E5A54]/5 transition-colors border border-transparent hover:border-[#1E5A54]/25"
