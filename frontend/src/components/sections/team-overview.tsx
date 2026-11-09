@@ -11,12 +11,12 @@ export function TeamOverview() {
   const leadership = teamData.filter((m) => m.isLeadership).slice(0, 3);
 
   return (
-    <section className="py-20 md:py-28 border-b border-[#1E5A54]/20 bg-[#EEE6E2]">
+    <section className="py-14 md:py-20 bg-[#F8F4F2]">
       <div className="site-container">
         {/* Asymmetric Editorial Layout: Left 4-Col Leadership Ethos / Right 8-Col Staggered Principals */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 xl:gap-20 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 xl:gap-16 items-start">
           {/* Left Column: Leadership Ethos */}
-          <div className="lg:col-span-4 space-y-6">
+          <div className="lg:col-span-4 space-y-5">
             <div className="flex items-center justify-between gap-3">
               <StudioStamp
                 text="FOUNDING PRINCIPALS"
@@ -42,7 +42,7 @@ export function TeamOverview() {
             <div className="pt-2">
               <Link
                 href="/team"
-                className="group inline-flex items-center gap-3 rounded-full border border-[#1E5A54] bg-[#F8F4F2] pl-6 pr-1.5 py-1.5 text-xs font-bold uppercase tracking-[0.16em] text-[#1E5A54] hover:bg-[#1E5A54] hover:text-[#EEE6E2] transition-all"
+                className="group inline-flex items-center gap-3 rounded-full border border-[#1E5A54] bg-[#EEE6E2] pl-6 pr-1.5 py-1.5 text-xs font-bold uppercase tracking-[0.16em] text-[#1E5A54] hover:bg-[#1E5A54] hover:text-[#EEE6E2] transition-all"
               >
                 <span>Meet All {teamData.length} Engineers</span>
                 <span className="w-7 h-7 rounded-full bg-[#F7623D] text-white flex items-center justify-center transition-transform group-hover:scale-110">

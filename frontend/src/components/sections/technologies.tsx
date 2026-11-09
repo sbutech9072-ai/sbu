@@ -65,8 +65,8 @@ export function Technologies() {
       : techCategories.filter((c) => c.category === activeCategory);
 
   return (
-    <section className="py-20 md:py-28 border-b border-[#1E5A54]/20 bg-[#EEE6E2]">
-      <div className="site-container space-y-12 xl:space-y-16">
+    <section className="py-14 md:py-20 bg-[#EEE6E2]">
+      <div className="site-container space-y-8 md:space-y-10">
         {/* Header + Filter Controls */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
           <div className="space-y-4">

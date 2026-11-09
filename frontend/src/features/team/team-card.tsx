@@ -10,7 +10,7 @@ interface TeamCardProps {
 
 export function TeamCard({ member }: TeamCardProps) {
   return (
-    <Card className="group overflow-hidden rounded-2xl border border-[#1E5A54]/25 bg-[#F8F4F2] hover:-translate-y-1 hover:border-[#1E5A54] hover:bg-[#EEE6E2] transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] flex flex-col justify-between">
+    <Card className="group overflow-hidden rounded-2xl border border-[#1E5A54]/25 bg-[#EEE6E2] hover:-translate-y-1 hover:border-[#1E5A54] hover:bg-[#F8F4F2] transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] flex flex-col justify-between">
       <div className="p-6 space-y-4">
         <div className="flex items-center justify-between pb-3 border-b border-[#1E5A54]/15">
           <span className="font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-[#1E5A54]">

@@ -49,7 +49,7 @@ export function WhyChooseUs() {
   ];
 
   return (
-    <section className="py-20 md:py-28 border-b border-[#1E5A54]/20 bg-[#EEE6E2]">
+    <section className="py-14 md:py-20 bg-[#EEE6E2]">
       <div className="site-container">
         {/* Asymmetric 12-Column Architectural Specification Board */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 xl:gap-20 items-start">

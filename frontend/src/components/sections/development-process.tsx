@@ -40,8 +40,8 @@ export function DevelopmentProcess() {
   ];
 
   return (
-    <section className="py-20 md:py-28 border-b border-[#1E5A54]/20 bg-[#EEE6E2]">
-      <div className="site-container space-y-14 xl:space-y-20">
+    <section className="py-14 md:py-20 bg-[#F8F4F2]">
+      <div className="site-container space-y-8 md:space-y-10">
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
           <SectionHeading
             align="left"
@@ -75,7 +75,7 @@ export function DevelopmentProcess() {
                   </div>
                 )}
 
-                <TiltCard className="p-6 md:p-7 rounded-2xl border border-[#1E5A54]/25 bg-[#F8F4F2] hover:border-[#1E5A54]/50 transition-colors flex flex-col justify-between space-y-6">
+                <TiltCard className="p-6 md:p-7 rounded-2xl border border-[#1E5A54]/20 bg-[#EEE6E2]/90 hover:bg-[#EEE6E2] hover:border-[#1E5A54]/50 transition-colors flex flex-col justify-between space-y-6">
                   <div className="space-y-4">
                     <div className="flex items-center justify-between border-b border-[#1E5A54]/15 pb-3">
                       <span className="font-headline text-4xl font-black text-[#1E5A54] decoration-[#F7623D] leading-none">

@@ -9,8 +9,8 @@ export function ServicesOverview() {
   const featuredServices = servicesData.slice(0, 4);
 
   return (
-    <section className="py-20 md:py-28 xl:py-32 border-b border-[#1E5A54]/20 bg-[#EEE6E2]">
-      <div className="site-container space-y-12 xl:space-y-16">
+    <section className="py-14 md:py-20 bg-[#EEE6E2]">
+      <div className="site-container space-y-8 md:space-y-10">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <SectionHeading
             align="left"

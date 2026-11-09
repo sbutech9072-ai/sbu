@@ -38,7 +38,7 @@ export function CompanyIntro() {
   ];
 
   return (
-    <section className="py-20 md:py-28 xl:py-32 border-b border-[#1E5A54]/20 bg-[#EEE6E2]">
+    <section className="py-14 md:py-20 bg-[#F8F4F2]">
       <div className="site-container">
         {/* Asymmetric 5/7 Broadsheet Split */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 xl:gap-16 items-start">
@@ -70,7 +70,7 @@ export function CompanyIntro() {
             <div className="pt-2 flex items-center gap-4">
               <Link
                 href="/about"
-                className="group inline-flex items-center gap-3 rounded-full border border-[#1E5A54] bg-[#F8F4F2] pl-6 pr-1.5 py-1.5 text-xs font-bold uppercase tracking-[0.16em] text-[#1E5A54] hover:bg-[#1E5A54] hover:text-[#EEE6E2] transition-all"
+                className="group inline-flex items-center gap-3 rounded-full border border-[#1E5A54] bg-[#EEE6E2] pl-6 pr-1.5 py-1.5 text-xs font-bold uppercase tracking-[0.16em] text-[#1E5A54] hover:bg-[#1E5A54] hover:text-[#EEE6E2] transition-all"
               >
                 <span>Read Our Studio Story</span>
                 <span className="w-7 h-7 rounded-full bg-[#F7623D] text-white flex items-center justify-center transition-transform group-hover:scale-110">
@@ -85,9 +85,9 @@ export function CompanyIntro() {
             {pillars.map((pillar, idx) => (
               <div
                 key={pillar.num}
-                className={idx % 2 === 1 ? 'sm:mt-10' : ''}
+                className={idx % 2 === 1 ? 'sm:mt-8' : ''}
               >
-                <TiltCard className="p-7 xl:p-9 rounded-2xl border border-[#1E5A54]/20 bg-[#F8F4F2] hover:border-[#1E5A54]/45 transition-colors flex flex-col justify-between space-y-5">
+                <TiltCard className="p-7 xl:p-9 rounded-2xl border border-[#1E5A54]/20 bg-[#EEE6E2]/90 hover:bg-[#EEE6E2] hover:border-[#1E5A54]/45 transition-colors flex flex-col justify-between space-y-5">
                   <div className="space-y-4">
                     <div className="flex items-center justify-between border-b border-[#1E5A54]/15 pb-3">
                       <span className="font-mono text-xs font-bold uppercase tracking-[0.16em] text-[#1E5A54]">

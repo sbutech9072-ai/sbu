@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { ArrowRight, ArrowUpRight, Code, Cpu, ShieldCheck } from 'lucide-react';
+import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { siteConfig } from '@/config/site';
 import { ArchitectureNodeOrb } from '@/components/human/architecture-node-orb';
 import { HandUnderline, StudioStamp } from '@/components/human/hand-crafted-svg';
@@ -8,8 +8,8 @@ import { MagneticWrap } from '@/components/human/magnetic-button';
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden pt-12 pb-16 md:pt-20 md:pb-24 border-b border-[#1E5A54]/20 bg-[#EEE6E2]">
-      <div className="site-container space-y-12 xl:space-y-16">
+    <section className="relative overflow-hidden pt-10 pb-12 md:pt-14 md:pb-16 bg-[#EEE6E2]">
+      <div className="site-container space-y-10 md:space-y-12">
         {/* Asymmetric 12-column split: 7 left editorial / 5 right 3D orb */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
           {/* Left Editorial Column */}
@@ -66,24 +66,6 @@ export function Hero() {
                   <ArrowUpRight className="h-4 w-4 stroke-2" />
                 </span>
               </Link>
-            </div>
-
-            {/* Technical Discipline Strip */}
-            <div className="pt-2 flex flex-wrap items-center gap-x-6 gap-y-2 text-xs uppercase tracking-[0.15em] font-bold text-[#1E5A54]">
-              <div className="flex items-center gap-2">
-                <Code className="h-4 w-4 text-[#F7623D] stroke-[1.75]" />
-                <span>Next.js & Go Microservices</span>
-              </div>
-              <span className="w-1.5 h-1.5 rounded-full bg-[#1E5A54]/40 hidden sm:inline-block" />
-              <div className="flex items-center gap-2">
-                <Cpu className="h-4 w-4 text-[#F7623D] stroke-[1.75]" />
-                <span>Private RAG & Vector Search</span>
-              </div>
-              <span className="w-1.5 h-1.5 rounded-full bg-[#1E5A54]/40 hidden sm:inline-block" />
-              <div className="flex items-center gap-2">
-                <ShieldCheck className="h-4 w-4 text-[#F7623D] stroke-[1.75]" />
-                <span>Zero-Downtime Terraform & EKS</span>
-              </div>
             </div>
           </div>
 

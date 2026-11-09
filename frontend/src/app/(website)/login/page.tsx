@@ -15,7 +15,6 @@ import {
   AlertCircle,
   X,
   Loader2,
-  Sparkles,
   ArrowLeft,
   ChevronDown,
 } from 'lucide-react';
@@ -136,11 +135,6 @@ export default function LoginPage() {
 
         {/* Header */}
         <div className="text-center space-y-3">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-[#1E5A54]/25 bg-[#F8F4F2] text-xs font-semibold tracking-[0.16em] uppercase text-[#1E5A54]">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#F7623D]" />
-            <Sparkles className="w-3.5 h-3.5 text-[#F7623D]" />
-            <span>Client & Partner Access</span>
-          </div>
           <h1 className="font-headline text-4xl md:text-5xl uppercase tracking-tight text-[#1E5A54]">
             {mode === 'client-login' && 'Client Portal'}
             {mode === 'client-register' && 'Client Registration'}

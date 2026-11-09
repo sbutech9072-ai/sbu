@@ -7,8 +7,8 @@ import { HandArrow, StudioStamp } from '@/components/human/hand-crafted-svg';
 
 export function ContactSection() {
   return (
-    <section className="py-20 md:py-28 bg-[#EEE6E2]">
-      <div className="site-container space-y-14 xl:space-y-20">
+    <section className="py-14 md:py-20 bg-[#F8F4F2]">
+      <div className="site-container space-y-8 md:space-y-10">
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
           <SectionHeading
             align="left"

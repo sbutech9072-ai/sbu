@@ -68,14 +68,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning className={`${anton.variable} ${inter.variable} scroll-smooth`}>
-      <head>
+      <body className="min-h-screen bg-[#EEE6E2] text-[#1E5A54] font-sans antialiased selection:bg-[#F7623D] selection:text-[#EEE6E2]">
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(){try{var t=localStorage.getItem('sbu-theme');if(t==='dark'){document.documentElement.classList.add('dark');}}catch(e){}})();`,
           }}
         />
-      </head>
-      <body className="min-h-screen bg-[#EEE6E2] text-[#1E5A54] font-sans antialiased selection:bg-[#F7623D] selection:text-[#EEE6E2]">
         <ThemeProvider>
           {children}
         </ThemeProvider>
