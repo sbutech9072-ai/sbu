@@ -178,7 +178,7 @@ export function ArchitectureNodeOrb({
   variant = 'hero',
   className,
 }: ArchitectureNodeOrbProps) {
-  const [canRenderWebGL, setCanRenderWebGL] = React.useState(false);
+  const [canRenderWebGL, setCanRenderWebGL] = React.useState(true);
   const [viewMode, setViewMode] = React.useState<'3d' | 'blueprint'>('3d');
   const [telemetry, setTelemetry] = React.useState({
     rx: '14.2',
@@ -186,32 +186,31 @@ export function ArchitectureNodeOrb({
     nodes: 12,
   });
 
+  const handleWebGLError = React.useCallback(() => {
+    setCanRenderWebGL(false);
+    setViewMode('blueprint');
+  }, []);
+
   React.useEffect(() => {
     if (typeof window === 'undefined') return;
-
-    const reducedMotion = window.matchMedia(
-      '(prefers-reduced-motion: reduce)'
-    ).matches;
-    const lowPower =
-      typeof navigator !== 'undefined' &&
-      Boolean(navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 2);
 
     let hasWebGL = false;
     try {
       const canvas = document.createElement('canvas');
       hasWebGL = Boolean(
-        canvas.getContext('webgl') || canvas.getContext('experimental-webgl')
+        canvas.getContext('webgl2') ||
+          canvas.getContext('webgl') ||
+          canvas.getContext('experimental-webgl')
       );
     } catch {
       hasWebGL = false;
     }
 
-    if (reducedMotion || lowPower || !hasWebGL) {
+    if (!hasWebGL) {
       setCanRenderWebGL(false);
       setViewMode('blueprint');
     } else {
       setCanRenderWebGL(true);
-      setViewMode('3d');
     }
   }, []);
 
@@ -243,13 +242,13 @@ export function ArchitectureNodeOrb({
               setViewMode((prev) => (prev === '3d' && canRenderWebGL ? 'blueprint' : '3d'))
             }
             disabled={!canRenderWebGL}
-            className="inline-flex items-center gap-1.5 rounded-full border border-[#1E5A54]/25 bg-[#EEE6E2] px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[#1E5A54] transition-colors duration-200 hover:border-[#F7623D] hover:text-[#F7623D] disabled:opacity-60"
+            className="inline-flex items-center gap-1.5 rounded-full border border-[#1E5A54]/25 bg-[#EEE6E2] px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[#1E5A54] transition-colors duration-200 hover:border-[#F7623D] hover:text-[#F7623D] disabled:opacity-60 cursor-pointer"
             aria-label="Toggle between 3D live mesh and static architectural blueprint"
           >
             <span
               className={cn(
                 'h-1.5 w-1.5 rounded-full',
-                showWebGL ? 'bg-[#F7623D]' : 'bg-[#1E5A54]'
+                showWebGL ? 'bg-[#F7623D] animate-pulse' : 'bg-[#1E5A54]'
               )}
             />
             <span>{showWebGL ? '3D LIVE' : 'BLUEPRINT'}</span>
@@ -263,10 +262,7 @@ export function ArchitectureNodeOrb({
           <div className="absolute inset-0">
             <LazyArchitectureOrbCanvas
               variant={variant}
-              onWebGLError={() => {
-                setCanRenderWebGL(false);
-                setViewMode('blueprint');
-              }}
+              onWebGLError={handleWebGLError}
               onTelemetryUpdate={setTelemetry}
             />
           </div>
