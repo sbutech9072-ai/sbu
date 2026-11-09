@@ -1,6 +1,6 @@
-# SBU Web: Enterprise Web Platform & Decoupled Backend API
+# SBU Web: Enterprise Web Platform & High-Throughput FastAPI Backend
 
-A clean, modern, and production-ready full-stack software application containing an independent **Backend API** (Node.js + Express + TypeScript + Zod + Supabase integration) and an extensive **Frontend Application** (Next.js 14 App Router + TypeScript + Tailwind CSS).
+A clean, modern, and production-ready full-stack software application containing an independent **Backend API** (Python 3.13 + FastAPI + SQLAlchemy 2.0 + Pydantic v2 + Supabase & Google integration) and an extensive **Frontend Application** (Next.js 14 App Router + TypeScript + Tailwind CSS).
 
 ---
 
@@ -9,56 +9,35 @@ A clean, modern, and production-ready full-stack software application containing
 ```text
 sbuweb/
 ├── backend/
-│   ├── src/
-│   │   ├── lib/
-│   │   │   └── supabase.ts         # Supabase client & connectivity verification
-│   │   ├── routes/
-│   │   │   └── auth.routes.ts      # Authentication & profile endpoints
-│   │   ├── schemas/
-│   │   │   └── auth.schema.ts      # Zod validation schemas
-│   │   └── app.ts                  # Express server & /api/v1 router
-│   ├── setup-supabase.ps1          # One-step local Supabase setup for Windows
-│   ├── package.json
-│   ├── tsconfig.json
-│   └── .env.example
+│   ├── app/
+│   │   ├── api/v1/endpoints/       # Health, Auth, Client, Contact, Quotes, Admin, CMS, AI
+│   │   ├── core/                   # Config, security (bcrypt & JWT), country whitelist
+│   │   ├── database/               # SQLAlchemy session, init_db, and seed data
+│   │   ├── integrations/           # Google OAuth2 & Supabase Auth telemetry
+│   │   ├── models/                 # SQLAlchemy 2.0 declarative database models
+│   │   ├── rag/                    # Chunking, embeddings, vector store & assistant
+│   │   ├── repositories/           # Isolated data access layer
+│   │   ├── schemas/                # Pydantic v2 input/output validation contracts
+│   │   └── services/               # Business logic & email notification
+│   ├── tests/                      # Automated API & validation test suites
+│   ├── Dockerfile                  # Production container definition
+│   ├── requirements.txt            # Python dependencies
+│   ├── run.py                      # Uvicorn entrypoint (Port 5000)
+│   └── README.md
 │
 ├── frontend/
 │   ├── src/
 │   │   ├── app/
-│   │   │   ├── (website)/          # Public website routes
-│   │   │   │   ├── page.tsx        # Modern homepage with hero & interactive sections
-│   │   │   │   ├── about/          # Company history & vision
-│   │   │   │   ├── services/       # Services list & detailed slug pages
-│   │   │   │   ├── projects/       # Portfolio case studies & slug pages
-│   │   │   │   ├── team/           # Engineering leadership & team overview
-│   │   │   │   ├── blog/           # Technical engineering blog & articles
-│   │   │   │   ├── contact/        # Direct contact & inquiry page
-│   │   │   │   ├── get-a-quote/    # Interactive multi-step quote request
-│   │   │   │   ├── login/          # Client & partner authentication portal
-│   │   │   │   ├── auth/           # Route alias to /login
-│   │   │   │   └── privacy-policy/ # Privacy terms & policies
-│   │   │   ├── admin/              # Comprehensive Administrative Suite
-│   │   │   │   ├── page.tsx        # Overview dashboard with analytics & metrics
-│   │   │   │   ├── blogs/          # Blog publishing & content management
-│   │   │   │   ├── login/          # Admin credential gateway
-│   │   │   │   ├── messages/       # Inbound contact inquiries inbox
-│   │   │   │   ├── projects/       # Case study project management
-│   │   │   │   ├── quote-requests/ # Client quote request tracker
-│   │   │   │   ├── services/       # Service offerings management
-│   │   │   │   ├── settings/       # Organization & branding settings
-│   │   │   │   ├── team/           # Team member management
-│   │   │   │   └── testimonials/   # Client review moderation
+│   │   │   ├── (website)/          # Public website routes (Home, About, Services, Projects, Team, Contact, Get-a-Quote, Login)
+│   │   │   ├── admin/              # Comprehensive Administrative Suite (Messages, Quotes, Projects, Services, Team, Settings)
 │   │   │   ├── layout.tsx          # Root layout & SEO metadata
 │   │   │   └── globals.css         # Styling, theme tokens & custom scrollbars
 │   │   ├── components/             # Reusable UI primitives, sections & admin layout
 │   │   ├── data/                   # Mock and seed content collections
 │   │   ├── features/               # Domain-specific feature modules
-│   │   ├── hooks/                  # Custom React hooks (debounce, media query)
 │   │   └── types/                  # Global TypeScript contracts
 │   ├── package.json
-│   ├── tailwind.config.ts
-│   ├── postcss.config.mjs
-│   ├── next.config.mjs
+│   ├── next.config.mjs             # Reverse proxy routing /api/* to backend on port 5000
 │   └── tsconfig.json
 │
 ├── .gitignore
@@ -67,43 +46,43 @@ sbuweb/
 
 ---
 
-## 🛠 Backend API Routes
-
-Mounted under `/api/v1`:
+## 🛠 Preserved Backend API Routes (`/api/v1`)
 
 | Method | Endpoint | Description | Status |
 | :--- | :--- | :--- | :--- |
-| `GET` | `/api/v1/health` | Service health check with Supabase connectivity status | `200 OK` |
-| `POST` | `/api/v1/auth/client/register` | Client registration validation (Zod schema) | `503 / Configured` |
-| `POST` | `/api/v1/auth/client/login` | Client credentials validation | `503 / Configured` |
-| `POST` | `/api/v1/auth/owner/login` | Owner administrative login validation | `503 / Configured` |
-| `GET` | `/api/v1/client/profile` | Client profile retrieval | `503 / Configured` |
-| `PATCH` | `/api/v1/client/profile` | Client profile update | `503 / Configured` |
+| `GET` | `/api/v1/health` | Service health check with Supabase & DB telemetry | `200 OK` |
+| `POST` | `/api/v1/auth/client/register` | Client account registration (Pydantic validation) | `200 OK` |
+| `POST` | `/api/v1/auth/client/login` | Client credentials authentication (JWT token) | `200 OK` |
+| `POST` | `/api/v1/auth/owner/login` | Owner & Administrator console login | `200 OK` |
+| `POST` | `/api/v1/auth/google` | Google One-Tap / OAuth2 identity verification | `200 OK` |
+| `GET` | `/api/v1/client/profile` | Client profile retrieval | `200 OK` |
+| `PATCH` | `/api/v1/client/profile` | Client profile update | `200 OK` |
+| `POST` | `/api/v1/contact` | Inbound consultation inquiry submission | `201 Created` |
+| `POST` | `/api/v1/quotes` | Project scope estimation request | `201 Created` |
+| `GET` | `/api/v1/admin/stats` | Control Desk metrics & KPIs | `200 OK` |
+| `GET` | `/api/v1/admin/messages` | List inbound messages | `200 OK` |
+| `PATCH` | `/api/v1/admin/messages/{id}` | Update message status (`new`, `read`, `replied`) | `200 OK` |
+| `GET` | `/api/v1/admin/quotes` | List project scope briefs | `200 OK` |
+| `PATCH` | `/api/v1/admin/quotes/{id}` | Update quote request status | `200 OK` |
+| `POST` | `/api/v1/ai/chat` | RAG-ready conversational engineering assistant | `200 OK` |
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Getting Started Locally
 
-### 1. Backend Setup
+### 1. Backend Setup (FastAPI)
 ```bash
 cd backend
-npm install
-npm run build     # Verify TypeScript compilation
-npm run dev       # Start development server on http://localhost:5000
+python -m pip install -r requirements.txt
+python run.py       # Starts FastAPI server on http://localhost:5000
 ```
+- Swagger UI Documentation: `http://localhost:5000/api/docs`
+- ReDoc Documentation: `http://localhost:5000/api/redoc`
 
-### 2. Frontend Setup
+### 2. Frontend Setup (Next.js)
 ```bash
 cd frontend
 npm install
-npm run build     # Compile Next.js production build
-npm run dev       # Start Next.js development server on http://localhost:3000
+npm run dev         # Starts Next.js development server on http://localhost:3000
 ```
-
----
-
-## 🌿 Repository Branches
-- `main` - Stable, consolidated production branch with all backend and frontend features
-- `sanket` - Sanket's feature branch
-- `utsob` - Utsob's feature branch
-- `borson` - Borson's feature branch
+The frontend automatically proxies `/api/*` to the FastAPI backend running on port 5000.
