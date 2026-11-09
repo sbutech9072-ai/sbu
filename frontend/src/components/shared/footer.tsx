@@ -35,7 +35,7 @@ export function Footer() {
     <footer className="border-t border-[#1E5A54]/20 bg-[#EEE6E2] text-[#1E5A54]">
       {/* Newsletter Bar */}
       <div className="border-b border-[#1E5A54]/20 py-12 bg-[#F8F4F2]">
-        <div className="container mx-auto px-4 max-w-7xl">
+        <div className="site-container-wide">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             <div className="lg:col-span-6 space-y-2.5">
               <div className="flex items-center gap-3">
@@ -89,7 +89,7 @@ export function Footer() {
       </div>
 
       {/* Main Footer Links */}
-      <div className="container mx-auto px-4 max-w-7xl py-16">
+      <div className="site-container-wide py-16 xl:py-20">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10">
           {/* Brand Info */}
           <div className="lg:col-span-4 space-y-5">

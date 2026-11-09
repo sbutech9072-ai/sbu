@@ -35,7 +35,7 @@ export function Navbar() {
           : 'border-b border-[#1E5A54]/18'
       )}
     >
-      <div className="container mx-auto px-4 max-w-7xl h-20 flex items-center justify-between">
+      <div className="site-container-wide h-20 xl:h-22 flex items-center justify-between">
         {/* Brand Logo */}
         <Link href="/" className="flex items-center gap-2.5 group">
           <div className="h-10 w-10 rounded-full border border-[#1E5A54] bg-[#F8F4F2] flex items-center justify-center text-[#1E5A54] transition-transform group-hover:scale-105">
@@ -52,7 +52,7 @@ export function Navbar() {
         </Link>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden lg:flex items-center gap-6 xl:gap-8">
+        <nav className="hidden lg:flex items-center gap-6 xl:gap-8 2xl:gap-10">
           {siteConfig.mainNav.map((item) => {
             const isActive =
               item.href === '/' ? pathname === '/' : pathname.startsWith(item.href);
@@ -74,7 +74,7 @@ export function Navbar() {
         </nav>
 
         {/* Action Buttons */}
-        <div className="hidden lg:flex items-center gap-3">
+        <div className="hidden lg:flex items-center gap-3 xl:gap-4">
           <Link
             href="/login"
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-[0.16em] text-[#1E5A54] hover:bg-[#1E5A54]/5 transition-colors border border-transparent hover:border-[#1E5A54]/25"

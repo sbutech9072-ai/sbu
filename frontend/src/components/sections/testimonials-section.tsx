@@ -12,8 +12,8 @@ export function TestimonialsSection() {
 
   return (
     <section className="py-20 md:py-28 border-b border-[#1E5A54]/20 bg-[#EEE6E2]">
-      <div className="container mx-auto px-4 max-w-7xl space-y-14">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+      <div className="site-container space-y-14 xl:space-y-20">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
           <SectionHeading
             align="left"
             badge="Client Endorsements"
@@ -30,10 +30,10 @@ export function TestimonialsSection() {
         </div>
 
         {/* Editorial Pull-Quote Spread: 5 Cols Oversized Lead Pull-Quote / 7 Cols Stacked Ledger */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 xl:gap-12 items-stretch">
           {/* Left 5 Cols: Oversized Typographic Pull-Quote Card */}
           {leadQuote && (
-            <div className="lg:col-span-5 rounded-3xl border border-[#1E5A54]/25 bg-[#1E5A54] text-[#EEE6E2] p-7 sm:p-9 flex flex-col justify-between space-y-8">
+            <div className="lg:col-span-5 rounded-3xl border border-[#1E5A54]/25 bg-[#1E5A54] text-[#EEE6E2] p-7 sm:p-9 xl:p-12 flex flex-col justify-between space-y-8">
               <div className="space-y-6">
                 <div className="flex items-center justify-between border-b border-[#EEE6E2]/20 pb-4">
                   <div className="flex items-center gap-1 text-[#1E5A54] decoration-[#F7623D]">
@@ -46,7 +46,7 @@ export function TestimonialsSection() {
                   </span>
                 </div>
 
-                <blockquote className="font-headline text-2xl sm:text-3xl md:text-4xl font-bold uppercase tracking-tight leading-[1.06] text-[#EEE6E2]">
+                <blockquote className="font-headline text-2xl sm:text-3xl md:text-4xl xl:text-5xl font-bold uppercase tracking-tight leading-[1.06] text-[#EEE6E2]">
                   &ldquo;Sbu Tech engineered our analytics engine from the ground up. Their deep
                   mastery of Next.js, Go, and Kafka allowed us to ingest{' '}
                   <span className="relative inline-block px-1 text-[#EEE6E2]">

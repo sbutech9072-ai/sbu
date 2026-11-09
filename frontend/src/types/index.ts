@@ -50,24 +50,6 @@ export interface TeamMember {
   isLeadership?: boolean;
 }
 
-export interface BlogPost {
-  id: string;
-  slug: string;
-  title: string;
-  excerpt: string;
-  content: string;
-  category: 'Engineering' | 'Architecture' | 'Design' | 'AI & Tech';
-  readTime: string;
-  publishedAt: string;
-  author: {
-    name: string;
-    role: string;
-    avatar: string;
-  };
-  tags: string[];
-  isFeatured?: boolean;
-}
-
 export interface Testimonial {
   id: string;
   quote: string;
@@ -117,4 +99,3 @@ export interface SiteSettings {
   enableMaintenanceMode: boolean;
   enableRegistration: boolean;
 }
-

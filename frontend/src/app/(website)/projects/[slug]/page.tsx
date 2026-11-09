@@ -60,8 +60,8 @@ export default function ProjectDetailPage({ params }: ProjectPageProps) {
         ]}
       />
 
-      <div className="container mx-auto px-4 max-w-7xl">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+      <div className="site-container">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 xl:gap-16 items-start">
           {/* Main Case Study Column */}
           <div className="lg:col-span-8 space-y-12">
             {/* Overview / Context */}

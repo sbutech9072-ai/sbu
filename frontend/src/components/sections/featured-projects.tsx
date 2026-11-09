@@ -13,8 +13,8 @@ export function FeaturedProjects() {
 
   return (
     <section className="py-20 md:py-28 border-b border-[#1E5A54]/20 bg-[#EEE6E2]">
-      <div className="container mx-auto px-4 max-w-7xl space-y-12">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+      <div className="site-container space-y-12 xl:space-y-16">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
           <SectionHeading
             align="left"
             badge="Selected Work"
@@ -24,7 +24,7 @@ export function FeaturedProjects() {
 
           <Link
             href="/projects"
-            className="group self-start md:self-auto shrink-0 inline-flex items-center gap-3 rounded-full border border-[#1E5A54] bg-[#F8F4F2] pl-6 pr-1.5 py-1.5 text-xs font-bold uppercase tracking-[0.16em] text-[#1E5A54] hover:bg-[#1E5A54] hover:text-[#EEE6E2] transition-all"
+            className="group self-start lg:self-auto shrink-0 inline-flex items-center gap-3 rounded-full border border-[#1E5A54] bg-[#F8F4F2] pl-6 pr-1.5 py-1.5 text-xs xl:text-sm font-bold uppercase tracking-[0.16em] text-[#1E5A54] hover:bg-[#1E5A54] hover:text-[#EEE6E2] transition-all"
           >
             <span>All Case Studies ({projectsData.length})</span>
             <span className="w-7 h-7 rounded-full bg-[#F7623D] text-white flex items-center justify-center transition-transform group-hover:scale-110">
@@ -35,8 +35,8 @@ export function FeaturedProjects() {
 
         {/* Flagship Case Study (featured[0]) - Full-Width Horizontal Split (lg:grid-cols-12) */}
         {flagship && (
-          <TiltCard maxTilt={2} className="rounded-3xl border border-[#1E5A54]/25 bg-[#F8F4F2] p-6 sm:p-8 lg:p-10">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch">
+          <TiltCard maxTilt={2} className="rounded-3xl border border-[#1E5A54]/25 bg-[#F8F4F2] p-6 sm:p-8 lg:p-10 xl:p-12">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-14 items-stretch">
               {/* Left 7 Cols: Narrative, Challenge/Solution, Stack */}
               <div className="lg:col-span-7 flex flex-col justify-between space-y-6">
                 <div className="space-y-4">
@@ -53,7 +53,7 @@ export function FeaturedProjects() {
                   </div>
 
                   <Link href={`/projects/${flagship.slug}`} className="group inline-block">
-                    <h3 className="font-headline text-3xl sm:text-4xl lg:text-5xl font-black uppercase tracking-tight text-[#1E5A54] group-hover:text-[#F7623D] transition-colors leading-[0.94]">
+                    <h3 className="font-headline text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-black uppercase tracking-tight text-[#1E5A54] group-hover:text-[#F7623D] transition-colors leading-[0.94]">
                       {flagship.title}
                     </h3>
                   </Link>
@@ -105,7 +105,7 @@ export function FeaturedProjects() {
               </div>
 
               {/* Right 5 Cols: Deep Teal Architectural Telemetry Board */}
-              <div className="lg:col-span-5 rounded-2xl bg-[#1E5A54] text-[#EEE6E2] p-6 sm:p-8 flex flex-col justify-between space-y-6">
+              <div className="lg:col-span-5 rounded-2xl bg-[#1E5A54] text-[#EEE6E2] p-6 sm:p-8 xl:p-10 flex flex-col justify-between space-y-6">
                 <div className="flex items-center justify-between border-b border-[#EEE6E2]/20 pb-4">
                   <span className="font-mono text-xs font-bold uppercase tracking-[0.18em] text-[#EEE6E2]">
                     PRODUCTION BENCHMARKS

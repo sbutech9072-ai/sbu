@@ -7,9 +7,9 @@ import { MagneticWrap } from '@/components/human/magnetic-button';
 export function CTASection() {
   return (
     <section className="py-20 md:py-28 border-b border-[#1E5A54]/20 bg-[#EEE6E2]">
-      <div className="container mx-auto px-4 max-w-7xl">
+      <div className="site-container">
         {/* High-Contrast Deep Teal Ticket Block */}
-        <div className="relative overflow-hidden rounded-3xl border-2 border-[#1E5A54] bg-[#1E5A54] text-[#EEE6E2] p-8 sm:p-12 md:p-16">
+        <div className="relative overflow-hidden rounded-3xl border-2 border-[#1E5A54] bg-[#1E5A54] text-[#EEE6E2] p-8 sm:p-12 md:p-16 xl:p-20">
           {/* Architectural Ticket Cutout Notches */}
           <div
             aria-hidden="true"

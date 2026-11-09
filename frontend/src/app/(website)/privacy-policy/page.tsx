@@ -19,7 +19,7 @@ export default function PrivacyPolicyPage() {
         breadcrumbs={[{ label: 'Privacy Policy' }]}
       />
 
-      <div className="container mx-auto px-4 max-w-4xl">
+      <div className="site-container-narrow">
         <div className="p-8 md:p-12 rounded-3xl border border-[#1E5A54]/25 bg-[#F8F4F2] space-y-8 text-sm text-[#1E5A54] leading-relaxed">
           <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[#1E5A54]/20 pb-4">
             <span className="font-mono text-xs uppercase tracking-wider text-[#1E5A54]">

@@ -31,9 +31,9 @@ export function PageHeader({
         className
       )}
     >
-      <div className="container mx-auto px-4 relative z-10 max-w-6xl">
-        <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6">
-          <div className="max-w-3xl">
+      <div className="site-container relative z-10">
+        <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6 xl:gap-12">
+          <div className="max-w-3xl xl:max-w-4xl 2xl:max-w-5xl">
             {breadcrumbs && breadcrumbs.length > 0 && (
               <nav aria-label="Breadcrumb" className="mb-4">
                 <ol className="flex items-center space-x-2 text-xs font-semibold uppercase tracking-[0.15em] text-[#1E5A54]">
@@ -61,7 +61,7 @@ export function PageHeader({
             {badge && (
               <div className="mb-3">
                 <div className="w-8 h-[2px] bg-[#1E5A54] mb-2" />
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-[#1E5A54]/30 bg-[#F8F4F2] text-[11px] font-bold uppercase tracking-[0.16em] text-[#1E5A54]">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-[#1E5A54]/30 bg-[#F8F4F2] text-[11px] xl:text-xs font-bold uppercase tracking-[0.16em] text-[#1E5A54]">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#F7623D]" />
                   <span>{badge}</span>
                 </div>
@@ -69,15 +69,15 @@ export function PageHeader({
             )}
 
             <div className="inline-block mb-4">
-              <h1 className="font-headline text-4xl sm:text-5xl md:text-6xl font-normal uppercase tracking-[0.04em] text-[#1E5A54] leading-[1.15]">
+              <h1 className="font-headline text-4xl sm:text-5xl md:text-6xl xl:text-7xl 2xl:text-8xl font-normal uppercase tracking-[0.04em] text-[#1E5A54] leading-[1.08]">
                 {title}
               </h1>
-              <div className="w-36 mt-3">
+              <div className="w-36 xl:w-48 mt-3">
                 <HandUnderline className="h-3 w-full" />
               </div>
             </div>
 
-            <p className="text-base md:text-lg text-[#1E5A54] max-w-3xl leading-relaxed font-sans">
+            <p className="text-base md:text-lg xl:text-xl text-[#1E5A54] max-w-3xl xl:max-w-4xl leading-relaxed font-sans">
               {description}
             </p>
           </div>

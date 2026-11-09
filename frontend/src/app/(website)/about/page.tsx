@@ -86,7 +86,7 @@ export default function AboutPage() {
       />
 
       {/* Studio Story & Interactive Compact Orb */}
-      <section className="container mx-auto px-4 max-w-7xl">
+      <section className="site-container">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
           <div className="lg:col-span-7 space-y-6">
             <div className="flex flex-wrap items-center gap-3">
@@ -183,7 +183,7 @@ export default function AboutPage() {
       </section>
 
       {/* Core Values (Asymmetric 5/7 Ledger) */}
-      <section className="container mx-auto px-4 max-w-7xl space-y-12">
+      <section className="site-container space-y-12">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[#1E5A54]/20 pb-8">
           <SectionHeading
             align="left"
@@ -232,7 +232,7 @@ export default function AboutPage() {
       </section>
 
       {/* Timeline Milestones */}
-      <section className="container mx-auto px-4 max-w-7xl space-y-12">
+      <section className="site-container space-y-12">
         <SectionHeading
           badge="Studio Logbook"
           title="Four Years of Shipping Under Pressure"
@@ -267,7 +267,7 @@ export default function AboutPage() {
       </section>
 
       {/* Leadership Section */}
-      <section className="container mx-auto px-4 max-w-7xl space-y-12">
+      <section className="site-container space-y-12">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <SectionHeading
             align="left"
@@ -293,7 +293,7 @@ export default function AboutPage() {
       </section>
 
       {/* CTA */}
-      <section className="container mx-auto px-4 max-w-5xl">
+      <section className="site-container">
         <div className="p-10 md:p-14 rounded-3xl border border-[#1E5A54]/25 bg-[#E2D7D1] flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="space-y-3 text-center md:text-left max-w-xl">
             <StudioStamp

@@ -11,6 +11,10 @@ const config: Config = {
   darkMode: 'class',
   theme: {
     extend: {
+      screens: {
+        '3xl': '1800px',
+        '4xl': '2160px',
+      },
       colors: {
         cream: {
           DEFAULT: '#EEE6E2',

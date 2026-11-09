@@ -69,7 +69,7 @@ export default function ServicesPage() {
       />
 
       {/* Services Grid */}
-      <section className="container mx-auto px-4 max-w-7xl space-y-12">
+      <section className="site-container space-y-12">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <SectionHeading
             align="left"
@@ -93,7 +93,7 @@ export default function ServicesPage() {
       </section>
 
       {/* Asymmetric Engagement Models Ledger */}
-      <section className="container mx-auto px-4 max-w-7xl">
+      <section className="site-container">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
           <div className="lg:col-span-5 space-y-6 lg:sticky lg:top-28">
             <StudioStamp
@@ -160,7 +160,7 @@ export default function ServicesPage() {
       </section>
 
       {/* FAQ Section */}
-      <section className="container mx-auto px-4 max-w-5xl space-y-10">
+      <section className="site-container space-y-10">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
           <SectionHeading
             align="left"
@@ -188,7 +188,7 @@ export default function ServicesPage() {
       </section>
 
       {/* CTA */}
-      <section className="container mx-auto px-4 max-w-5xl">
+      <section className="site-container">
         <div className="p-10 md:p-14 rounded-3xl border border-[#1E5A54]/25 bg-[#1E5A54] text-[#EEE6E2] text-center space-y-6">
           <StudioStamp
             text="CUSTOM TECHNICAL SCOPE"

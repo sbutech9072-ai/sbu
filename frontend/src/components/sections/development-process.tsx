@@ -41,8 +41,8 @@ export function DevelopmentProcess() {
 
   return (
     <section className="py-20 md:py-28 border-b border-[#1E5A54]/20 bg-[#EEE6E2]">
-      <div className="container mx-auto px-4 max-w-7xl space-y-14">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+      <div className="site-container space-y-14 xl:space-y-20">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
           <SectionHeading
             align="left"
             badge="How We Work"
@@ -65,7 +65,7 @@ export function DevelopmentProcess() {
             className="hidden lg:block absolute top-16 left-12 right-12 border-t-2 border-dashed border-[#1E5A54]/25 pointer-events-none"
           />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-5 items-start">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-6 xl:gap-8 items-start">
             {steps.map((st, idx) => (
               <div key={st.num} className={`relative ${st.offsetClass}`}>
                 {/* HandArrow connector between stepped cards on desktop */}

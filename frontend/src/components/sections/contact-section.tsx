@@ -8,8 +8,8 @@ import { HandArrow, StudioStamp } from '@/components/human/hand-crafted-svg';
 export function ContactSection() {
   return (
     <section className="py-20 md:py-28 bg-[#EEE6E2]">
-      <div className="container mx-auto px-4 max-w-7xl space-y-14">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+      <div className="site-container space-y-14 xl:space-y-20">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
           <SectionHeading
             align="left"
             badge="Studio Dispatch Desk"
@@ -26,9 +26,9 @@ export function ContactSection() {
         </div>
 
         {/* Clean 5/7 Studio Dispatch Desk */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 xl:gap-14 items-start">
           {/* Left 5 Cols: Direct Coordinates Ledger */}
-          <div className="lg:col-span-5 space-y-6 p-7 sm:p-8 rounded-2xl border border-[#1E5A54]/25 bg-[#F8F4F2]">
+          <div className="lg:col-span-5 space-y-6 p-7 sm:p-8 xl:p-10 rounded-2xl border border-[#1E5A54]/25 bg-[#F8F4F2]">
             <div className="flex items-center justify-between border-b border-[#1E5A54]/15 pb-4">
               <div>
                 <span className="font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-[#1E5A54] decoration-[#F7623D] block">

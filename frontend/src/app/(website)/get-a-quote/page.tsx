@@ -39,7 +39,7 @@ export default function GetAQuotePage() {
         breadcrumbs={[{ label: 'Get a Quote' }]}
       />
 
-      <div className="container mx-auto px-4 max-w-5xl space-y-14">
+      <div className="site-container-narrow space-y-14">
         {/* Next Steps Infographic */}
         <div className="space-y-6">
           <div className="flex flex-wrap items-center justify-between gap-4">

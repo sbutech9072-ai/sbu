@@ -9,7 +9,7 @@ import { MagneticWrap } from '@/components/human/magnetic-button';
 export function Hero() {
   return (
     <section className="relative overflow-hidden pt-12 pb-16 md:pt-20 md:pb-24 border-b border-[#1E5A54]/20 bg-[#EEE6E2]">
-      <div className="container mx-auto px-4 max-w-7xl space-y-14">
+      <div className="site-container space-y-12 xl:space-y-16">
         {/* Asymmetric 12-column split: 7 left editorial / 5 right 3D orb */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
           {/* Left Editorial Column */}
@@ -29,7 +29,7 @@ export function Hero() {
             </div>
 
             {/* Main Headline with HandUnderline under key phrase */}
-            <h1 className="font-headline text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-normal tracking-[0.04em] text-[#1E5A54] leading-[1.12] uppercase">
+            <h1 className="font-headline text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-[5.25rem] font-normal tracking-[0.04em] text-[#1E5A54] leading-[1.08] uppercase">
               We Architect{' '}
               <span className="relative inline-block">
                 High-Throughput
@@ -39,7 +39,7 @@ export function Hero() {
             </h1>
 
             {/* Plain-spoken Subtitle */}
-            <p className="text-base sm:text-lg md:text-xl text-[#1E5A54] max-w-2xl leading-relaxed font-sans">
+            <p className="text-base sm:text-lg md:text-xl xl:text-2xl text-[#1E5A54] max-w-3xl leading-relaxed font-sans">
               Sbu Tech is a senior software engineering studio in San Francisco. We work directly
               with founders and CTOs to design, build, and ship production web platforms,
               Kubernetes clusters, and private LLM workflows that hold up under real load.
@@ -88,7 +88,7 @@ export function Hero() {
           </div>
 
           {/* Right 3D Architectural Node Orb Column */}
-          <div className="lg:col-span-5">
+          <div className="lg:col-span-5 w-full">
             <ArchitectureNodeOrb variant="hero" />
           </div>
         </div>
@@ -96,12 +96,12 @@ export function Hero() {
         {/* Bottom Architectural Ledger Strip for siteConfig.stats */}
         <div className="rounded-2xl border border-[#1E5A54]/20 bg-[#F8F4F2] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-[#1E5A54]/18">
           {siteConfig.stats.map((stat, idx) => (
-            <div key={stat.label} className="p-6 flex flex-col justify-between gap-2">
+            <div key={stat.label} className="p-6 xl:p-8 flex flex-col justify-between gap-2">
               <div className="flex items-center justify-between text-[11px] font-mono font-bold uppercase tracking-[0.18em] text-[#1E5A54]">
                 <span>{stat.label}</span>
                 <span className="text-[#1E5A54] decoration-[#F7623D]">0{idx + 1}</span>
               </div>
-              <div className="font-headline text-4xl md:text-5xl font-black text-[#1E5A54] tracking-tight leading-none py-1">
+              <div className="font-headline text-4xl md:text-5xl xl:text-6xl font-black text-[#1E5A54] tracking-tight leading-none py-1">
                 {stat.value}
               </div>
               <p className="text-xs text-[#1E5A54] font-sans">{stat.helper}</p>

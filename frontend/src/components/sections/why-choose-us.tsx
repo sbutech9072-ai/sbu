@@ -50,9 +50,9 @@ export function WhyChooseUs() {
 
   return (
     <section className="py-20 md:py-28 border-b border-[#1E5A54]/20 bg-[#EEE6E2]">
-      <div className="container mx-auto px-4 max-w-7xl">
+      <div className="site-container">
         {/* Asymmetric 12-Column Architectural Specification Board */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 xl:gap-20 items-start">
           {/* Left 4-Column Sticky Header */}
           <div className="lg:col-span-4 lg:sticky lg:top-28 space-y-6">
             <div className="flex items-center justify-between gap-3">

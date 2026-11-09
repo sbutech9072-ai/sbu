@@ -12,9 +12,9 @@ export function TeamOverview() {
 
   return (
     <section className="py-20 md:py-28 border-b border-[#1E5A54]/20 bg-[#EEE6E2]">
-      <div className="container mx-auto px-4 max-w-7xl">
+      <div className="site-container">
         {/* Asymmetric Editorial Layout: Left 4-Col Leadership Ethos / Right 8-Col Staggered Principals */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 xl:gap-20 items-start">
           {/* Left Column: Leadership Ethos */}
           <div className="lg:col-span-4 space-y-6">
             <div className="flex items-center justify-between gap-3">

@@ -66,7 +66,7 @@ export function Technologies() {
 
   return (
     <section className="py-20 md:py-28 border-b border-[#1E5A54]/20 bg-[#EEE6E2]">
-      <div className="container mx-auto px-4 max-w-7xl space-y-12">
+      <div className="site-container space-y-12 xl:space-y-16">
         {/* Header + Filter Controls */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
           <div className="space-y-4">

@@ -9,15 +9,15 @@ import {
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen flex flex-col justify-between bg-[#EEE6E2] text-[#1E5A54] px-6 py-12 sm:px-12 selection:bg-[#F7623D] selection:text-[#EEE6E2]">
+    <div className="min-h-screen flex flex-col justify-between bg-[#EEE6E2] text-[#1E5A54] px-4 py-12 selection:bg-[#F7623D] selection:text-[#EEE6E2]">
       {/* Top Studio Index Bar */}
-      <div className="mx-auto flex w-full max-w-5xl items-center justify-between border-b border-[#1E5A54]/20 pb-4 font-mono text-[11px] uppercase tracking-[0.18em]">
+      <div className="site-container flex items-center justify-between border-b border-[#1E5A54]/20 pb-4 font-mono text-[11px] uppercase tracking-[0.18em]">
         <span>SBU TECH // STUDIO ROUTING TABLE</span>
         <span className="text-[#1E5A54] decoration-[#F7623D]">STATUS: 404 NOT FOUND</span>
       </div>
 
       {/* Main Editorial 404 Block */}
-      <div className="mx-auto my-12 w-full max-w-5xl">
+      <div className="site-container my-12">
         <div className="mb-6 flex flex-wrap items-center gap-4">
           <StudioStamp
             text="404 // ROUTE OFF THE MAP"
@@ -129,7 +129,7 @@ export default function NotFound() {
       </div>
 
       {/* Bottom Footnote */}
-      <div className="mx-auto flex w-full max-w-5xl items-center justify-between border-t border-[#1E5A54]/20 pt-4 font-mono text-[10px] uppercase tracking-[0.16em] text-[#1E5A54]">
+      <div className="site-container flex items-center justify-between border-t border-[#1E5A54]/20 pt-4 font-mono text-[10px] uppercase tracking-[0.16em] text-[#1E5A54]">
         <span>SBU TECH ENGINEERING</span>
         <span>DHAKA // REMOTE WORLDWIDE</span>
       </div>

@@ -38,10 +38,10 @@ export function CompanyIntro() {
   ];
 
   return (
-    <section className="py-20 md:py-28 border-b border-[#1E5A54]/20 bg-[#EEE6E2]">
-      <div className="container mx-auto px-4 max-w-7xl">
+    <section className="py-20 md:py-28 xl:py-32 border-b border-[#1E5A54]/20 bg-[#EEE6E2]">
+      <div className="site-container">
         {/* Asymmetric 5/7 Broadsheet Split */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 xl:gap-16 items-start">
           {/* Left Column (5 cols): Sticky Studio Manifesto */}
           <div className="lg:col-span-5 lg:sticky lg:top-28 space-y-6">
             <div className="flex flex-wrap items-center justify-between gap-3">
@@ -81,13 +81,13 @@ export function CompanyIntro() {
           </div>
 
           {/* Right Column (7 cols): Staggered 2-Column Offset Layout */}
-          <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6 items-start">
+          <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6 xl:gap-8 items-start">
             {pillars.map((pillar, idx) => (
               <div
                 key={pillar.num}
                 className={idx % 2 === 1 ? 'sm:mt-10' : ''}
               >
-                <TiltCard className="p-7 rounded-2xl border border-[#1E5A54]/20 bg-[#F8F4F2] hover:border-[#1E5A54]/45 transition-colors flex flex-col justify-between space-y-5">
+                <TiltCard className="p-7 xl:p-9 rounded-2xl border border-[#1E5A54]/20 bg-[#F8F4F2] hover:border-[#1E5A54]/45 transition-colors flex flex-col justify-between space-y-5">
                   <div className="space-y-4">
                     <div className="flex items-center justify-between border-b border-[#1E5A54]/15 pb-3">
                       <span className="font-mono text-xs font-bold uppercase tracking-[0.16em] text-[#1E5A54]">

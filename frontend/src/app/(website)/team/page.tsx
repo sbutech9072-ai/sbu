@@ -24,7 +24,7 @@ export default function TeamPage() {
         breadcrumbs={[{ label: 'Our Team' }]}
       />
 
-      <div className="container mx-auto px-4 max-w-7xl space-y-20">
+      <div className="site-container space-y-20">
         <TeamList initialMembers={teamData} />
 
         {/* Culture / Hiring Callout */}

@@ -22,8 +22,8 @@ export default function ContactPage() {
         breadcrumbs={[{ label: 'Contact' }]}
       />
 
-      <div className="container mx-auto px-4 max-w-7xl">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+      <div className="site-container">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 xl:gap-16 items-start">
           {/* Contact Information */}
           <div className="lg:col-span-5 space-y-6">
             <TiltCard className="p-8 rounded-3xl border border-[#1E5A54]/25 bg-[#F8F4F2] space-y-6">

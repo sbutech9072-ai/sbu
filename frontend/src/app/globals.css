@@ -55,6 +55,38 @@
   }
 }
 
+@layer components {
+  /* Fluid Site Container: adapts gracefully across all viewports from 320px to 4K / Zoom Out */
+  .site-container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: clamp(1rem, 3.5vw, 4.5rem);
+    padding-right: clamp(1rem, 3.5vw, 4.5rem);
+    max-width: min(94vw, 1780px);
+  }
+
+  /* Extended wide container for hero / navbar / footer */
+  .site-container-wide {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: clamp(1rem, 3vw, 4rem);
+    padding-right: clamp(1rem, 3vw, 4rem);
+    max-width: min(96vw, 1860px);
+  }
+
+  /* Narrower readable container for longform forms / privacy */
+  .site-container-narrow {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: clamp(1rem, 3vw, 3.5rem);
+    padding-right: clamp(1rem, 3vw, 3.5rem);
+    max-width: min(92vw, 1320px);
+  }
+}
+
 /* Subtle paper-grain texture overlay (about 4-6% opacity, fixed, pointer-events: none) */
 body::before {
   content: "";

@@ -20,7 +20,7 @@ export default function ProjectsPage() {
         breadcrumbs={[{ label: 'Projects' }]}
       />
 
-      <div className="container mx-auto px-4 max-w-7xl space-y-8">
+      <div className="site-container space-y-8">
         <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[#1E5A54]/20 pb-4">
           <span className="font-mono text-xs uppercase tracking-[0.16em] text-[#1E5A54]">
             Showing verified production deployments

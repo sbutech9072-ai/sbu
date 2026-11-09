@@ -9,8 +9,8 @@ export function ServicesOverview() {
   const featuredServices = servicesData.slice(0, 4);
 
   return (
-    <section className="py-20 md:py-28 border-b border-[#1E5A54]/20 bg-[#EEE6E2]">
-      <div className="container mx-auto px-4 max-w-7xl space-y-12">
+    <section className="py-20 md:py-28 xl:py-32 border-b border-[#1E5A54]/20 bg-[#EEE6E2]">
+      <div className="site-container space-y-12 xl:space-y-16">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <SectionHeading
             align="left"
@@ -60,7 +60,7 @@ export function ServicesOverview() {
 
                 {/* Large Headline Title */}
                 <div className="lg:col-span-4">
-                  <h3 className="font-headline text-2xl sm:text-3xl md:text-4xl font-black uppercase tracking-tight text-[#1E5A54] group-hover:text-[#F7623D] transition-colors leading-[0.95]">
+                  <h3 className="font-headline text-2xl sm:text-3xl md:text-4xl xl:text-5xl font-black uppercase tracking-tight text-[#1E5A54] group-hover:text-[#F7623D] transition-colors leading-[0.95]">
                     {service.title}
                   </h3>
                 </div>
