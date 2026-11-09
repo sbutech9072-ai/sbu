@@ -11,7 +11,6 @@ import {
   Eye,
   EyeOff,
   Shield,
-  Building,
   ArrowRight,
   AlertCircle,
   X,
@@ -21,9 +20,8 @@ import {
   ChevronDown,
 } from 'lucide-react';
 import { COUNTRIES } from '@/lib/countries';
-import { StudioStamp } from '@/components/human/hand-crafted-svg';
 
-type AuthMode = 'client-login' | 'client-register' | 'owner-login';
+type AuthMode = 'client-login' | 'client-register';
 
 export default function LoginPage() {
   const [mode, setMode] = useState<AuthMode>('client-login');
@@ -34,7 +32,6 @@ export default function LoginPage() {
   const [showClientPass, setShowClientPass] = useState(false);
   const [showRegPass, setShowRegPass] = useState(false);
   const [showRegConfirmPass, setShowRegConfirmPass] = useState(false);
-  const [showOwnerPass, setShowOwnerPass] = useState(false);
 
   // Form Fields
   const [clientLogin, setClientLogin] = useState({ email: '', password: '' });
@@ -46,7 +43,6 @@ export default function LoginPage() {
     country: '',
     whatsappNumber: '',
   });
-  const [ownerLogin, setOwnerLogin] = useState({ email: '', password: '' });
 
   // Field Errors
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
@@ -120,39 +116,21 @@ export default function LoginPage() {
     }, 500);
   };
 
-  const handleOwnerLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    setShowNotice(false);
-    const errs: { [key: string]: string } = {};
-
-    if (!ownerLogin.email.trim()) errs.email = 'Company email is required';
-    else if (!validateEmail(ownerLogin.email)) errs.email = 'Invalid email address';
-
-    if (!ownerLogin.password) errs.password = 'Password is required';
-
-    if (Object.keys(errs).length > 0) {
-      setErrors(errs);
-      return;
-    }
-
-    setErrors({});
-    setIsSubmitting(true);
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setShowNotice(true);
-    }, 500);
-  };
-
   return (
     <div className="min-h-screen py-16 flex items-center justify-center px-4 bg-[#EEE6E2] text-[#1E5A54]">
       <div className="w-full max-w-lg space-y-6">
+        {/* Top utility bar with back and separate Admin Portal link */}
         <div className="flex items-center justify-between text-xs tracking-wider uppercase font-semibold text-[#1E5A54]">
           <Link href="/" className="inline-flex items-center gap-1.5 hover:text-[#1E5A54] transition-colors">
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>Back to Home</span>
           </Link>
-          <Link href="/admin/login" className="hover:text-[#F7623D] transition-colors">
-            Admin Portal →
+          <Link
+            href="/admin/login"
+            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-[#1E5A54]/25 bg-[#F8F4F2] hover:border-[#F7623D] hover:text-[#F7623D] transition-colors text-[11px] font-mono tracking-wider"
+          >
+            <Shield className="w-3.5 h-3.5 text-[#F7623D]" />
+            <span>Admin Portal →</span>
           </Link>
         </div>
 
@@ -166,30 +144,21 @@ export default function LoginPage() {
           <h1 className="font-headline text-4xl md:text-5xl uppercase tracking-tight text-[#1E5A54]">
             {mode === 'client-login' && 'Client Portal'}
             {mode === 'client-register' && 'Client Registration'}
-            {mode === 'owner-login' && 'Owner Administration'}
           </h1>
           <p className="text-sm text-[#1E5A54] max-w-md mx-auto">
             {mode === 'client-login' && 'Sign in to view your active sprint board, staging links, and invoices.'}
             {mode === 'client-register' && 'Create a client account to start a new project workspace.'}
-            {mode === 'owner-login' && 'Studio-provisioned credentials only.'}
           </p>
         </div>
 
         {/* Card */}
         <div className="bg-[#F8F4F2] border border-[#1E5A54]/25 rounded-3xl p-6 md:p-8 space-y-6">
-          <div className="flex items-center justify-between">
-            <span className="font-mono text-[10px] uppercase tracking-widest text-[#1E5A54]">
-              Select Access Mode
-            </span>
-            <StudioStamp text="TLS 1.3 GATEWAY" rotate="slight-right" variant="cream" />
-          </div>
-
-          {/* Tabs */}
-          <div className="grid grid-cols-3 gap-1 p-1 bg-[#EEE6E2] rounded-full border border-[#1E5A54]/25">
+          {/* Tabs: Only Login and Register */}
+          <div className="grid grid-cols-2 gap-1 p-1 bg-[#EEE6E2] rounded-full border border-[#1E5A54]/25">
             <button
               type="button"
               onClick={() => switchMode('client-login')}
-              className={`py-2 px-2 text-xs md:text-sm font-semibold tracking-wider uppercase rounded-full transition-colors flex items-center justify-center gap-1.5 ${
+              className={`py-2 px-3 text-xs md:text-sm font-semibold tracking-wider uppercase rounded-full transition-colors flex items-center justify-center gap-1.5 ${
                 mode === 'client-login'
                   ? 'bg-[#1E5A54] text-[#EEE6E2]'
                   : 'text-[#1E5A54] hover:text-[#1E5A54]'
@@ -201,7 +170,7 @@ export default function LoginPage() {
             <button
               type="button"
               onClick={() => switchMode('client-register')}
-              className={`py-2 px-2 text-xs md:text-sm font-semibold tracking-wider uppercase rounded-full transition-colors flex items-center justify-center gap-1.5 ${
+              className={`py-2 px-3 text-xs md:text-sm font-semibold tracking-wider uppercase rounded-full transition-colors flex items-center justify-center gap-1.5 ${
                 mode === 'client-register'
                   ? 'bg-[#1E5A54] text-[#EEE6E2]'
                   : 'text-[#1E5A54] hover:text-[#1E5A54]'
@@ -209,18 +178,6 @@ export default function LoginPage() {
             >
               <User className="w-3.5 h-3.5" />
               <span>Register</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => switchMode('owner-login')}
-              className={`py-2 px-2 text-xs md:text-sm font-semibold tracking-wider uppercase rounded-full transition-colors flex items-center justify-center gap-1.5 ${
-                mode === 'owner-login'
-                  ? 'bg-[#1E5A54] text-[#EEE6E2]'
-                  : 'text-[#1E5A54] hover:text-[#1E5A54]'
-              }`}
-            >
-              <Shield className="w-3.5 h-3.5" />
-              <span>Owner</span>
             </button>
           </div>
 
@@ -361,7 +318,7 @@ export default function LoginPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <div className="space-y-1.5">
                   <label className="text-xs font-semibold uppercase tracking-[0.16em] text-[#1E5A54]">
-                    Country <span className="text-[#1E5A54] decoration-[#F7623D]">*</span>
+                    Country <span className="text-[#F7623D]">*</span>
                   </label>
                   <div className="relative">
                     <Globe className="absolute left-4 top-3.5 w-4 h-4 text-[#1E5A54] pointer-events-none z-10" />
@@ -399,7 +356,10 @@ export default function LoginPage() {
                       placeholder="+1234567890"
                       value={clientRegister.whatsappNumber}
                       onChange={(e) =>
-                        setClientRegister({ ...clientRegister, whatsappNumber: e.target.value })
+                        setClientRegister({
+                          ...clientRegister,
+                          whatsappNumber: e.target.value,
+                        })
                       }
                       className="w-full bg-[#EEE6E2] border border-[#1E5A54]/30 rounded-full pl-11 pr-4 py-2.5 text-sm text-[#1E5A54] placeholder-[#1E5A54]/60 focus:outline-none focus:border-[#1E5A54] transition-colors"
                     />
@@ -446,7 +406,10 @@ export default function LoginPage() {
                     placeholder="••••••••"
                     value={clientRegister.confirmPassword}
                     onChange={(e) =>
-                      setClientRegister({ ...clientRegister, confirmPassword: e.target.value })
+                      setClientRegister({
+                        ...clientRegister,
+                        confirmPassword: e.target.value,
+                      })
                     }
                     className="w-full bg-[#EEE6E2] border border-[#1E5A54]/30 rounded-full pl-11 pr-11 py-2.5 text-sm text-[#1E5A54] placeholder-[#1E5A54]/60 focus:outline-none focus:border-[#1E5A54] transition-colors"
                   />
@@ -455,11 +418,7 @@ export default function LoginPage() {
                     onClick={() => setShowRegConfirmPass(!showRegConfirmPass)}
                     className="absolute right-4 top-3 text-[#1E5A54] hover:text-[#1E5A54]"
                   >
-                    {showRegConfirmPass ? (
-                      <EyeOff className="w-4 h-4" />
-                    ) : (
-                      <Eye className="w-4 h-4" />
-                    )}
+                    {showRegConfirmPass ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </button>
                 </div>
                 {errors.confirmPassword && (
@@ -476,73 +435,6 @@ export default function LoginPage() {
                   <Loader2 className="w-4 h-4 animate-spin" />
                 ) : (
                   <span>Create Client Account</span>
-                )}
-                {!isSubmitting && <ArrowRight className="w-4 h-4" />}
-              </button>
-            </form>
-          )}
-
-          {/* Form 3: Owner Login */}
-          {mode === 'owner-login' && (
-            <form onSubmit={handleOwnerLogin} className="space-y-4">
-              <div className="rounded-2xl bg-[#EEE6E2] border border-[#1E5A54]/25 p-3.5 text-xs text-[#1E5A54]">
-                Owner accounts are studio-provisioned. Self-registration is disabled.
-              </div>
-
-              <div className="space-y-1.5">
-                <label className="text-xs font-semibold uppercase tracking-[0.16em] text-[#1E5A54]">
-                  Company Email
-                </label>
-                <div className="relative">
-                  <Building className="absolute left-4 top-3.5 w-4 h-4 text-[#1E5A54]" />
-                  <input
-                    type="email"
-                    placeholder="owner@sbuweb.internal"
-                    value={ownerLogin.email}
-                    onChange={(e) => setOwnerLogin({ ...ownerLogin, email: e.target.value })}
-                    className="w-full bg-[#EEE6E2] border border-[#1E5A54]/30 rounded-full pl-11 pr-4 py-2.5 text-sm text-[#1E5A54] placeholder-[#1E5A54]/60 focus:outline-none focus:border-[#1E5A54] transition-colors"
-                  />
-                </div>
-                {errors.email && (
-                  <p className="text-xs text-[#1E5A54] decoration-[#F7623D] font-medium">• {errors.email}</p>
-                )}
-              </div>
-
-              <div className="space-y-1.5">
-                <label className="text-xs font-semibold uppercase tracking-[0.16em] text-[#1E5A54]">
-                  Password
-                </label>
-                <div className="relative">
-                  <Lock className="absolute left-4 top-3.5 w-4 h-4 text-[#1E5A54]" />
-                  <input
-                    type={showOwnerPass ? 'text' : 'password'}
-                    placeholder="••••••••"
-                    value={ownerLogin.password}
-                    onChange={(e) => setOwnerLogin({ ...ownerLogin, password: e.target.value })}
-                    className="w-full bg-[#EEE6E2] border border-[#1E5A54]/30 rounded-full pl-11 pr-11 py-2.5 text-sm text-[#1E5A54] placeholder-[#1E5A54]/60 focus:outline-none focus:border-[#1E5A54] transition-colors"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowOwnerPass(!showOwnerPass)}
-                    className="absolute right-4 top-3 text-[#1E5A54] hover:text-[#1E5A54]"
-                  >
-                    {showOwnerPass ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                  </button>
-                </div>
-                {errors.password && (
-                  <p className="text-xs text-[#1E5A54] decoration-[#F7623D] font-medium">• {errors.password}</p>
-                )}
-              </div>
-
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full bg-[#1E5A54] border-2 border-[#F7623D] hover:bg-[#16443F] text-[#EEE6E2] font-semibold py-3 rounded-full text-xs uppercase tracking-[0.16em] flex items-center justify-center gap-2 transition-colors disabled:opacity-50 cursor-pointer"
-              >
-                {isSubmitting ? (
-                  <Loader2 className="w-4 h-4 animate-spin text-white" />
-                ) : (
-                  <span>Sign In as Owner</span>
                 )}
                 {!isSubmitting && <ArrowRight className="w-4 h-4" />}
               </button>

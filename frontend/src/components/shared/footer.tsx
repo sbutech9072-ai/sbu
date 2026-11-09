@@ -189,11 +189,6 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/blog" className="text-[#1E5A54] hover:text-[#F7623D] transition-colors">
-                  Engineering Notes
-                </Link>
-              </li>
-              <li>
                 <Link href="/get-a-quote" className="text-[#1E5A54] hover:text-[#F7623D] transition-colors">
                   Project Scope
                 </Link>

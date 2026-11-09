@@ -23,7 +23,6 @@ export const siteConfig = {
     { title: 'Services', href: '/services' },
     { title: 'Projects', href: '/projects' },
     { title: 'Team', href: '/team' },
-    { title: 'Blog', href: '/blog' },
     { title: 'Contact', href: '/contact' },
   ],
   adminNav: [
@@ -31,7 +30,6 @@ export const siteConfig = {
     { title: 'Projects', href: '/admin/projects', icon: 'FolderGit2' },
     { title: 'Services', href: '/admin/services', icon: 'Cpu' },
     { title: 'Team Members', href: '/admin/team', icon: 'Users' },
-    { title: 'Blog Posts', href: '/admin/blogs', icon: 'BookOpen' },
     { title: 'Testimonials', href: '/admin/testimonials', icon: 'Quote' },
     { title: 'Messages', href: '/admin/messages', icon: 'Mail' },
     { title: 'Quote Requests', href: '/admin/quote-requests', icon: 'FileSpreadsheet' },

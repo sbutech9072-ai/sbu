@@ -6,7 +6,7 @@ import {
   FolderGit2,
   Cpu,
   Users,
-  BookOpen,
+  Quote,
   Mail,
   FileSpreadsheet,
   ArrowRight,
@@ -20,7 +20,7 @@ import { mockQuoteRequests, mockMessages } from '@/data/mock-admin';
 import { projectsData } from '@/data/projects';
 import { servicesData } from '@/data/services';
 import { teamData } from '@/data/team';
-import { blogsData } from '@/data/blogs';
+import { testimonialsData } from '@/data/testimonials';
 
 export default function AdminDashboardOverviewPage() {
   return (
@@ -210,12 +210,12 @@ export default function AdminDashboardOverviewPage() {
           </Link>
 
           <Link
-            href="/admin/blogs"
+            href="/admin/testimonials"
             className="p-5 rounded-3xl border border-[#1E5A54]/25 bg-[#F8F4F2] hover:bg-[#E2D7D1] transition-all space-y-1 block"
           >
-            <BookOpen className="h-5 w-5 text-[#1E5A54] decoration-[#F7623D] mb-2" />
-            <h4 className="font-headline text-lg uppercase text-[#1E5A54]">Blog Posts</h4>
-            <p className="text-xs text-[#1E5A54]">{blogsData.length} Articles</p>
+            <Quote className="h-5 w-5 text-[#1E5A54] decoration-[#F7623D] mb-2" />
+            <h4 className="font-headline text-lg uppercase text-[#1E5A54]">Testimonials</h4>
+            <p className="text-xs text-[#1E5A54]">{testimonialsData.length} Reviews</p>
           </Link>
         </div>
       </div>
