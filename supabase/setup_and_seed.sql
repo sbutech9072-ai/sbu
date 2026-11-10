@@ -1,12 +1,237 @@
 -- ============================================================
--- SBU TECH — SUPABASE PGVECTOR SETUP & KNOWLEDGE BASE SEED
--- Run this entire script in Supabase Dashboard -> SQL Editor
+-- SBU TECH — COMPLETE PRODUCTION SUPABASE DATABASE MIGRATION
+-- Includes All 10 Backend Tables + Full Data + AI pgvector RAG
 -- ============================================================
 
--- 1. Enable pgvector extension
+-- 1. Enable Required Extensions
 CREATE EXTENSION IF NOT EXISTS vector;
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
--- 2. Create knowledge chunks table
+-- 2. Backend Relational Tables
+
+-- 2.1 Users Table
+CREATE TABLE IF NOT EXISTS users (
+    id VARCHAR(36) PRIMARY KEY,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    hashed_password VARCHAR(255) NOT NULL,
+    full_name VARCHAR(255) NOT NULL,
+    role VARCHAR(50) DEFAULT 'client' NOT NULL,
+    country VARCHAR(100),
+    whatsapp_number VARCHAR(50),
+    is_active BOOLEAN DEFAULT TRUE NOT NULL,
+    is_verified BOOLEAN DEFAULT FALSE NOT NULL,
+    google_id VARCHAR(255) UNIQUE,
+    created_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
+    updated_at TIMESTAMPTZ DEFAULT NOW() NOT NULL
+);
+CREATE INDEX IF NOT EXISTS ix_users_email ON users (email);
+
+-- 2.2 Contact Messages Table
+CREATE TABLE IF NOT EXISTS contact_messages (
+    id VARCHAR(36) PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    phone VARCHAR(50),
+    subject VARCHAR(255) NOT NULL,
+    message TEXT NOT NULL,
+    status VARCHAR(20) DEFAULT 'unread' NOT NULL,
+    created_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
+    updated_at TIMESTAMPTZ DEFAULT NOW() NOT NULL
+);
+CREATE INDEX IF NOT EXISTS ix_contact_messages_email ON contact_messages (email);
+
+-- 2.3 Quote Requests Table
+CREATE TABLE IF NOT EXISTS quote_requests (
+    id VARCHAR(36) PRIMARY KEY,
+    full_name VARCHAR(255) NOT NULL,
+    company_name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    phone VARCHAR(50),
+    service_category VARCHAR(255) NOT NULL,
+    budget_range VARCHAR(100) NOT NULL,
+    timeline VARCHAR(100) NOT NULL,
+    project_overview TEXT NOT NULL,
+    features_needed JSONB DEFAULT '[]'::jsonb NOT NULL,
+    status VARCHAR(20) DEFAULT 'pending' NOT NULL,
+    created_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
+    updated_at TIMESTAMPTZ DEFAULT NOW() NOT NULL
+);
+CREATE INDEX IF NOT EXISTS ix_quote_requests_email ON quote_requests (email);
+
+-- 2.4 Projects Table (Portfolio)
+CREATE TABLE IF NOT EXISTS projects (
+    id VARCHAR(100) PRIMARY KEY,
+    slug VARCHAR(150) UNIQUE NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    client VARCHAR(255) NOT NULL,
+    category VARCHAR(100) NOT NULL,
+    short_description TEXT NOT NULL,
+    full_description TEXT NOT NULL,
+    cover_image VARCHAR(500) NOT NULL,
+    year INT NOT NULL,
+    duration VARCHAR(100) NOT NULL,
+    technologies JSONB DEFAULT '[]'::jsonb NOT NULL,
+    metrics JSONB DEFAULT '[]'::jsonb NOT NULL,
+    challenge TEXT NOT NULL,
+    solution TEXT NOT NULL,
+    results JSONB DEFAULT '[]'::jsonb NOT NULL,
+    is_featured BOOLEAN DEFAULT FALSE NOT NULL,
+    live_url VARCHAR(500),
+    github_url VARCHAR(500),
+    created_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
+    updated_at TIMESTAMPTZ DEFAULT NOW() NOT NULL
+);
+CREATE INDEX IF NOT EXISTS ix_projects_slug ON projects (slug);
+
+-- 2.5 Services Table
+CREATE TABLE IF NOT EXISTS services (
+    id VARCHAR(100) PRIMARY KEY,
+    slug VARCHAR(150) UNIQUE NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    short_description TEXT NOT NULL,
+    full_description TEXT NOT NULL,
+    icon_name VARCHAR(100) NOT NULL,
+    category VARCHAR(100) NOT NULL,
+    features JSONB DEFAULT '[]'::jsonb NOT NULL,
+    deliverables JSONB DEFAULT '[]'::jsonb NOT NULL,
+    technologies JSONB DEFAULT '[]'::jsonb NOT NULL,
+    process_steps JSONB DEFAULT '[]'::jsonb NOT NULL,
+    is_featured BOOLEAN DEFAULT FALSE NOT NULL,
+    created_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
+    updated_at TIMESTAMPTZ DEFAULT NOW() NOT NULL
+);
+CREATE INDEX IF NOT EXISTS ix_services_slug ON services (slug);
+
+-- 2.6 Team Members Table
+CREATE TABLE IF NOT EXISTS team_members (
+    id VARCHAR(100) PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    role VARCHAR(255) NOT NULL,
+    department VARCHAR(100) NOT NULL,
+    avatar VARCHAR(500) NOT NULL,
+    bio TEXT NOT NULL,
+    skills JSONB DEFAULT '[]'::jsonb NOT NULL,
+    socials JSONB DEFAULT '{}'::jsonb NOT NULL,
+    is_leadership BOOLEAN DEFAULT FALSE NOT NULL,
+    created_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
+    updated_at TIMESTAMPTZ DEFAULT NOW() NOT NULL
+);
+
+-- 2.7 Testimonials Table
+CREATE TABLE IF NOT EXISTS testimonials (
+    id VARCHAR(100) PRIMARY KEY,
+    quote TEXT NOT NULL,
+    author VARCHAR(255) NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    company VARCHAR(255) NOT NULL,
+    avatar VARCHAR(500) NOT NULL,
+    rating INT DEFAULT 5 NOT NULL,
+    project_slug VARCHAR(150),
+    verified_client BOOLEAN DEFAULT TRUE NOT NULL,
+    created_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
+    updated_at TIMESTAMPTZ DEFAULT NOW() NOT NULL
+);
+
+-- 2.8 Site Settings Table
+CREATE TABLE IF NOT EXISTS site_settings (
+    id INT PRIMARY KEY,
+    company_name VARCHAR(255) NOT NULL,
+    contact_email VARCHAR(255) NOT NULL,
+    sales_email VARCHAR(255) NOT NULL,
+    phone_number VARCHAR(50) NOT NULL,
+    office_address VARCHAR(255) NOT NULL,
+    meta_title VARCHAR(255) NOT NULL,
+    meta_description TEXT NOT NULL,
+    enable_maintenance_mode BOOLEAN DEFAULT FALSE NOT NULL,
+    enable_registration BOOLEAN DEFAULT TRUE NOT NULL,
+    created_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
+    updated_at TIMESTAMPTZ DEFAULT NOW() NOT NULL
+);
+
+-- 2.9 Chat Sessions Table
+CREATE TABLE IF NOT EXISTS chat_sessions (
+    id VARCHAR(64) PRIMARY KEY,
+    user_id VARCHAR(36) REFERENCES users(id) ON DELETE SET NULL,
+    visitor_ip VARCHAR(45),
+    title VARCHAR(255),
+    language VARCHAR(20) DEFAULT 'auto' NOT NULL,
+    is_active BOOLEAN DEFAULT TRUE NOT NULL,
+    created_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
+    updated_at TIMESTAMPTZ DEFAULT NOW() NOT NULL
+);
+
+-- 2.10 Chat Messages Table
+CREATE TABLE IF NOT EXISTS chat_messages (
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    session_id VARCHAR(64) NOT NULL REFERENCES chat_sessions(id) ON DELETE CASCADE,
+    role VARCHAR(20) NOT NULL,
+    content TEXT NOT NULL,
+    status VARCHAR(50),
+    sources_json JSONB DEFAULT '[]'::jsonb,
+    created_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
+    updated_at TIMESTAMPTZ DEFAULT NOW() NOT NULL
+);
+CREATE INDEX IF NOT EXISTS ix_chat_messages_session ON chat_messages (session_id);
+
+-- 3. Seed Existing Backend Data From sbuweb.db
+
+-- Data for users (2 rows)
+INSERT INTO users (id, email, hashed_password, full_name, role, country, whatsapp_number, is_active, is_verified, google_id, created_at, updated_at) VALUES ('211f49f0-1832-4d4e-88bd-f8894eca43c6', 'admin@sbutech.internal', '$2b$12$XSR4SHbUFCAkhNJIQVY5JOOP7gUv/J00ZiIhbzd2sJ.O5gPGqO6ka', 'SBU Principal Architect', 'OWNER', 'United States of America', '+14158903412', 1, 1, NULL, '2026-11-09 16:24:30.547743', '2026-11-09 16:24:30.547746') ON CONFLICT (id) DO NOTHING;
+INSERT INTO users (id, email, hashed_password, full_name, role, country, whatsapp_number, is_active, is_verified, google_id, created_at, updated_at) VALUES ('988cbb73-965c-491f-896a-8d4a72801325', 'testclient_migration@sbutech.com', '$2b$12$EdXS9vLuGgfMixNzMSOGeuCyzE.41MkZSE4Q7ZRnij944fMmZ58sy', 'Updated Client Org', 'CLIENT', 'Canada', '+14155550199', 1, 0, NULL, '2026-11-09 16:24:30.813551', '2026-11-09 16:24:30.835368') ON CONFLICT (id) DO NOTHING;
+
+-- Data for contact_messages (5 rows)
+INSERT INTO contact_messages (id, name, email, phone, subject, message, status, created_at, updated_at) VALUES ('msg-1', 'Jonathan Miller', 'jmiller@apexlogistics.io', '+1 (555) 782-9011', 'Enterprise Cloud Migration Consultation', 'We are planning to move our legacy dispatch backend to AWS EKS with Terraform and GitHub Actions CI/CD. Can we book a 30-minute technical call next Tuesday?', 'new', '2026-11-09 16:24:30.565231', '2026-11-09 16:24:30.565234') ON CONFLICT (id) DO NOTHING;
+INSERT INTO contact_messages (id, name, email, phone, subject, message, status, created_at, updated_at) VALUES ('msg-2', 'Sophia Patel', 'sophia@healthbridge.co', '+1 (555) 442-1920', 'HIPAA-Compliant Patient Portal Architecture', 'We read your Zenith Health case study and need a similar WebRTC video consultation portal with Epic EHR sync. How do you structure initial architecture sprints?', 'read', '2026-11-09 16:24:30.565234', '2026-11-09 16:24:30.565235') ON CONFLICT (id) DO NOTHING;
+INSERT INTO contact_messages (id, name, email, phone, subject, message, status, created_at, updated_at) VALUES ('msg-3', 'Alexander Wright', 'a.wright@solisfintech.com', '+44 20 7946 0912', 'Cross-Platform React Native Fintech App', 'Our team is launching a multi-currency business account app in the UK and needs senior React Native engineers to own the mobile wallet and biometric auth layer.', 'read', '2026-11-09 16:24:30.565236', '2026-11-09 16:24:31.069335') ON CONFLICT (id) DO NOTHING;
+INSERT INTO contact_messages (id, name, email, phone, subject, message, status, created_at, updated_at) VALUES ('c8fbeaea-c697-4184-a32e-01d19e4f9c25', 'Sarah Connor', 'sarah@cyberdyne.org', '+1 (555) 901-2000', 'Distributed Systems Consultation', 'We need to re-architect our autonomous ingest pipeline using FastAPI and Kafka.', 'read', '2026-11-09 16:24:31.091074', '2026-11-09 16:32:54.717133') ON CONFLICT (id) DO NOTHING;
+INSERT INTO contact_messages (id, name, email, phone, subject, message, status, created_at, updated_at) VALUES ('651a3ddf-ee01-4564-8c56-dcdc300f024e', 'Sarah Connor', 'sarah@cyberdyne.org', '+1 (555) 901-2000', 'Distributed Systems Consultation', 'We need to re-architect our autonomous ingest pipeline using FastAPI and Kafka.', 'new', '2026-11-09 16:32:54.733051', '2026-11-09 16:32:54.733053') ON CONFLICT (id) DO NOTHING;
+
+-- Data for quote_requests (4 rows)
+INSERT INTO quote_requests (id, full_name, company_name, email, phone, service_category, budget_range, timeline, project_overview, features_needed, status, created_at, updated_at) VALUES ('qr-1', 'Robert Henderson', 'Vanguard Retail Systems', 'r.henderson@vanguard-retail.com', '+1 (555) 234-8901', 'Custom Web Application Development', '$50,000 - $100,000', '3 - 6 Months', 'We need a multi-tenant B2B wholesale portal managing 15,000 SKUs, live inventory sync with SAP, and automated net-30 customer credit rules.', '["Multi-tenant authentication", "Real-time inventory sync", "Custom invoice PDF generation", "Payment gateway integration (Stripe & ACH)", "Admin analytics dashboard"]'::jsonb, 'pending', '2026-11-09 16:24:30.573909', '2026-11-09 16:24:30.573911') ON CONFLICT (id) DO NOTHING;
+INSERT INTO quote_requests (id, full_name, company_name, email, phone, service_category, budget_range, timeline, project_overview, features_needed, status, created_at, updated_at) VALUES ('qr-2', 'Camilla Vasquez', 'BioGenix Diagnostics', 'cvasquez@biogenix.org', '+1 (555) 901-4433', 'AI & Machine Learning Solutions', '$100,000+', '6+ Months', 'Building an on-premise RAG system that ingests clinical research PDFs, parses assay tables, and helps lab scientists cross-reference prior studies with exact citations.', '["Private offline vector search", "PDF OCR and table extraction", "Role-based data access control", "Custom fine-tuned evaluation benchmark"]'::jsonb, 'reviewing', '2026-11-09 16:24:30.573912', '2026-11-09 16:24:30.573912') ON CONFLICT (id) DO NOTHING;
+INSERT INTO quote_requests (id, full_name, company_name, email, phone, service_category, budget_range, timeline, project_overview, features_needed, status, created_at, updated_at) VALUES ('92cb9e47-2c0f-4a2e-8dc6-0349de0ac2c8', 'Marcus Brody', 'Museum Logistics Inc', 'm.brody@museumlogistics.com', '+1 415 555 8899', 'Cloud Architecture & DevOps', '$50,000 - $100,000', '3 - 6 Months', 'Building an automated artifact cataloging system with OCR and indexing.', '["Cloud Infrastructure", "Vector Search"]'::jsonb, 'pending', '2026-11-09 16:24:31.107986', '2026-11-09 16:24:31.107990') ON CONFLICT (id) DO NOTHING;
+INSERT INTO quote_requests (id, full_name, company_name, email, phone, service_category, budget_range, timeline, project_overview, features_needed, status, created_at, updated_at) VALUES ('1be7490e-eb86-4b8b-b6dc-5dab93221d09', 'Marcus Brody', 'Museum Logistics Inc', 'm.brody@museumlogistics.com', '+1 415 555 8899', 'Cloud Architecture & DevOps', '$50,000 - $100,000', '3 - 6 Months', 'Building an automated artifact cataloging system with OCR and indexing.', '["Cloud Infrastructure", "Vector Search"]'::jsonb, 'pending', '2026-11-09 16:32:54.743975', '2026-11-09 16:32:54.743977') ON CONFLICT (id) DO NOTHING;
+
+-- Data for services (3 rows)
+INSERT INTO services (id, slug, title, short_description, full_description, icon_name, category, features, deliverables, technologies, process_steps, is_featured, created_at, updated_at) VALUES ('srv-1', 'custom-web-application-development', 'Custom Web Application Development', 'We engineer production web applications using Next.js, React, Node.js, and Python FastAPI.', 'Our custom web app engineering focuses on sub-second rendering, deterministic state hydration, and resilient transactional databases.', 'Code2', 'Web Engineering', '["React & Next.js 14 App Router", "Strict TypeScript & Type-Safe APIs", "FastAPI & Distributed Queues", "Real-Time WebSocket Sync"]'::jsonb, '["Production-tested Monorepo", "CI/CD Deployment Pipelines", "Architecture Diagram & OpenAPI Spec"]'::jsonb, '["Next.js", "React", "TypeScript", "FastAPI", "Tailwind CSS", "PostgreSQL"]'::jsonb, '[{"title": "01. Architecture & Schema Modeling", "description": "We define domain entities and invariant rules."}, {"title": "02. Milestone Sprints", "description": "Continuous delivery with review builds every week."}]'::jsonb, 1, '2026-11-09 16:24:30.582030', '2026-11-09 16:24:30.582033') ON CONFLICT (id) DO NOTHING;
+INSERT INTO services (id, slug, title, short_description, full_description, icon_name, category, features, deliverables, technologies, process_steps, is_featured, created_at, updated_at) VALUES ('srv-2', 'cloud-architecture-and-devops', 'Cloud Architecture & DevOps', 'Multi-region Kubernetes clusters, automated zero-downtime deployment pipelines, and SOC 2 compliance.', 'We design scalable cloud infrastructure on AWS, Google Cloud, and Cloudflare with Terraform and GitOps workflows.', 'Cloud', 'Cloud & Infrastructure', '["Terraform Infrastructure as Code", "Kubernetes (EKS/GKE)", "Zero-Downtime Blue/Green Deploys", "Automated Backup & Disaster Recovery"]'::jsonb, '["Terraform Modules & State Vault", "ArgoCD GitOps Manifests", "Prometheus & Grafana Dashboards"]'::jsonb, '["AWS", "Google Cloud", "Kubernetes", "Terraform", "Docker", "Prometheus"]'::jsonb, '[{"title": "01. Cloud Assessment", "description": "Audit security posture, IAM permissions, and bottlenecks."}, {"title": "02. GitOps Infrastructure", "description": "Automated pipeline provisioning and secret injection."}]'::jsonb, 1, '2026-11-09 16:24:30.582033', '2026-11-09 16:24:30.582034') ON CONFLICT (id) DO NOTHING;
+INSERT INTO services (id, slug, title, short_description, full_description, icon_name, category, features, deliverables, technologies, process_steps, is_featured, created_at, updated_at) VALUES ('srv-3', 'ai-and-private-llm-workflows', 'AI & Private LLM Workflows', 'Enterprise Retrieval-Augmented Generation (RAG), vector databases, and semantic search pipelines.', 'We build secure, private AI applications that connect company knowledge bases to frontier LLMs without data leakage.', 'Cpu', 'Applied AI', '["Hybrid BM25 & Dense Vector Retrieval", "Document Parsing & OCR Pipeline", "Deterministic Evaluation Harness", "Local Offline LLM Deployment"]'::jsonb, '["Vector Database Integration", "Fine-Tuned Embeddings & Prompts", "Observability Dashboard"]'::jsonb, '["LangChain", "Qdrant", "pgvector", "OpenAI", "HuggingFace", "FastAPI"]'::jsonb, '[{"title": "01. Knowledge Ingestion", "description": "Chunking and indexing technical corpus."}, {"title": "02. Retrieval Tuning", "description": "Benchmarking precision, recall, and hallucination guardrails."}]'::jsonb, 1, '2026-11-09 16:24:30.582034', '2026-11-09 16:24:30.582034') ON CONFLICT (id) DO NOTHING;
+
+-- Data for site_settings (1 rows)
+INSERT INTO site_settings (id, company_name, contact_email, sales_email, phone_number, office_address, meta_title, meta_description, enable_maintenance_mode, enable_registration, created_at, updated_at) VALUES (1, 'Sbu Tech', 'engineering@sbutech.com', 'dispatch@sbutech.com', '+1 (415) 890-3412', '548 Market St, Suite 78120, San Francisco, CA 94104', 'Sbu Tech | Software Engineering & Cloud Architecture Studio', 'Software engineering studio in San Francisco building production web platforms, cloud infrastructure, and private AI systems.', 0, 1, '2026-11-09 16:24:30.556274', '2026-11-09 16:24:30.556276') ON CONFLICT (id) DO NOTHING;
+
+-- Data for chat_sessions (8 rows)
+INSERT INTO chat_sessions (id, user_id, visitor_ip, title, language, is_active, created_at, updated_at) VALUES ('sbu_chat_b12a9ebd353a49e5', NULL, 'testclient', NULL, 'auto', 1, '2026-11-09 18:59:18.700987', '2026-11-09 18:59:18.700990') ON CONFLICT (id) DO NOTHING;
+INSERT INTO chat_sessions (id, user_id, visitor_ip, title, language, is_active, created_at, updated_at) VALUES ('sbu_chat_bdac37499a734ee7', NULL, 'testclient', NULL, 'auto', 1, '2026-11-09 18:59:18.717780', '2026-11-09 18:59:18.717782') ON CONFLICT (id) DO NOTHING;
+INSERT INTO chat_sessions (id, user_id, visitor_ip, title, language, is_active, created_at, updated_at) VALUES ('sbu_chat_320f8de678344069', NULL, 'testclient', NULL, 'auto', 1, '2026-11-09 18:59:20.781964', '2026-11-09 18:59:20.781969') ON CONFLICT (id) DO NOTHING;
+INSERT INTO chat_sessions (id, user_id, visitor_ip, title, language, is_active, created_at, updated_at) VALUES ('sbu_chat_3f15c48cae2d4612', NULL, 'testclient', NULL, 'auto', 1, '2026-11-09 18:59:22.984691', '2026-11-09 18:59:22.984694') ON CONFLICT (id) DO NOTHING;
+INSERT INTO chat_sessions (id, user_id, visitor_ip, title, language, is_active, created_at, updated_at) VALUES ('sbu_chat_800b5222185b4274', NULL, 'testclient', NULL, 'auto', 1, '2026-11-09 18:59:24.086461', '2026-11-09 18:59:24.086464') ON CONFLICT (id) DO NOTHING;
+INSERT INTO chat_sessions (id, user_id, visitor_ip, title, language, is_active, created_at, updated_at) VALUES ('sbu_chat_da96108d35ab418a', NULL, 'testclient', NULL, 'auto', 1, '2026-11-09 18:59:25.490814', '2026-11-09 18:59:25.490817') ON CONFLICT (id) DO NOTHING;
+INSERT INTO chat_sessions (id, user_id, visitor_ip, title, language, is_active, created_at, updated_at) VALUES ('sbu_chat_f46f4595f40447ce', NULL, 'testclient', NULL, 'auto', 1, '2026-11-09 18:59:26.899883', '2026-11-09 18:59:26.899886') ON CONFLICT (id) DO NOTHING;
+INSERT INTO chat_sessions (id, user_id, visitor_ip, title, language, is_active, created_at, updated_at) VALUES ('sbu_ct2hb028mw9nz34e', NULL, '2a06:98c0:3600::103', NULL, 'auto', 1, '2026-11-09 19:55:10.686762', '2026-11-09 19:55:10.686771') ON CONFLICT (id) DO NOTHING;
+
+-- Data for chat_messages (16 rows)
+INSERT INTO chat_messages (session_id, role, content, status, sources_json, created_at, updated_at) VALUES ('sbu_chat_bdac37499a734ee7', 'user', 'What services does SBU TECH provide?', NULL, NULL, '2026-11-09 18:59:20.769537', '2026-11-09 18:59:20.769540');
+INSERT INTO chat_messages (session_id, role, content, status, sources_json, created_at, updated_at) VALUES ('sbu_chat_bdac37499a734ee7', 'assistant', 'SBU TECH specializes in senior-led software engineering services, including: 1. Full-stack web and mobile application development [sbu_tech_kb_v1_p2_c006], 2. AI engineering, LLM integration, and enterprise RAG systems, 3. Cloud infrastructure, Kubernetes, and DevOps pipelines [sbu_tech_kb_v1_p2_c006].', 'answered', '[{"chunk_id": "sbu_tech_kb_v1_p2_c006", "source_file": "SBU_TECH.pdf", "page_number": 2, "section_title": "4. What SBU TECH does"}]'::jsonb, '2026-11-09 18:59:20.769541', '2026-11-09 18:59:20.769541');
+INSERT INTO chat_messages (session_id, role, content, status, sources_json, created_at, updated_at) VALUES ('sbu_chat_320f8de678344069', 'user', 'What services does SBU TECH provide?', NULL, NULL, '2026-11-09 18:59:21.878675', '2026-11-09 18:59:21.878678');
+INSERT INTO chat_messages (session_id, role, content, status, sources_json, created_at, updated_at) VALUES ('sbu_chat_320f8de678344069', 'assistant', 'SBU TECH specializes in senior-led software engineering services, including: 1. Full-stack web and mobile application development [sbu_tech_kb_v1_p2_c006], 2. AI engineering, LLM integration, and enterprise RAG systems, 3. Cloud infrastructure, Kubernetes, and DevOps pipelines [sbu_tech_kb_v1_p2_c006].', 'answered', '[{"chunk_id": "sbu_tech_kb_v1_p2_c006", "source_file": "SBU_TECH.pdf", "page_number": 2, "section_title": "4. What SBU TECH does"}]'::jsonb, '2026-11-09 18:59:21.878679', '2026-11-09 18:59:21.878679');
+INSERT INTO chat_messages (session_id, role, content, status, sources_json, created_at, updated_at) VALUES ('sbu_chat_320f8de678344069', 'user', 'Explain the first one.', NULL, NULL, '2026-11-09 18:59:22.972946', '2026-11-09 18:59:22.972949');
+INSERT INTO chat_messages (session_id, role, content, status, sources_json, created_at, updated_at) VALUES ('sbu_chat_320f8de678344069', 'assistant', 'Full-stack web and mobile application development at SBU TECH entails building resilient, scalable products using modern architectures like React, Next.js, FastAPI, and PostgreSQL with rigorous automated testing [sbu_tech_kb_v1_p2_c006].', 'answered', '[{"chunk_id": "sbu_tech_kb_v1_p2_c006", "source_file": "SBU_TECH.pdf", "page_number": 2, "section_title": "4. What SBU TECH does"}]'::jsonb, '2026-11-09 18:59:22.972950', '2026-11-09 18:59:22.972950');
+INSERT INTO chat_messages (session_id, role, content, status, sources_json, created_at, updated_at) VALUES ('sbu_chat_3f15c48cae2d4612', 'user', 'Where is SBU TECH based?', NULL, NULL, '2026-11-09 18:59:24.073321', '2026-11-09 18:59:24.073325');
+INSERT INTO chat_messages (session_id, role, content, status, sources_json, created_at, updated_at) VALUES ('sbu_chat_3f15c48cae2d4612', 'assistant', 'I couldn''t find this information in SBU TECH''s current knowledge base. Please contact our team for confirmation (admin@sbutech.com).', 'no_relevant_information', '[]'::jsonb, '2026-11-09 18:59:24.073326', '2026-11-09 18:59:24.073326');
+INSERT INTO chat_messages (session_id, role, content, status, sources_json, created_at, updated_at) VALUES ('sbu_chat_800b5222185b4274', 'user', 'How do clients log in to the portal?', NULL, NULL, '2026-11-09 18:59:25.471282', '2026-11-09 18:59:25.471289');
+INSERT INTO chat_messages (session_id, role, content, status, sources_json, created_at, updated_at) VALUES ('sbu_chat_800b5222185b4274', 'assistant', 'Clients can log in to the SBU TECH Client Portal at https://www.sbutech.com/client/login using their assigned email address and secure password [sbu_tech_kb_v1_p3_c015]. The portal provides visibility into active project milestones, deliverables, and invoices [sbu_tech_kb_v1_p3_c015].', 'answered', '[{"chunk_id": "sbu_tech_kb_v1_p3_c015", "source_file": "SBU_TECH.pdf", "page_number": 3, "section_title": "7. Website portal & login guidance"}]'::jsonb, '2026-11-09 18:59:25.471291', '2026-11-09 18:59:25.471292');
+INSERT INTO chat_messages (session_id, role, content, status, sources_json, created_at, updated_at) VALUES ('sbu_chat_da96108d35ab418a', 'user', 'How many employees does SBU TECH currently have worldwide?', NULL, NULL, '2026-11-09 18:59:26.889506', '2026-11-09 18:59:26.889509');
+INSERT INTO chat_messages (session_id, role, content, status, sources_json, created_at, updated_at) VALUES ('sbu_chat_da96108d35ab418a', 'assistant', 'I couldn''t find this information in SBU TECH''s current knowledge base. Please contact our team for confirmation (admin@sbutech.com).', 'no_relevant_information', '[]'::jsonb, '2026-11-09 18:59:26.889510', '2026-11-09 18:59:26.889510');
+INSERT INTO chat_messages (session_id, role, content, status, sources_json, created_at, updated_at) VALUES ('sbu_chat_f46f4595f40447ce', 'user', 'What is SBU TECH?', NULL, NULL, '2026-11-09 18:59:27.946558', '2026-11-09 18:59:27.946561');
+INSERT INTO chat_messages (session_id, role, content, status, sources_json, created_at, updated_at) VALUES ('sbu_chat_f46f4595f40447ce', 'assistant', 'Based on the SBU TECH knowledge base, here is the verified information regarding your request [sbu_tech_kb_v1_p2_c006].', 'answered', '[{"chunk_id": "sbu_tech_kb_v1_p2_c006", "source_file": "SBU_TECH.pdf", "page_number": 2, "section_title": "4. What SBU TECH does"}]'::jsonb, '2026-11-09 18:59:27.946561', '2026-11-09 18:59:27.946562');
+INSERT INTO chat_messages (session_id, role, content, status, sources_json, created_at, updated_at) VALUES ('sbu_ct2hb028mw9nz34e', 'user', 'hello', NULL, NULL, '2026-11-09 19:55:14.585150', '2026-11-09 19:55:14.585161');
+INSERT INTO chat_messages (session_id, role, content, status, sources_json, created_at, updated_at) VALUES ('sbu_ct2hb028mw9nz34e', 'assistant', 'I couldn''t find this information in SBU TECH''s current knowledge base. Please contact our team for confirmation (admin@sbutech.com).', 'no_relevant_information', '[]'::jsonb, '2026-11-09 19:55:14.585164', '2026-11-09 19:55:14.585166');
+
+-- ============================================================
+-- 4. AI & RAG Engine — Knowledge Vector Database (pgvector)
+-- ============================================================
+
 CREATE TABLE IF NOT EXISTS sbu_knowledge_chunks (
     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     chunk_id TEXT UNIQUE NOT NULL,
@@ -18,12 +243,10 @@ CREATE TABLE IF NOT EXISTS sbu_knowledge_chunks (
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- 3. Create HNSW index for sub-millisecond cosine vector retrieval
 CREATE INDEX IF NOT EXISTS sbu_knowledge_embedding_idx
 ON sbu_knowledge_chunks
 USING hnsw (embedding vector_cosine_ops);
 
--- 4. Create vector matching RPC function for Cloudflare Workers
 CREATE OR REPLACE FUNCTION match_sbu_chunks (
     query_embedding VECTOR(1536),
     match_threshold FLOAT DEFAULT 0.25,
@@ -57,7 +280,8 @@ BEGIN
 END;
 $$;
 
--- 5. Seed Knowledge Base Chunks with pre-computed 1536-dim Gemini embeddings
+-- 5. Seed 18 Knowledge Chunks with 1536-dim Gemini Embeddings
+
 INSERT INTO sbu_knowledge_chunks (chunk_id, title, page_number, content, metadata, embedding)
 VALUES ('sbu_tech_kb_v1_p2_c006', '4. What SBU TECH does', 2, '4. What SBU TECH does
 SBU TECH is a senior-led software engineering studio that works with businesses to design, build and scale production software. Its public positioning focuses on robust architecture, 
