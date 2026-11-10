@@ -17,9 +17,21 @@ sys.path.insert(0, str(PROJECT_ROOT / "backend"))
 
 from ai.vectorstore.qdrant_client import QdrantLocalManager
 
-def escape_sql_val(val):
+BOOLEAN_COLS = {
+    "is_active",
+    "is_verified",
+    "is_featured",
+    "is_leadership",
+    "verified_client",
+    "enable_maintenance_mode",
+    "enable_registration",
+}
+
+def escape_sql_val(val, col_name=""):
     if val is None:
         return "NULL"
+    if col_name in BOOLEAN_COLS:
+        return "TRUE" if (val in (1, "1", True, "true", "TRUE")) else "FALSE"
     if isinstance(val, bool):
         return "TRUE" if val else "FALSE"
     if isinstance(val, (int, float)):
@@ -247,7 +259,7 @@ CREATE INDEX IF NOT EXISTS ix_chat_messages_session ON chat_messages (session_id
             lines.append(f"-- Data for {tbl} ({len(rows)} rows)")
             col_list_str = ", ".join(cols)
             for row in rows:
-                val_strs = [escape_sql_val(v) for v in row]
+                val_strs = [escape_sql_val(row[i], cols[i]) for i in range(len(cols))]
                 val_joined = ", ".join(val_strs)
                 pk = cols[0]
                 lines.append(f"INSERT INTO {tbl} ({col_list_str}) VALUES ({val_joined}) ON CONFLICT ({pk}) DO NOTHING;")
@@ -259,7 +271,8 @@ CREATE INDEX IF NOT EXISTS ix_chat_messages_session ON chat_messages (session_id
     if msg_rows:
         lines.append(f"-- Data for chat_messages ({len(msg_rows)} rows)")
         for m in msg_rows:
-            vals = [escape_sql_val(v) for v in m]
+            col_names = ["session_id", "role", "content", "status", "sources_json", "created_at", "updated_at"]
+            vals = [escape_sql_val(m[i], col_names[i]) for i in range(len(col_names))]
             lines.append(f"INSERT INTO chat_messages (session_id, role, content, status, sources_json, created_at, updated_at) VALUES ({', '.join(vals)});")
         lines.append("")
 
@@ -267,7 +280,7 @@ CREATE INDEX IF NOT EXISTS ix_chat_messages_session ON chat_messages (session_id
 
     lines.append("-- ============================================================")
     lines.append("-- 4. AI & RAG Engine — Knowledge Vector Database (pgvector)")
-    lines.append("-- ============================================================\n")
+    lines.append("-- ============================================================")
 
     lines.append("""CREATE TABLE IF NOT EXISTS sbu_knowledge_chunks (
     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
