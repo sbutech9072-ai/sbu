@@ -129,8 +129,8 @@ class AgentRouterClient:
         key = (self.api_key or "").strip()
         if not key or key == "PASTE_YOUR_AGENTROUTER_API_KEY_HERE" or key.startswith("PASTE_YOUR_"):
             raise AgentRouterAuthError(
-                "AGENTIC_API_KEY is not configured in ai/.env. "
-                "Please paste your AgentRouter API key into ai/.env to proceed."
+                "AGENTIC_API_KEY is not configured in the root `.env`. "
+                "Please paste your AgentRouter API key into `.env` to proceed."
             )
         if len(key) < 8:
             raise AgentRouterAuthError("AGENTIC_API_KEY is too short or malformed.")
@@ -218,7 +218,7 @@ class AgentRouterClient:
                 if response.status_code == 401:
                     raise AgentRouterAuthError(
                         "AgentRouter authentication failed (HTTP 401). "
-                        "Please verify AGENTIC_API_KEY in ai/.env."
+                        "Please verify AGENTIC_API_KEY in `.env`."
                     )
 
                 if response.status_code == 402:

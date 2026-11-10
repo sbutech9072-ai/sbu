@@ -69,40 +69,17 @@ export default function ChatWidget() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  // Initialize session and restore history from localStorage
+  // Initialize ephemeral in-memory session (clears automatically on page refresh/tab close)
   useEffect(() => {
     try {
-      const savedSid = localStorage.getItem(STORAGE_SESSION_KEY);
-      if (savedSid) {
-        setSessionId(savedSid);
-      } else {
-        const newSid = `sbu_${Math.random().toString(36).substring(2, 10)}${Date.now().toString(36)}`;
-        setSessionId(newSid);
-        localStorage.setItem(STORAGE_SESSION_KEY, newSid);
-      }
-
-      const savedHistory = localStorage.getItem(STORAGE_HISTORY_KEY);
-      if (savedHistory) {
-        const parsed = JSON.parse(savedHistory);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          setMessages(parsed);
-        }
-      }
-    } catch (e) {
-      console.warn('Failed to load chat history from localStorage', e);
+      localStorage.removeItem(STORAGE_SESSION_KEY);
+      localStorage.removeItem(STORAGE_HISTORY_KEY);
+    } catch {
+      // Ignore storage access errors
     }
+    const newSid = `sbu_${Math.random().toString(36).substring(2, 10)}${Date.now().toString(36)}`;
+    setSessionId(newSid);
   }, []);
-
-  // Save messages to localStorage
-  useEffect(() => {
-    if (messages.length > 1) {
-      try {
-        localStorage.setItem(STORAGE_HISTORY_KEY, JSON.stringify(messages));
-      } catch (e) {
-        console.warn('Failed to save chat history to localStorage', e);
-      }
-    }
-  }, [messages]);
 
   // Auto-scroll to bottom of message list
   useEffect(() => {
@@ -162,10 +139,9 @@ export default function ChatWidget() {
 
       const data = (await response.json()) as BackendChatResponse;
 
-      // Update session ID if backend re-allocated
+      // Update session ID in memory if backend re-allocated
       if (data.session_id && data.session_id !== sessionId) {
         setSessionId(data.session_id);
-        localStorage.setItem(STORAGE_SESSION_KEY, data.session_id);
       }
 
       const aiMessage: ChatMessage = {
@@ -204,8 +180,6 @@ export default function ChatWidget() {
     const newSid = `sbu_${Math.random().toString(36).substring(2, 10)}${Date.now().toString(36)}`;
     setSessionId(newSid);
     try {
-      localStorage.setItem(STORAGE_SESSION_KEY, newSid);
-      localStorage.removeItem(STORAGE_HISTORY_KEY);
       await fetch('/api/ai/session/new', { method: 'POST' });
     } catch (e) {
       console.warn('Session reset error:', e);

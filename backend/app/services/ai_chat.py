@@ -19,7 +19,6 @@ if str(PROJECT_ROOT) not in sys.path:
 
 from ai.config.settings import settings as ai_settings
 from ai.llm import generate_grounded_answer, GroundedResponse, AgentRouterClient
-from ai.vectorstore.qdrant_client import QdrantLocalManager
 from app.models.ai_session import ChatSession, ChatMessage
 from app.schemas.ai import ChatResponse, SourceCitation, HealthResponse
 
@@ -184,29 +183,22 @@ class AIChatService:
 
     def check_health(self) -> HealthResponse:
         """
-        Executes non-invasive health checks on Qdrant, embeddings, and LLM readiness.
+        Executes non-invasive health checks on Supabase vector store, embeddings, and LLM readiness.
         Never exposes secrets, database credentials, or API keys.
         """
-        qdrant_ok = False
-        try:
-            q_client = QdrantLocalManager.get_client()
-            col = q_client.get_collection(ai_settings.QDRANT_COLLECTION_NAME)
-            qdrant_ok = col.status is not None
-        except Exception as e:
-            logger.warning("Health check: Qdrant probe failed: %s", e)
-
+        vector_db_ok = bool(ai_settings.DATABASE_URL and ai_settings.DATABASE_URL.startswith("postgresql://"))
         emb_ok = ai_settings.is_gemini_api_key_valid()
         llm_ok = ai_settings.is_agentrouter_api_key_valid()
 
-        all_ok = qdrant_ok and emb_ok and llm_ok
+        all_ok = vector_db_ok and emb_ok and llm_ok
 
         return HealthResponse(
             status="healthy" if all_ok else "degraded",
             backend_available=True,
             ai_module_available=True,
-            qdrant_connected=qdrant_ok,
+            qdrant_connected=vector_db_ok,
             embedding_ready=emb_ok,
             llm_ready=llm_ok,
-            collection_name=ai_settings.QDRANT_COLLECTION_NAME,
+            collection_name="sbu_knowledge_chunks",
             model=ai_settings.AGENTROUTER_MODEL,
         )

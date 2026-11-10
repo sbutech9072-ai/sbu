@@ -1,34 +1,60 @@
-# Dependencies
-node_modules
-*/node_modules
+# ==============================================================================
+# SBU TECH — CENTRALIZED GITIGNORE
+# ==============================================================================
 
-# Production builds
-dist
-*/dist
-.next
-*/.next
-out
-*/out
-.open-next
-*/.open-next
-.wrangler
-*/.wrangler
+# Environment variables (NEVER commit .env)
+.env
+.env.*
+*.env
+!.env.example
 .dev.vars*
 */.dev.vars*
 
-# Environment variables
-.env
-.env.local
-.env.*.local
-*.env
-ai/.env
+# Node / Frontend dependencies & builds
+node_modules/
+*/node_modules/
+dist/
+*/dist/
+.next/
+*/.next/
+out/
+*/out/
+build/
+*/build/
+.open-next/
+*/.open-next/
+.wrangler/
+*/.wrangler/
+*.tsbuildinfo
+frontend/cloudflare-env.d.ts
+frontend/next-env.d.ts
 
+# Python byte-code, caches & virtual environments
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.venv/
+env/
+venv/
+ENV/
 
-# Logs
+# Databases & Vector Storage
+*.db
+*.sqlite
+*.sqlite3
+ai/storage/qdrant/*
+!ai/storage/qdrant/.gitkeep
+
+# Logs & Scratch files
 *.log
+ai/logs/*.log
+!ai/logs/.gitkeep
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+*.tmp
+*.bak
 
 # OS Files
 .DS_Store

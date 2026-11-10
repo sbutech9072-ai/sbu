@@ -1,6 +1,6 @@
 // @ts-ignore
 import openNextHandler from './.open-next/worker.js';
-import { handleAIChat } from './src/lib/ai/chat-handler';
+import { handleAIChat } from '../ai/edge/chat-handler';
 
 // Re-export any OpenNext Durable Objects if needed by Next.js Cloudflare adapter
 // @ts-ignore

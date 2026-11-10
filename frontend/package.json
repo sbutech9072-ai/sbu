@@ -2,6 +2,9 @@
   "name": "sbuweb-frontend",
   "version": "1.0.0",
   "private": true,
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -17,9 +20,6 @@
     "@opennextjs/cloudflare": "^1.15.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "cors": "^2.8.6",
-    "dotenv": "^18.0.9",
-    "express": "^5.3.0",
     "framer-motion": "^14.9.0",
     "gsap": "3.12.5",
     "lenis": "1.1.20",
@@ -33,8 +33,6 @@
     "zod": "^4.6.7"
   },
   "devDependencies": {
-    "@types/cors": "^2.8.19",
-    "@types/express": "^5.0.6",
     "@types/node": "^22.13.0",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",

@@ -46,7 +46,7 @@ class GeminiEmbeddingClient:
         if not settings.is_gemini_api_key_valid():
             raise GeminiAuthError(
                 "Gemini API key is not configured or is still the placeholder. "
-                "Please add your valid Gemini API key to `ai/.env` (GEMINI_API_KEY=...)."
+                "Please add your valid Gemini API key to the root `.env` (GEMINI_API_KEY=...)."
             )
 
         try:

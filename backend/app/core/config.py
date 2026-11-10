@@ -1,16 +1,24 @@
 import os
 from pathlib import Path
-from typing import List, Union
-from pydantic import AnyHttpUrl, field_validator
+from typing import List
+from dotenv import load_dotenv
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 BACKEND_DIR = Path(__file__).resolve().parent.parent.parent
+ROOT_DIR = BACKEND_DIR.parent
 DEFAULT_DB_PATH = (BACKEND_DIR / "sbuweb.db").as_posix()
+
+# Load centralized root .env (with fallback to backend/.env if present)
+_root_env_file = ROOT_DIR / ".env"
+_local_env_file = BACKEND_DIR / ".env"
+_active_env_file = _root_env_file if _root_env_file.is_file() else _local_env_file
+if _active_env_file.is_file():
+    load_dotenv(_active_env_file, override=True)
 
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
-        env_file=".env",
+        env_file=str(_active_env_file),
         env_file_encoding="utf-8",
         case_sensitive=True,
         extra="ignore",
@@ -63,10 +71,8 @@ class Settings(BaseSettings):
     EMAILS_FROM_EMAIL: str = os.getenv("EMAILS_FROM_EMAIL", "engineering@sbutech.com")
     EMAILS_FROM_NAME: str = os.getenv("EMAILS_FROM_NAME", "Sbu Tech Dispatch")
 
-    # Future AI / RAG Architecture
+    # AI / RAG Architecture
     AI_ENABLED: bool = True
-    OPENAI_API_KEY: str = os.getenv("OPENAI_API_KEY", "")
-    VECTOR_DB_URL: str = os.getenv("VECTOR_DB_URL", "")
 
 
 settings = Settings()
