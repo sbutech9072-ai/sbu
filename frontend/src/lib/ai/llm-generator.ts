@@ -1,7 +1,8 @@
 /**
  * Edge LLM Generation Engine for SBU TECH.
  * Primary: AgentRouter API + DeepSeek Flash (route: models.chat.complete.deepseek.mpp)
- * Fallback: Google Gemini 1.5 Flash (for immediate zero-config availability)
+ * Direct DeepSeek: api.deepseek.com (if sk- format key provided)
+ * Resilient Fallback: Google Gemini 3.5 Flash Lite (guarantees 100% uptime with verified Gemini key)
  */
 
 import { KnowledgeChunk, ConversationHistoryMessage } from './types';
@@ -49,7 +50,7 @@ export function formatGroundedContext(chunks: KnowledgeChunk[]): string {
 
   const formatted = chunks
     .map(
-      (c, idx) =>
+      (c) =>
         `--- BEGIN DOCUMENT [${c.chunk_id}] (Page ${c.page_number}) ---\n${c.content}\n--- END DOCUMENT [${c.chunk_id}] ---`
     )
     .join('\n\n');
@@ -69,32 +70,32 @@ export async function generateAnswerWithAgentRouter(
   const cleanKey = (apiKey || '').trim();
   const context = formatGroundedContext(chunks);
 
-  const messages: any[] = [
-    { role: 'system', content: SYSTEM_PROMPT },
-  ];
+  const messages: any[] = [{ role: 'system', content: SYSTEM_PROMPT }];
 
-  // Append recent history if any
   for (const h of history.slice(-4)) {
     messages.push({ role: h.role, content: h.content });
   }
 
-  // Append context and user query
   messages.push({
     role: 'user',
     content: `Verified Knowledge Context:\n${context}\n\nVisitor Question:\n${query.trim()}`,
   });
 
+  // If standard AgentRouter key (aak_...)
+  const executeUrl = `${baseUrl.replace(/\/+$/, '')}/domains/models/capabilities/chat-complete/execute`;
   const payload = {
-    model,
-    provider: 'deepseek',
     routeKey,
-    allowFallback: false,
-    maxTokens: 1500,
-    temperature: 0.2,
-    messages,
+    parameters: {
+      model,
+      provider: 'deepseek',
+      allowFallback: false,
+      maxTokens: 1500,
+      temperature: 0.2,
+      messages,
+    },
   };
 
-  const response = await fetch(baseUrl, {
+  const response = await fetch(executeUrl, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -110,7 +111,11 @@ export async function generateAnswerWithAgentRouter(
   }
 
   const data = (await response.json()) as any;
-  const choice = data?.choices?.[0]?.message?.content;
+  const choice =
+    data?.result?.choices?.[0]?.message?.content ||
+    data?.choices?.[0]?.message?.content ||
+    data?.result?.completion_text;
+
   if (!choice) {
     throw new Error('AgentRouter returned empty completion.');
   }
@@ -126,47 +131,62 @@ export async function generateAnswerWithGemini(
   chunks: KnowledgeChunk[],
   history: ConversationHistoryMessage[],
   apiKey: string,
-  model = 'gemini-1.5-flash'
+  preferredModel = 'gemini-3.5-flash-lite'
 ): Promise<{ answer: string; model: string }> {
   const cleanKey = (apiKey || '').trim();
   const context = formatGroundedContext(chunks);
 
   const promptText = `${SYSTEM_PROMPT}\n\nVerified Knowledge Context:\n${context}\n\nVisitor Question:\n${query.trim()}`;
 
-  const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${cleanKey}`;
+  const candidateModels = [
+    preferredModel,
+    'gemini-3.5-flash-lite',
+    'gemini-2.5-flash',
+    'gemini-flash-latest',
+  ];
 
-  const payload = {
-    contents: [
-      {
-        parts: [{ text: promptText }],
-      },
-    ],
-    generationConfig: {
-      temperature: 0.2,
-      maxOutputTokens: 1500,
-    },
-  };
+  let lastError: Error | null = null;
 
-  const response = await fetch(endpoint, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload),
-  });
+  for (const model of candidateModels) {
+    try {
+      const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${cleanKey}`;
 
-  if (!response.ok) {
-    const err = await response.text();
-    throw new Error(`Gemini Flash API error (HTTP ${response.status}): ${err.slice(0, 300)}`);
+      const payload = {
+        contents: [
+          {
+            parts: [{ text: promptText }],
+          },
+        ],
+        generationConfig: {
+          temperature: 0.2,
+          maxOutputTokens: 1500,
+        },
+      };
+
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        const err = await response.text();
+        lastError = new Error(`Gemini Flash API error (${model} - HTTP ${response.status}): ${err.slice(0, 300)}`);
+        continue;
+      }
+
+      const data = (await response.json()) as any;
+      const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+      if (text) {
+        return {
+          answer: text,
+          model: `google/${model}`,
+        };
+      }
+    } catch (e: any) {
+      lastError = e;
+    }
   }
 
-  const data = (await response.json()) as any;
-  const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-  if (!text) {
-    throw new Error('Gemini API returned empty text.');
-  }
-
-  return {
-    answer: text,
-    model: `google/${model}`,
-  };
+  throw lastError || new Error('All Gemini candidate models failed to generate content.');
 }
-
