@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import {
   User,
   Mail,
@@ -18,33 +19,88 @@ import {
   ArrowLeft,
   ChevronDown,
   CheckCircle2,
-  LogOut,
-  FolderGit2,
-  MessageSquare,
-  ShieldCheck,
   Send,
 } from 'lucide-react';
-import { COUNTRIES } from '@/lib/countries';
+import { COUNTRIES, COUNTRY_LABELS } from '@/lib/countries';
+import { ClientWorkspaceCard } from '@/components/shared/client-workspace-card';
 import { createClient } from '@/lib/supabase/client';
 import type { User as SupabaseUser } from '@supabase/supabase-js';
 import { Logo } from '@/components/shared/logo';
 
-type AuthMode = 'client-login' | 'client-register' | 'forgot-password' | 'check-email';
+type BackendUser = {
+  id: string;
+  email: string;
+  fullName: string;
+  role: string;
+  country: string | null;
+  whatsappNumber: string | null;
+  isActive: boolean;
+  isVerified: boolean;
+};
+
+type BackendSession = {
+  accessToken: string;
+  user: BackendUser;
+};
+
+const BACKEND_SESSION_KEY = 'techzaa-backend-session';
+
+const isRecord = (value: unknown): value is Record<string, unknown> =>
+  typeof value === 'object' && value !== null;
+
+const isBackendUser = (value: unknown): value is BackendUser =>
+  isRecord(value) &&
+  typeof value.id === 'string' &&
+  typeof value.email === 'string' &&
+  typeof value.fullName === 'string' &&
+  typeof value.role === 'string' &&
+  (typeof value.country === 'string' || value.country === null) &&
+  (typeof value.whatsappNumber === 'string' || value.whatsappNumber === null) &&
+  typeof value.isActive === 'boolean' &&
+  typeof value.isVerified === 'boolean';
+
+const isBackendSession = (value: unknown): value is BackendSession =>
+  isRecord(value) &&
+  typeof value.accessToken === 'string' &&
+  isBackendUser(value.user);
+
+const getApiErrorMessage = (value: unknown, fallback: string): string => {
+  if (!isRecord(value)) return fallback;
+  if (typeof value.message === 'string') return value.message;
+  if (typeof value.detail === 'string') return value.detail;
+  return fallback;
+};
+
+type AuthMode =
+  | 'client-login'
+  | 'client-register'
+  | 'signup-verify'
+  | 'forgot-password'
+  | 'forgot-verify'
+  | 'check-email';
 
 export default function LoginPage() {
+  const router = useRouter();
   const [mode, setMode] = useState<AuthMode>('client-login');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isGoogleSubmitting, setIsGoogleSubmitting] = useState(false);
   const [apiError, setApiError] = useState<string | null>(null);
   const [apiSuccess, setApiSuccess] = useState<string | null>(null);
   const [currentUser, setCurrentUser] = useState<SupabaseUser | null>(null);
+  const [backendSession, setBackendSession] = useState<BackendSession | null>(null);
   const [registeredEmail, setRegisteredEmail] = useState('');
   const [resendCooldown, setResendCooldown] = useState(0);
+  const [signupOtp, setSignupOtp] = useState('');
+  const [passwordResetOtp, setPasswordResetOtp] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmNewPassword, setConfirmNewPassword] = useState('');
 
   // Password visibility states
   const [showClientPass, setShowClientPass] = useState(false);
   const [showRegPass, setShowRegPass] = useState(false);
   const [showRegConfirmPass, setShowRegConfirmPass] = useState(false);
+  const [showResetPass, setShowResetPass] = useState(false);
+  const [showResetConfirmPass, setShowResetConfirmPass] = useState(false);
 
   // Form Fields
   const [clientLogin, setClientLogin] = useState({ email: '', password: '' });
@@ -82,6 +138,51 @@ export default function LoginPage() {
     };
   }, [supabase]);
 
+  useEffect(() => {
+    const stored = window.sessionStorage.getItem(BACKEND_SESSION_KEY);
+    if (!stored) return;
+
+    let session: unknown;
+    try {
+      session = JSON.parse(stored);
+    } catch {
+      window.sessionStorage.removeItem(BACKEND_SESSION_KEY);
+      return;
+    }
+
+    if (!isBackendSession(session)) {
+      window.sessionStorage.removeItem(BACKEND_SESSION_KEY);
+      return;
+    }
+
+    setBackendSession(session);
+    fetch('/api/v1/auth/me', {
+      headers: { Authorization: `Bearer ${session.accessToken}` },
+      cache: 'no-store',
+    })
+      .then(async (response) => {
+        if (response.status === 401 || response.status === 403) {
+          window.sessionStorage.removeItem(BACKEND_SESSION_KEY);
+          setBackendSession(null);
+          return;
+        }
+        if (!response.ok) return;
+
+        const user: unknown = await response.json();
+        if (isBackendUser(user)) {
+          const restoredSession = { accessToken: session.accessToken, user };
+          setBackendSession(restoredSession);
+          window.sessionStorage.setItem(
+            BACKEND_SESSION_KEY,
+            JSON.stringify(restoredSession)
+          );
+        }
+      })
+      .catch(() => {
+        // Keep the saved session available if the backend is temporarily unreachable.
+      });
+  }, []);
+
   // Handle countdown timer for resending email confirmation
   useEffect(() => {
     if (resendCooldown <= 0) return;
@@ -99,6 +200,17 @@ export default function LoginPage() {
   };
 
   const validateEmail = (val: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+
+  const persistBackendSession = (session: BackendSession): boolean => {
+    try {
+      window.sessionStorage.setItem(BACKEND_SESSION_KEY, JSON.stringify(session));
+      setBackendSession(session);
+      setCurrentUser(null);
+      return true;
+    } catch {
+      return false;
+    }
+  };
 
   // ----------------------------------------------------------------------------
   // Google OAuth ("Continue with Google")
@@ -167,10 +279,41 @@ export default function LoginPage() {
           setRegisteredEmail(email);
           setMode('check-email');
           setApiError('Please confirm your email address before signing in.');
-        } else {
-          setApiError(error.message || 'Invalid email or password.');
+          return;
         }
-        setIsSubmitting(false);
+
+        try {
+          const backendResponse = await fetch('/api/v1/auth/client/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password: clientLogin.password }),
+          });
+          const backendResult: unknown = await backendResponse.json().catch(() => null);
+
+          if (backendResponse.ok && isBackendSession(backendResult)) {
+            if (persistBackendSession(backendResult)) {
+              setApiSuccess('Signed in successfully.');
+              router.push('/workspace');
+            } else {
+              setApiError('Signed in, but this browser could not save the session.');
+            }
+            setClientLogin({ email: '', password: '' });
+            return;
+          }
+
+          if (backendResponse.status !== 401) {
+            setApiError(
+              getApiErrorMessage(
+                backendResult,
+                'Unable to connect to the authentication server.'
+              )
+            );
+            return;
+          }
+        } catch {
+          // Keep the existing Supabase error if the backend fallback is unavailable.
+        }
+        setApiError(error.message || 'Invalid email or password.');
         return;
       }
 
@@ -190,6 +333,8 @@ export default function LoginPage() {
         }
       }
 
+      setBackendSession(null);
+      window.sessionStorage.removeItem(BACKEND_SESSION_KEY);
       setCurrentUser(data.user);
       setApiSuccess('Signed in successfully.');
       setClientLogin({ email: '', password: '' });
@@ -238,31 +383,73 @@ export default function LoginPage() {
 
     try {
       const email = clientRegister.email.trim().toLowerCase();
-      const origin = window.location.origin;
-
-      const { error } = await supabase.auth.signUp({
-        email,
-        password: clientRegister.password,
-        options: {
-          emailRedirectTo: `${origin}/auth/callback`,
-          data: {
-            full_name: clientRegister.fullName.trim(),
-            country: clientRegister.country,
-            whatsapp: clientRegister.whatsappNumber.trim() || null,
-          },
-        },
+      const response = await fetch('/api/v1/auth/signup/send-otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
       });
+      const result: unknown = await response.json().catch(() => null);
 
-      if (error) {
-        setApiError(error.message);
-        setIsSubmitting(false);
+      if (!response.ok) {
+        const retryAfter = Number(response.headers.get('Retry-After'));
+        if (response.status === 429 && Number.isFinite(retryAfter) && retryAfter > 0) {
+          setResendCooldown(retryAfter);
+        }
+        setApiError(getApiErrorMessage(result, 'Unable to send a verification code.'));
         return;
       }
 
-      // Always show generic privacy-preserving confirmation without leaking whether email exists
       setRegisteredEmail(email);
-      setMode('check-email');
+      setSignupOtp('');
       setResendCooldown(60);
+      setMode('signup-verify');
+      setApiSuccess('A verification code has been sent to your email address.');
+    } catch {
+      setApiError('Unable to request a verification code. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleVerifySignupOTP = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setApiError(null);
+    setApiSuccess(null);
+
+    if (!/^[0-9]{6}$/.test(signupOtp)) {
+      setApiError('Enter the 6-digit verification code.');
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      const response = await fetch('/api/v1/auth/signup/verify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: registeredEmail,
+          otp: signupOtp,
+          fullName: clientRegister.fullName.trim(),
+          password: clientRegister.password,
+          country: clientRegister.country,
+          whatsappNumber: clientRegister.whatsappNumber.trim() || null,
+        }),
+      });
+      const result: unknown = await response.json().catch(() => null);
+
+      if (!response.ok) {
+        setApiError(getApiErrorMessage(result, 'The code is invalid or expired.'));
+        return;
+      }
+      if (!isBackendSession(result)) {
+        setApiError('The account was created, but the server returned an invalid session.');
+        return;
+      }
+      if (!persistBackendSession(result)) {
+        setApiError('Your account is ready, but this browser could not save the session.');
+        return;
+      }
+
       setClientRegister({
         fullName: '',
         email: '',
@@ -271,8 +458,45 @@ export default function LoginPage() {
         country: '',
         whatsappNumber: '',
       });
+      setSignupOtp('');
+      setResendCooldown(0);
+      setMode('client-login');
+      setApiSuccess('Your email is verified and your account is ready.');
+      router.push('/workspace');
     } catch {
-      setApiError('Unable to complete registration. Please try again.');
+      setApiError('Unable to verify the code. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleResendSignupOTP = async () => {
+    if (!registeredEmail || resendCooldown > 0) return;
+    setIsSubmitting(true);
+    setApiError(null);
+    setApiSuccess(null);
+    try {
+      const response = await fetch('/api/v1/auth/signup/send-otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: registeredEmail }),
+      });
+      const result: unknown = await response.json().catch(() => null);
+
+      if (!response.ok) {
+        const retryAfter = Number(response.headers.get('Retry-After'));
+        if (response.status === 429 && Number.isFinite(retryAfter) && retryAfter > 0) {
+          setResendCooldown(retryAfter);
+        }
+        setApiError(getApiErrorMessage(result, 'Unable to resend the verification code.'));
+        return;
+      }
+
+      setSignupOtp('');
+      setResendCooldown(60);
+      setApiSuccess('A new verification code has been sent.');
+    } catch {
+      setApiError('Unable to resend the verification code. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -323,24 +547,111 @@ export default function LoginPage() {
 
     setIsSubmitting(true);
     try {
-      const origin = window.location.origin;
-      const { error } = await supabase.auth.resetPasswordForEmail(
-        forgotEmail.trim().toLowerCase(),
-        {
-          redirectTo: `${origin}/auth/reset`,
-        }
-      );
+      const email = forgotEmail.trim().toLowerCase();
+      const response = await fetch('/api/v1/auth/password-reset/send-otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+      const result: unknown = await response.json().catch(() => null);
 
-      if (error) {
-        setApiError(error.message);
-      } else {
-        setApiSuccess(
-          'If an account exists with this email, a password reset link has been dispatched.'
+      if (!response.ok) {
+        setApiError(
+          getApiErrorMessage(result, 'Unable to process the password reset request.')
         );
-        setForgotEmail('');
+        return;
       }
+
+      setForgotEmail(email);
+      setPasswordResetOtp('');
+      setNewPassword('');
+      setConfirmNewPassword('');
+      setResendCooldown(60);
+      setMode('forgot-verify');
+      setApiSuccess('If the email is registered, a password reset code has been sent.');
     } catch {
       setApiError('Unable to process password reset request.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleResendPasswordResetOTP = async () => {
+    if (!forgotEmail || resendCooldown > 0) return;
+    setIsSubmitting(true);
+    setApiError(null);
+    setApiSuccess(null);
+    try {
+      const response = await fetch('/api/v1/auth/password-reset/send-otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: forgotEmail }),
+      });
+      const result: unknown = await response.json().catch(() => null);
+
+      if (!response.ok) {
+        setApiError(
+          getApiErrorMessage(result, 'Unable to resend the password reset code.')
+        );
+        return;
+      }
+
+      setPasswordResetOtp('');
+      setResendCooldown(60);
+      setApiSuccess('If the email is registered, a new password reset code has been sent.');
+    } catch {
+      setApiError('Unable to resend the password reset code. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleVerifyPasswordReset = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setApiError(null);
+    setApiSuccess(null);
+
+    if (!/^[0-9]{6}$/.test(passwordResetOtp)) {
+      setApiError('Enter the 6-digit verification code.');
+      return;
+    }
+    if (newPassword.length < 8) {
+      setApiError('Password must be at least 8 characters.');
+      return;
+    }
+    if (newPassword !== confirmNewPassword) {
+      setApiError('Passwords do not match.');
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      const response = await fetch('/api/v1/auth/password-reset/verify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: forgotEmail,
+          otp: passwordResetOtp,
+          newPassword,
+          confirmPassword: confirmNewPassword,
+        }),
+      });
+      const result: unknown = await response.json().catch(() => null);
+
+      if (!response.ok) {
+        setApiError(getApiErrorMessage(result, 'The code is invalid or expired.'));
+        return;
+      }
+
+      setPasswordResetOtp('');
+      setNewPassword('');
+      setConfirmNewPassword('');
+      setForgotEmail('');
+      setResendCooldown(0);
+      setMode('client-login');
+      setApiSuccess('Password reset successfully. Please sign in with your new password.');
+    } catch {
+      setApiError('Unable to reset the password. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -350,6 +661,17 @@ export default function LoginPage() {
   // Sign Out Handler
   // ----------------------------------------------------------------------------
   const handleSignOut = async () => {
+    if (backendSession) {
+      window.sessionStorage.removeItem(BACKEND_SESSION_KEY);
+      setBackendSession(null);
+    }
+
+    if (!currentUser) {
+      setApiSuccess('You have successfully signed out.');
+      setMode('client-login');
+      return;
+    }
+
     try {
       const session = (await supabase.auth.getSession()).data.session;
       if (session?.access_token) {
@@ -372,9 +694,16 @@ export default function LoginPage() {
   };
 
   const userMeta = currentUser?.user_metadata || {};
-  const userFullName = userMeta.full_name || userMeta.name || currentUser?.email?.split('@')[0] || 'Client';
-  const userCountry = userMeta.country || null;
-  const userWhatsapp = userMeta.whatsapp || null;
+  const isAuthenticated = Boolean(currentUser || backendSession);
+  const userEmail = currentUser?.email || backendSession?.user.email;
+  const userFullName =
+    userMeta.full_name ||
+    userMeta.name ||
+    backendSession?.user.fullName ||
+    currentUser?.email?.split('@')[0] ||
+    'Client';
+  const userCountry = userMeta.country || backendSession?.user.country || null;
+  const userWhatsapp = userMeta.whatsapp || backendSession?.user.whatsappNumber || null;
 
   return (
     <div className="min-h-screen py-16 flex items-center justify-center px-4 bg-[#EEE6E2] text-[#1E5A54]">
@@ -402,10 +731,12 @@ export default function LoginPage() {
         {/* Header */}
         <div className="text-center space-y-3">
           <h1 className="font-headline text-4xl md:text-5xl uppercase tracking-tight text-[#1E5A54]">
-            {currentUser
+            {isAuthenticated
               ? 'Client Workspace'
-              : mode === 'forgot-password'
+              : mode === 'forgot-password' || mode === 'forgot-verify'
               ? 'Reset Password'
+              : mode === 'signup-verify'
+              ? 'Verify Your Email'
               : mode === 'check-email'
               ? 'Confirm Email'
               : mode === 'client-login'
@@ -413,10 +744,14 @@ export default function LoginPage() {
               : 'Client Registration'}
           </h1>
           <p className="text-sm text-[#1E5A54] max-w-md mx-auto">
-            {currentUser
+            {isAuthenticated
               ? 'Your authenticated workspace session is active.'
               : mode === 'forgot-password'
-              ? 'Enter your account email to receive a secure password reset link.'
+              ? 'Enter your account email to receive a secure password reset code.'
+              : mode === 'forgot-verify'
+              ? 'Enter the code from your email and choose a new password.'
+              : mode === 'signup-verify'
+              ? 'Enter the 6-digit code sent to your email to complete registration.'
               : mode === 'check-email'
               ? 'Check your inbox to verify your email address.'
               : mode === 'client-login'
@@ -475,80 +810,15 @@ export default function LoginPage() {
         )}
 
         {/* Authenticated Client Card View */}
-        {currentUser ? (
-          <div className="bg-[#F8F4F2] border border-[#1E5A54]/25 rounded-3xl p-6 md:p-8 space-y-6">
-            <div className="flex items-center justify-between border-b border-[#1E5A54]/15 pb-4">
-              <div className="flex items-center gap-3">
-                {userMeta.avatar_url || userMeta.picture ? (
-                  <img
-                    src={userMeta.avatar_url || userMeta.picture}
-                    alt={userFullName}
-                    className="w-12 h-12 rounded-full border border-[#1E5A54]/20 object-cover"
-                  />
-                ) : (
-                  <div className="w-12 h-12 rounded-full bg-[#1E5A54] text-[#EEE6E2] flex items-center justify-center font-bold text-lg">
-                    {userFullName.charAt(0).toUpperCase()}
-                  </div>
-                )}
-                <div>
-                  <h3 className="font-headline text-lg font-bold uppercase tracking-wide text-[#1E5A54]">
-                    {userFullName}
-                  </h3>
-                  <p className="text-xs text-[#1E5A54]/75">{currentUser.email}</p>
-                </div>
-              </div>
-              <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#1E5A54]/10 text-[#1E5A54] text-[11px] font-mono font-semibold uppercase tracking-wider">
-                <ShieldCheck className="w-3.5 h-3.5 text-[#1E5A54]" />
-                Client
-              </span>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-              <div className="bg-[#EEE6E2] rounded-2xl p-3 border border-[#1E5A54]/15">
-                <span className="text-[10px] uppercase tracking-widest text-[#1E5A54]/70 font-semibold block mb-1">
-                  Location / Region
-                </span>
-                <span className="font-semibold text-sm text-[#1E5A54] flex items-center gap-1.5">
-                  <Globe className="w-4 h-4 text-[#1E5A54]" />
-                  {userCountry || 'Verified Profile'}
-                </span>
-              </div>
-              <div className="bg-[#EEE6E2] rounded-2xl p-3 border border-[#1E5A54]/15">
-                <span className="text-[10px] uppercase tracking-widest text-[#1E5A54]/70 font-semibold block mb-1">
-                  Direct Communication
-                </span>
-                <span className="font-semibold text-sm text-[#1E5A54] flex items-center gap-1.5">
-                  <Phone className="w-4 h-4 text-[#1E5A54]" />
-                  {userWhatsapp || 'Email Preferred'}
-                </span>
-              </div>
-            </div>
-
-            <div className="space-y-3 pt-2">
-              <Link
-                href="/contact"
-                className="w-full bg-[#1E5A54] hover:bg-[#16443F] text-[#EEE6E2] font-semibold py-3 rounded-full text-xs uppercase tracking-[0.16em] flex items-center justify-center gap-2 transition-colors cursor-pointer"
-              >
-                <MessageSquare className="w-4 h-4" />
-                <span>Message Engineering Partner</span>
-              </Link>
-              <Link
-                href="/services"
-                className="w-full bg-transparent hover:bg-[#1E5A54]/5 text-[#1E5A54] border border-[#1E5A54]/30 font-semibold py-2.5 rounded-full text-xs uppercase tracking-[0.16em] flex items-center justify-center gap-2 transition-colors cursor-pointer"
-              >
-                <FolderGit2 className="w-4 h-4" />
-                <span>Explore Technical Services</span>
-              </Link>
-              <button
-                type="button"
-                onClick={handleSignOut}
-                className="w-full text-center text-xs text-[#F7623D] hover:underline pt-2 flex items-center justify-center gap-1 font-semibold uppercase tracking-wider cursor-pointer"
-              >
-                <LogOut className="w-3.5 h-3.5" />
-                <span>Sign Out of Account</span>
-              </button>
-            </div>
-          </div>
+        {isAuthenticated ? (
+          <ClientWorkspaceCard
+            fullName={userFullName}
+            email={userEmail || ''}
+            country={userCountry}
+            whatsapp={userWhatsapp}
+            avatarUrl={userMeta.avatar_url || userMeta.picture}
+            onSignOut={handleSignOut}
+          />
         ) : mode === 'check-email' ? (
           /* Check Email Confirmation Screen */
           <div className="bg-[#F8F4F2] border border-[#1E5A54]/25 rounded-3xl p-6 md:p-8 space-y-6 text-center">
@@ -596,6 +866,64 @@ export default function LoginPage() {
               </button>
             </div>
           </div>
+        ) : mode === 'signup-verify' ? (
+          <div className="bg-[#F8F4F2] border border-[#1E5A54]/25 rounded-3xl p-6 md:p-8 space-y-6">
+            <div className="text-center space-y-2">
+              <div className="mx-auto w-14 h-14 rounded-full bg-[#1E5A54]/10 text-[#1E5A54] flex items-center justify-center">
+                <Mail className="w-7 h-7 stroke-[1.5]" />
+              </div>
+              <p className="text-xs text-[#1E5A54]/90">
+                Enter the code sent to <strong>{registeredEmail}</strong>.
+              </p>
+            </div>
+
+            <form onSubmit={handleVerifySignupOTP} className="space-y-4">
+              <div className="space-y-1.5">
+                <label className="text-xs font-semibold uppercase tracking-[0.16em] text-[#1E5A54]">
+                  6-Digit Verification Code
+                </label>
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  autoComplete="one-time-code"
+                  pattern="[0-9]{6}"
+                  maxLength={6}
+                  value={signupOtp}
+                  onChange={(e) => setSignupOtp(e.target.value.replace(/[^0-9]/g, '').slice(0, 6))}
+                  className="w-full bg-[#EEE6E2] border border-[#1E5A54]/30 rounded-full px-4 py-2.5 text-center text-lg tracking-[0.4em] text-[#1E5A54] placeholder-[#1E5A54]/60 focus:outline-none focus:border-[#1E5A54] transition-colors"
+                  aria-label="6-digit verification code"
+                  required
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full bg-[#1E5A54] border-2 border-[#F7623D] hover:bg-[#16443F] text-[#EEE6E2] font-semibold py-3 rounded-full text-xs uppercase tracking-[0.16em] flex items-center justify-center gap-2 transition-colors disabled:opacity-50 cursor-pointer"
+              >
+                {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <span>Verify & Create Account</span>}
+                {!isSubmitting && <ArrowRight className="w-4 h-4" />}
+              </button>
+            </form>
+
+            <div className="space-y-3">
+              <button
+                type="button"
+                onClick={handleResendSignupOTP}
+                disabled={isSubmitting || resendCooldown > 0}
+                className="w-full border border-[#1E5A54] bg-transparent text-[#1E5A54] hover:bg-[#1E5A54]/10 font-semibold py-3 rounded-full text-xs uppercase tracking-[0.16em] flex items-center justify-center gap-2 transition-colors disabled:opacity-50 cursor-pointer"
+              >
+                {resendCooldown > 0 ? `Resend OTP in ${resendCooldown}s` : 'Resend OTP'}
+              </button>
+              <button
+                type="button"
+                onClick={() => switchMode('client-register')}
+                className="w-full text-center text-xs text-[#1E5A54] hover:underline font-semibold uppercase tracking-wider py-1 cursor-pointer"
+              >
+                Back to Registration
+              </button>
+            </div>
+          </div>
         ) : mode === 'forgot-password' ? (
           /* Forgot Password Screen */
           <div className="bg-[#F8F4F2] border border-[#1E5A54]/25 rounded-3xl p-6 md:p-8 space-y-6">
@@ -628,7 +956,7 @@ export default function LoginPage() {
                 {isSubmitting ? (
                   <Loader2 className="w-4 h-4 animate-spin" />
                 ) : (
-                  <span>Send Reset Link</span>
+                  <span>Send Reset Code</span>
                 )}
                 {!isSubmitting && <ArrowRight className="w-4 h-4" />}
               </button>
@@ -641,6 +969,116 @@ export default function LoginPage() {
                 Back to Sign In
               </button>
             </form>
+          </div>
+        ) : mode === 'forgot-verify' ? (
+          <div className="bg-[#F8F4F2] border border-[#1E5A54]/25 rounded-3xl p-6 md:p-8 space-y-6">
+            <div className="text-center space-y-2">
+              <div className="mx-auto w-14 h-14 rounded-full bg-[#1E5A54]/10 text-[#1E5A54] flex items-center justify-center">
+                <Mail className="w-7 h-7 stroke-[1.5]" />
+              </div>
+              <p className="text-xs text-[#1E5A54]/90">
+                If registered, a code was sent to <strong>{forgotEmail}</strong>.
+              </p>
+            </div>
+
+            <form onSubmit={handleVerifyPasswordReset} className="space-y-4">
+              <div className="space-y-1.5">
+                <label className="text-xs font-semibold uppercase tracking-[0.16em] text-[#1E5A54]">
+                  6-Digit Reset Code
+                </label>
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  autoComplete="one-time-code"
+                  pattern="[0-9]{6}"
+                  maxLength={6}
+                  value={passwordResetOtp}
+                  onChange={(e) => setPasswordResetOtp(e.target.value.replace(/[^0-9]/g, '').slice(0, 6))}
+                  className="w-full bg-[#EEE6E2] border border-[#1E5A54]/30 rounded-full px-4 py-2.5 text-center text-lg tracking-[0.4em] text-[#1E5A54] placeholder-[#1E5A54]/60 focus:outline-none focus:border-[#1E5A54] transition-colors"
+                  aria-label="6-digit password reset code"
+                  required
+                />
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-xs font-semibold uppercase tracking-[0.16em] text-[#1E5A54]">
+                  New Password
+                </label>
+                <div className="relative">
+                  <Lock className="absolute left-4 top-3.5 w-4 h-4 text-[#1E5A54]" />
+                  <input
+                    type={showResetPass ? 'text' : 'password'}
+                    autoComplete="new-password"
+                    placeholder="Min 8 characters"
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    className="w-full bg-[#EEE6E2] border border-[#1E5A54]/30 rounded-full pl-11 pr-11 py-2.5 text-sm text-[#1E5A54] placeholder-[#1E5A54]/60 focus:outline-none focus:border-[#1E5A54] transition-colors"
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowResetPass(!showResetPass)}
+                    className="absolute right-4 top-3 text-[#1E5A54] hover:text-[#1E5A54]"
+                    aria-label={showResetPass ? 'Hide password' : 'Show password'}
+                  >
+                    {showResetPass ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  </button>
+                </div>
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-xs font-semibold uppercase tracking-[0.16em] text-[#1E5A54]">
+                  Confirm New Password
+                </label>
+                <div className="relative">
+                  <Lock className="absolute left-4 top-3.5 w-4 h-4 text-[#1E5A54]" />
+                  <input
+                    type={showResetConfirmPass ? 'text' : 'password'}
+                    autoComplete="new-password"
+                    placeholder="••••••••"
+                    value={confirmNewPassword}
+                    onChange={(e) => setConfirmNewPassword(e.target.value)}
+                    className="w-full bg-[#EEE6E2] border border-[#1E5A54]/30 rounded-full pl-11 pr-11 py-2.5 text-sm text-[#1E5A54] placeholder-[#1E5A54]/60 focus:outline-none focus:border-[#1E5A54] transition-colors"
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowResetConfirmPass(!showResetConfirmPass)}
+                    className="absolute right-4 top-3 text-[#1E5A54] hover:text-[#1E5A54]"
+                    aria-label={showResetConfirmPass ? 'Hide password' : 'Show password'}
+                  >
+                    {showResetConfirmPass ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  </button>
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full bg-[#1E5A54] border-2 border-[#F7623D] hover:bg-[#16443F] text-[#EEE6E2] font-semibold py-3 rounded-full text-xs uppercase tracking-[0.16em] flex items-center justify-center gap-2 transition-colors disabled:opacity-50 cursor-pointer"
+              >
+                {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <span>Verify & Reset Password</span>}
+                {!isSubmitting && <ArrowRight className="w-4 h-4" />}
+              </button>
+            </form>
+
+            <div className="space-y-3">
+              <button
+                type="button"
+                onClick={handleResendPasswordResetOTP}
+                disabled={isSubmitting || resendCooldown > 0}
+                className="w-full border border-[#1E5A54] bg-transparent text-[#1E5A54] hover:bg-[#1E5A54]/10 font-semibold py-3 rounded-full text-xs uppercase tracking-[0.16em] flex items-center justify-center gap-2 transition-colors disabled:opacity-50 cursor-pointer"
+              >
+                {resendCooldown > 0 ? `Resend OTP in ${resendCooldown}s` : 'Resend OTP'}
+              </button>
+              <button
+                type="button"
+                onClick={() => switchMode('forgot-password')}
+                className="w-full text-center text-xs text-[#1E5A54] hover:underline font-semibold uppercase tracking-wider py-1 cursor-pointer"
+              >
+                Back to Email Entry
+              </button>
+            </div>
           </div>
         ) : (
           /* Main Authentication Card (Tabs: Sign In / Register) */
@@ -853,9 +1291,9 @@ export default function LoginPage() {
                         <option value="" disabled className="bg-[#EEE6E2] text-[#1E5A54]">
                           Select your country...
                         </option>
-                        {COUNTRIES.map((c) => (
-                          <option key={c} value={c} className="bg-[#EEE6E2] text-[#1E5A54]">
-                            {c}
+                        {COUNTRIES.map((country) => (
+                          <option key={country} value={country} className="bg-[#EEE6E2] text-[#1E5A54]">
+                            {COUNTRY_LABELS[country] ?? country}
                           </option>
                         ))}
                       </select>
@@ -957,7 +1395,7 @@ export default function LoginPage() {
                   {isSubmitting ? (
                     <Loader2 className="w-4 h-4 animate-spin" />
                   ) : (
-                    <span>Create Client Account</span>
+                    <span>Send Verification Code</span>
                   )}
                   {!isSubmitting && <ArrowRight className="w-4 h-4" />}
                 </button>
