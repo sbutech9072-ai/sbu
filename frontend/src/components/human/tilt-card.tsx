@@ -21,18 +21,18 @@ export function TiltCard({
   React.useEffect(() => {
     if (typeof window === 'undefined') return;
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const isTouch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
-    if (reducedMotion || isTouch) {
+    if (reducedMotion) {
       setDisabled(true);
     }
   }, []);
 
-  const handleMouseMove = React.useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
+  const applyTilt = React.useCallback(
+    (clientX: number, clientY: number) => {
       if (disabled || !cardRef.current) return;
       const rect = cardRef.current.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width;
-      const y = (e.clientY - rect.top) / rect.height;
+      if (rect.width === 0 || rect.height === 0) return;
+      const x = Math.min(Math.max((clientX - rect.left) / rect.width, 0), 1);
+      const y = Math.min(Math.max((clientY - rect.top) / rect.height, 0), 1);
 
       const rotateY = (x - 0.5) * 2 * maxTilt;
       const rotateX = (0.5 - y) * 2 * maxTilt;
@@ -44,17 +44,36 @@ export function TiltCard({
     [disabled, maxTilt]
   );
 
-  const handleMouseLeave = React.useCallback(() => {
+  const resetTilt = React.useCallback(() => {
     if (!cardRef.current) return;
     cardRef.current.style.transform =
       'perspective(960px) rotateX(0deg) rotateY(0deg) translateZ(0)';
   }, []);
 
+  const handleMouseMove = React.useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      applyTilt(e.clientX, e.clientY);
+    },
+    [applyTilt]
+  );
+
+  const handleTouchMove = React.useCallback(
+    (e: React.TouchEvent<HTMLDivElement>) => {
+      if (e.touches.length > 0) {
+        applyTilt(e.touches[0].clientX, e.touches[0].clientY);
+      }
+    },
+    [applyTilt]
+  );
+
   return (
     <div
       ref={cardRef}
       onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
+      onMouseLeave={resetTilt}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={resetTilt}
+      onTouchCancel={resetTilt}
       style={{
         transition: 'transform 380ms cubic-bezier(0.22, 1, 0.36, 1)',
         willChange: disabled ? 'auto' : 'transform',

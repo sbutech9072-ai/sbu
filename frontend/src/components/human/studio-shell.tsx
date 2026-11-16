@@ -49,8 +49,11 @@ export function StudioShell({ children }: StudioShellProps) {
       // Fallback gracefully to native scroll if Lenis fails in headless environments
     }
 
-    const isFinePointer = window.matchMedia('(pointer: fine)').matches;
+    const isFinePointer =
+      window.matchMedia('(hover: hover) and (pointer: fine)').matches &&
+      (navigator.maxTouchPoints || 0) === 0;
     if (!isFinePointer) {
+      setCursorVisible(false);
       return () => {
         window.cancelAnimationFrame(rafId);
         lenis?.destroy();

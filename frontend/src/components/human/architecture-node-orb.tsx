@@ -193,13 +193,6 @@ export function ArchitectureNodeOrb({
   React.useEffect(() => {
     if (typeof window === 'undefined') return;
 
-    const reducedMotion = window.matchMedia(
-      '(prefers-reduced-motion: reduce)'
-    ).matches;
-    const lowPower =
-      typeof navigator !== 'undefined' &&
-      Boolean(navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 2);
-
     let hasWebGL = false;
     try {
       const canvas = document.createElement('canvas');
@@ -226,8 +219,8 @@ export function ArchitectureNodeOrb({
       className={cn(
         'relative flex flex-col justify-between rounded-2xl border border-[#1E5A54]/20 bg-[#F8F4F2] p-4 sm:p-5 overflow-hidden',
         variant === 'hero'
-          ? 'min-h-[340px] sm:min-h-[410px]'
-          : 'min-h-[250px] sm:min-h-[280px]',
+          ? 'min-h-[360px] sm:min-h-[430px]'
+          : 'min-h-[260px] sm:min-h-[290px]',
         className
       )}
     >
@@ -262,9 +255,16 @@ export function ArchitectureNodeOrb({
       </div>
 
       {/* Center Stage (WebGL or Static SVG Fallback) */}
-      <div className="relative flex-1 flex items-center justify-center my-2 min-h-[220px] sm:min-h-[270px]">
+      <div
+        className={cn(
+          'relative w-full flex-1 flex items-center justify-center my-2',
+          variant === 'hero'
+            ? 'h-[280px] sm:h-[330px] lg:h-[340px]'
+            : 'h-[220px] sm:h-[250px]'
+        )}
+      >
         {showWebGL ? (
-          <div className="absolute inset-0">
+          <div className="relative h-full w-full">
             <LazyArchitectureOrbCanvas
               variant={variant}
               onWebGLError={handleWebGLError}
