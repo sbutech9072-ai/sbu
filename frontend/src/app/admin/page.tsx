@@ -4,11 +4,9 @@ import React from 'react';
 import Link from 'next/link';
 import {
   FolderGit2,
-  Cpu,
   Users,
   Quote,
   Mail,
-  FileSpreadsheet,
   ArrowRight,
   Plus,
 } from 'lucide-react';
@@ -16,13 +14,19 @@ import { StatsCard } from '@/components/admin/stats-card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
-import { mockQuoteRequests, mockMessages } from '@/data/mock-admin';
+import { mockMessages } from '@/data/mock-admin';
 import { projectsData } from '@/data/projects';
-import { servicesData } from '@/data/services';
 import { teamData } from '@/data/team';
 import { testimonialsData } from '@/data/testimonials';
+import { VisitorTraffic } from '@/components/admin/visitor-traffic';
+import { useAdminAuth, ADMIN_ROLE_LABELS } from '@/context/admin-auth-context';
 
 export default function AdminDashboardOverviewPage() {
+  const { adminUser } = useAdminAuth();
+  const isMainOwner = adminUser?.role === 'main_owner';
+  const canManageAccounts =
+    adminUser?.role === 'main_owner' || adminUser?.role === 'co_owner';
+
   return (
     <div className="space-y-8">
       {/* Top Banner */}
@@ -32,7 +36,9 @@ export default function AdminDashboardOverviewPage() {
             Studio Operations Ledger
           </h1>
           <p className="text-xs text-[#1E5A54] mt-1">
-            Review case studies, service lines, engineering staff, and incoming project scopes.
+            {adminUser
+              ? `Signed in as ${adminUser.full_name} (${ADMIN_ROLE_LABELS[adminUser.role]}) • ${adminUser.email}`
+              : 'Review case studies, engineering staff, and inquiries.'}
           </p>
         </div>
 
@@ -43,14 +49,21 @@ export default function AdminDashboardOverviewPage() {
               <span>Add New Project</span>
             </Link>
           </Button>
-          <Button asChild variant="outline" size="sm" className="text-xs rounded-full">
-            <Link href="/admin/settings">Settings</Link>
-          </Button>
+          {canManageAccounts && (
+            <Button asChild variant="outline" size="sm" className="text-xs rounded-full">
+              <Link href="/admin/accounts">Admin Accounts</Link>
+            </Button>
+          )}
+          {isMainOwner && (
+            <Button asChild variant="outline" size="sm" className="text-xs rounded-full">
+              <Link href="/admin/settings">Settings</Link>
+            </Button>
+          )}
         </div>
       </div>
 
       {/* KPI Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <StatsCard
           title="Active Projects"
           value={projectsData.length}
@@ -60,20 +73,12 @@ export default function AdminDashboardOverviewPage() {
           helper="Published case studies"
         />
         <StatsCard
-          title="Core Services"
-          value={servicesData.length}
-          change="100% active"
+          title="Engineering Staff"
+          value={teamData.length}
+          change="Senior practitioners"
           changeType="positive"
-          icon={Cpu}
-          helper="Engineering practices"
-        />
-        <StatsCard
-          title="Quote Requests"
-          value={mockQuoteRequests.length}
-          change="1 pending review"
-          changeType="neutral"
-          icon={FileSpreadsheet}
-          helper="Valued > $175,000"
+          icon={Users}
+          helper="Architecture & systems"
         />
         <StatsCard
           title="Contact Inquiries"
@@ -85,95 +90,42 @@ export default function AdminDashboardOverviewPage() {
         />
       </div>
 
-      {/* Two Column Layout: Recent Quote Requests & Messages */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        {/* Left Column: Recent Quote Submissions */}
-        <div className="lg:col-span-7 space-y-4">
-          <div className="flex items-center justify-between">
-            <h3 className="font-headline text-xl uppercase text-[#1E5A54] flex items-center gap-2">
-              <FileSpreadsheet className="h-4 w-4 text-[#F7623D]" />
-              <span>Incoming Project Scopes</span>
-            </h3>
-            <Link
-              href="/admin/quote-requests"
-              className="text-xs text-[#1E5A54] hover:text-[#F7623D] flex items-center gap-1 font-semibold"
-            >
-              <span>View All</span>
-              <ArrowRight className="h-3 w-3" />
-            </Link>
-          </div>
+      {/* Visitor Traffic Analytics */}
+      <VisitorTraffic />
 
-          <Card className="divide-y divide-[#1E5A54]/15 border-[#1E5A54]/25 bg-[#F8F4F2] rounded-3xl overflow-hidden">
-            {mockQuoteRequests.map((req) => (
-              <div key={req.id} className="p-5 hover:bg-[#E2D7D1]/50 transition-colors space-y-2">
-                <div className="flex items-start justify-between gap-2">
-                  <div>
-                    <h4 className="text-sm font-bold text-[#1E5A54]">{req.companyName}</h4>
-                    <span className="text-xs text-[#1E5A54]">
-                      Contact: {req.fullName} ({req.email})
-                    </span>
-                  </div>
-                  <Badge
-                    variant={
-                      req.status === 'pending'
-                        ? 'warning'
-                        : req.status === 'reviewing'
-                        ? 'default'
-                        : 'success'
-                    }
-                    className="capitalize text-[10px]"
-                  >
-                    {req.status}
-                  </Badge>
-                </div>
-
-                <p className="text-xs text-[#1E5A54] line-clamp-2 leading-relaxed">
-                  {req.projectOverview}
-                </p>
-
-                <div className="flex items-center justify-between pt-1 text-[11px] text-[#1E5A54] font-mono">
-                  <span>Scope: {req.serviceCategory}</span>
-                  <span className="text-[#1E5A54] font-bold">{req.budgetRange}</span>
-                </div>
-              </div>
-            ))}
-          </Card>
+      {/* Recent Messages / Inquiries */}
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <h3 className="font-headline text-xl uppercase text-[#1E5A54] flex items-center gap-2">
+            <Mail className="h-4 w-4 text-[#F7623D]" />
+            <span>Recent Inquiries</span>
+          </h3>
+          <Link
+            href="/admin/messages"
+            className="text-xs text-[#1E5A54] hover:text-[#F7623D] flex items-center gap-1 font-semibold"
+          >
+            <span>View All</span>
+            <ArrowRight className="h-3 w-3" />
+          </Link>
         </div>
 
-        {/* Right Column: Recent Messages */}
-        <div className="lg:col-span-5 space-y-4">
-          <div className="flex items-center justify-between">
-            <h3 className="font-headline text-xl uppercase text-[#1E5A54] flex items-center gap-2">
-              <Mail className="h-4 w-4 text-[#F7623D]" />
-              <span>Recent Inquiries</span>
-            </h3>
-            <Link
-              href="/admin/messages"
-              className="text-xs text-[#1E5A54] hover:text-[#F7623D] flex items-center gap-1 font-semibold"
-            >
-              <span>View All</span>
-              <ArrowRight className="h-3 w-3" />
-            </Link>
-          </div>
-
-          <Card className="divide-y divide-[#1E5A54]/15 border-[#1E5A54]/25 bg-[#F8F4F2] rounded-3xl overflow-hidden">
-            {mockMessages.map((msg) => (
-              <div key={msg.id} className="p-5 hover:bg-[#E2D7D1]/50 transition-colors space-y-1.5">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-[#1E5A54]">{msg.name}</span>
-                  <Badge
-                    variant={msg.status === 'new' ? 'destructive' : 'secondary'}
-                    className="text-[10px] capitalize"
-                  >
-                    {msg.status}
-                  </Badge>
-                </div>
-                <h5 className="text-xs font-semibold text-[#1E5A54] decoration-[#F7623D] truncate">{msg.subject}</h5>
-                <p className="text-xs text-[#1E5A54] line-clamp-2">{msg.message}</p>
+        <Card className="divide-y divide-[#1E5A54]/15 border-[#1E5A54]/25 bg-[#F8F4F2] rounded-3xl overflow-hidden">
+          {mockMessages.map((msg) => (
+            <div key={msg.id} className="p-5 hover:bg-[#E2D7D1]/50 transition-colors space-y-1.5">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-[#1E5A54]">{msg.name}</span>
+                <Badge
+                  variant={msg.status === 'new' ? 'destructive' : 'secondary'}
+                  className="text-[10px] capitalize"
+                >
+                  {msg.status}
+                </Badge>
               </div>
-            ))}
-          </Card>
-        </div>
+              <h5 className="text-xs font-semibold text-[#1E5A54] decoration-[#F7623D] truncate">{msg.subject}</h5>
+              <p className="text-xs text-[#1E5A54] line-clamp-2">{msg.message}</p>
+            </div>
+          ))}
+        </Card>
       </div>
 
       {/* Quick Navigation Cards */}
@@ -181,7 +133,7 @@ export default function AdminDashboardOverviewPage() {
         <h3 className="text-xs font-mono font-semibold uppercase tracking-wider text-[#1E5A54] mb-4">
           Quick Management Portals
         </h3>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <Link
             href="/admin/projects"
             className="p-5 rounded-3xl border border-[#1E5A54]/25 bg-[#F8F4F2] hover:bg-[#E2D7D1] transition-all space-y-1 block"
@@ -189,15 +141,6 @@ export default function AdminDashboardOverviewPage() {
             <FolderGit2 className="h-5 w-5 text-[#1E5A54] decoration-[#F7623D] mb-2" />
             <h4 className="font-headline text-lg uppercase text-[#1E5A54]">Projects</h4>
             <p className="text-xs text-[#1E5A54]">{projectsData.length} Case studies</p>
-          </Link>
-
-          <Link
-            href="/admin/services"
-            className="p-5 rounded-3xl border border-[#1E5A54]/25 bg-[#F8F4F2] hover:bg-[#E2D7D1] transition-all space-y-1 block"
-          >
-            <Cpu className="h-5 w-5 text-[#1E5A54] mb-2" />
-            <h4 className="font-headline text-lg uppercase text-[#1E5A54]">Services</h4>
-            <p className="text-xs text-[#1E5A54]">{servicesData.length} Practice areas</p>
           </Link>
 
           <Link

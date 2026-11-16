@@ -820,10 +820,10 @@ export default function AboutPage() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
             <MagneticWrap>
               <Link
-                href="/get-a-quote"
+                href="/contact"
                 className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-[#1E5A54] border-2 border-[#F7623D] text-[#EEE6E2] text-xs font-bold uppercase tracking-[0.16em] inline-flex items-center justify-center gap-2.5 hover:bg-[#16443F] transition-all shadow-md"
               >
-                <span>Start a Project</span>
+                <span>Book Architecture Call</span>
                 <ArrowRight className="h-4 w-4 stroke-2" />
               </Link>
             </MagneticWrap>

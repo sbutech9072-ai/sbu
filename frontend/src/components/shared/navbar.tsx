@@ -18,12 +18,16 @@ import {
   Github,
   Twitter,
   Linkedin,
+  LogOut,
 } from 'lucide-react';
 import { siteConfig } from '@/config/site';
+import { Logo } from '@/components/shared/logo';
 import { MagneticWrap } from '@/components/human/magnetic-button';
 import { HamburgerButton } from '@/components/ui/hamburger-button';
 import { ThemeToggle } from '@/components/shared/theme-toggle';
 import { cn } from '@/lib/utils';
+import { createClient } from '@/lib/supabase/client';
+import type { User as SupabaseUser } from '@supabase/supabase-js';
 
 const navIconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Home: Home,
@@ -37,7 +41,42 @@ const navIconMap: Record<string, React.ComponentType<{ className?: string }>> = 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [currentUser, setCurrentUser] = useState<SupabaseUser | null>(null);
   const pathname = usePathname();
+  const supabase = createClient();
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data }) => {
+      if (data?.user) setCurrentUser(data.user);
+    });
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setCurrentUser(session?.user ?? null);
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, [supabase]);
+
+  const handleSignOut = async () => {
+    try {
+      const session = (await supabase.auth.getSession()).data.session;
+      if (session?.access_token) {
+        await fetch('/api/auth/logout-event', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${session.access_token}`,
+          },
+        }).catch(() => {});
+      }
+    } catch {}
+    await supabase.auth.signOut();
+    setCurrentUser(null);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -98,19 +137,7 @@ export function Navbar() {
             <div className="h-6 w-px bg-[#1E5A54]/20 hidden sm:block" />
 
             {/* Brand Logo */}
-            <Link href="/" className="flex items-center gap-2.5 group">
-              <div className="h-10 w-10 rounded-full border border-[#1E5A54] bg-[#F8F4F2] flex items-center justify-center text-[#1E5A54] transition-transform group-hover:scale-105 shadow-sm">
-                <Terminal className="h-5 w-5 stroke-[1.5]" />
-              </div>
-              <div className="flex flex-col">
-                <span className="font-headline text-2xl font-bold tracking-tight text-[#1E5A54] uppercase flex items-center gap-1 leading-none">
-                  Sbu <span className="text-[#1E5A54] decoration-[#F7623D]">Tech</span>
-                </span>
-                <span className="text-[10px] uppercase font-bold tracking-[0.2em] text-[#1E5A54] mt-0.5">
-                  Software Studio
-                </span>
-              </div>
-            </Link>
+            <Logo variant="navbar" priority />
           </div>
 
           {/* Right Action Buttons */}
@@ -118,14 +145,58 @@ export function Navbar() {
             {/* Small, Elegant Theme Selector (Sun/Moon) */}
             <ThemeToggle />
 
-            <Link
-              href="/login"
-              className="hidden sm:flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-[0.16em] text-[#1E5A54] hover:bg-[#1E5A54]/5 transition-colors border border-transparent hover:border-[#1E5A54]/25"
-              title="Client Portal Login"
-            >
-              <User className="h-3.5 w-3.5 stroke-[1.5]" />
-              <span>Portal</span>
-            </Link>
+            {/* User Session Action (Desktop) */}
+            {currentUser ? (
+              <div className="hidden sm:flex items-center gap-1.5 bg-[#F8F4F2] border border-[#1E5A54]/20 rounded-full pl-1.5 pr-2 py-1">
+                <Link
+                  href="/login"
+                  className="flex items-center gap-1.5 hover:opacity-80 transition-opacity"
+                  title="View Client Workspace"
+                >
+                  {currentUser.user_metadata?.avatar_url || currentUser.user_metadata?.picture ? (
+                    <img
+                      src={currentUser.user_metadata.avatar_url || currentUser.user_metadata.picture}
+                      alt="Avatar"
+                      className="w-5 h-5 rounded-full object-cover border border-[#1E5A54]/20"
+                    />
+                  ) : (
+                    <div className="w-5 h-5 rounded-full bg-[#1E5A54] text-[#EEE6E2] flex items-center justify-center text-[10px] font-bold">
+                      {(
+                        currentUser.user_metadata?.full_name ||
+                        currentUser.user_metadata?.name ||
+                        currentUser.email ||
+                        'U'
+                      )
+                        .charAt(0)
+                        .toUpperCase()}
+                    </div>
+                  )}
+                  <span className="text-xs font-bold uppercase tracking-[0.14em] text-[#1E5A54] max-w-[100px] truncate">
+                    {currentUser.user_metadata?.full_name?.split(' ')[0] ||
+                      currentUser.user_metadata?.name?.split(' ')[0] ||
+                      'Workspace'}
+                  </span>
+                </Link>
+                <button
+                  type="button"
+                  onClick={handleSignOut}
+                  title="Sign out"
+                  className="p-1 rounded-full text-[#1E5A54]/60 hover:text-[#F7623D] hover:bg-[#1E5A54]/5 transition-colors cursor-pointer"
+                  aria-label="Sign out"
+                >
+                  <LogOut className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            ) : (
+              <Link
+                href="/login"
+                className="hidden sm:flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-[0.16em] text-[#1E5A54] hover:bg-[#1E5A54]/5 transition-colors border border-transparent hover:border-[#1E5A54]/25"
+                title="Client Portal Login"
+              >
+                <User className="h-3.5 w-3.5 stroke-[1.5]" />
+                <span>Sign in</span>
+              </Link>
+            )}
 
             <Link
               href="/admin"
@@ -138,10 +209,10 @@ export function Navbar() {
 
             <MagneticWrap>
               <Link
-                href="/get-a-quote"
+                href="/contact"
                 className="group flex items-center gap-2.5 sm:gap-3 rounded-full border border-[#1E5A54] bg-[#F8F4F2] pl-4 sm:pl-5 pr-1.5 py-1.5 text-xs font-bold uppercase tracking-[0.16em] text-[#1E5A54] hover:bg-[#1E5A54] hover:text-[#EEE6E2] transition-all shadow-sm"
               >
-                <span>Get a Quote</span>
+                <span>Contact Us</span>
                 <span className="w-6 h-6 rounded-full bg-[#F7623D] text-white flex items-center justify-center transition-transform group-hover:scale-110">
                   <ArrowUpRight className="h-3.5 w-3.5 stroke-2" />
                 </span>
@@ -173,23 +244,7 @@ export function Navbar() {
         {/* Top Header of Sidebar */}
         <div>
           <div className="flex items-center justify-between p-5 border-b border-[#1E5A54]/18 bg-[#F8F4F2]">
-            <Link
-              href="/"
-              onClick={() => setIsOpen(false)}
-              className="flex items-center gap-3 group"
-            >
-              <div className="h-10 w-10 rounded-full border border-[#1E5A54] bg-[#EEE6E2] flex items-center justify-center text-[#1E5A54] shrink-0 transition-transform group-hover:scale-105 shadow-sm">
-                <Terminal className="h-5 w-5 stroke-[1.5]" />
-              </div>
-              <div className="flex flex-col">
-                <span className="font-headline text-xl font-bold tracking-tight text-[#1E5A54] uppercase flex items-center gap-1 leading-none">
-                  Sbu <span className="text-[#1E5A54] decoration-[#F7623D]">Tech</span>
-                </span>
-                <span className="text-[9px] uppercase font-bold tracking-[0.22em] text-[#1E5A54]/75 mt-1">
-                  Software Studio
-                </span>
-              </div>
-            </Link>
+            <Logo variant="navbar" onClick={() => setIsOpen(false)} />
 
             <button
               type="button"
@@ -260,11 +315,11 @@ export function Navbar() {
 
               <MagneticWrap>
                 <Link
-                  href="/get-a-quote"
+                  href="/contact"
                   onClick={() => setIsOpen(false)}
                   className="group flex items-center justify-between w-full rounded-full border border-[#1E5A54] bg-[#F8F4F2] pl-4 pr-1.5 py-1.5 text-xs font-bold uppercase tracking-[0.16em] text-[#1E5A54] hover:bg-[#1E5A54] hover:text-[#EEE6E2] transition-all shadow-sm"
                 >
-                  <span>Request Project Quote</span>
+                  <span>Book Architecture Call</span>
                   <span className="w-7 h-7 rounded-full bg-[#F7623D] text-white flex items-center justify-center transition-transform group-hover:scale-110 shrink-0">
                     <ArrowUpRight className="h-3.5 w-3.5 stroke-2" />
                   </span>
@@ -272,23 +327,51 @@ export function Navbar() {
               </MagneticWrap>
 
               <div className="grid grid-cols-2 gap-2">
-                <Link
-                  href="/login"
-                  onClick={() => setIsOpen(false)}
-                  className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-full text-xs font-bold uppercase tracking-[0.14em] text-[#1E5A54] bg-[#F8F4F2] border border-[#1E5A54]/20 hover:border-[#1E5A54] hover:bg-[#1E5A54] hover:text-[#EEE6E2] transition-colors"
-                >
-                  <User className="h-3.5 w-3.5 stroke-[1.5]" />
-                  <span>Portal</span>
-                </Link>
+                {currentUser ? (
+                  <>
+                    <Link
+                      href="/login"
+                      onClick={() => setIsOpen(false)}
+                      className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-full text-xs font-bold uppercase tracking-[0.14em] text-[#1E5A54] bg-[#F8F4F2] border border-[#1E5A54]/20 hover:border-[#1E5A54] hover:bg-[#1E5A54] hover:text-[#EEE6E2] transition-colors truncate"
+                    >
+                      <User className="h-3.5 w-3.5 stroke-[1.5] shrink-0" />
+                      <span className="truncate">
+                        {currentUser.user_metadata?.full_name?.split(' ')[0] || 'Workspace'}
+                      </span>
+                    </Link>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsOpen(false);
+                        handleSignOut();
+                      }}
+                      className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-full text-xs font-bold uppercase tracking-[0.14em] text-[#F7623D] bg-[#F8F4F2] border border-[#F7623D]/25 hover:bg-[#F7623D] hover:text-[#EEE6E2] transition-colors cursor-pointer"
+                    >
+                      <LogOut className="h-3.5 w-3.5 stroke-[1.5]" />
+                      <span>Sign Out</span>
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <Link
+                      href="/login"
+                      onClick={() => setIsOpen(false)}
+                      className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-full text-xs font-bold uppercase tracking-[0.14em] text-[#1E5A54] bg-[#F8F4F2] border border-[#1E5A54]/20 hover:border-[#1E5A54] hover:bg-[#1E5A54] hover:text-[#EEE6E2] transition-colors"
+                    >
+                      <User className="h-3.5 w-3.5 stroke-[1.5]" />
+                      <span>Sign in</span>
+                    </Link>
 
-                <Link
-                  href="/admin"
-                  onClick={() => setIsOpen(false)}
-                  className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-full text-xs font-bold uppercase tracking-[0.14em] text-[#1E5A54] bg-[#F8F4F2] border border-[#1E5A54]/20 hover:border-[#1E5A54] hover:bg-[#1E5A54] hover:text-[#EEE6E2] transition-colors"
-                >
-                  <ShieldCheck className="h-3.5 w-3.5 stroke-[1.5]" />
-                  <span>Admin</span>
-                </Link>
+                    <Link
+                      href="/admin"
+                      onClick={() => setIsOpen(false)}
+                      className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-full text-xs font-bold uppercase tracking-[0.14em] text-[#1E5A54] bg-[#F8F4F2] border border-[#1E5A54]/20 hover:border-[#1E5A54] hover:bg-[#1E5A54] hover:text-[#EEE6E2] transition-colors"
+                    >
+                      <ShieldCheck className="h-3.5 w-3.5 stroke-[1.5]" />
+                      <span>Admin</span>
+                    </Link>
+                  </>
+                )}
               </div>
             </div>
           </div>

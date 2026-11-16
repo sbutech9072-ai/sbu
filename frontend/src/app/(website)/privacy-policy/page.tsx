@@ -6,7 +6,7 @@ import { StudioStamp } from '@/components/human/hand-crafted-svg';
 export const metadata: Metadata = {
   title: 'Privacy Policy & Terms of Service',
   description:
-    'Our privacy commitments, client data protection policies, and intellectual property terms at Sbu Tech.',
+    'Our privacy commitments, user data protection policies, and telemetry governance at Sbu Tech.',
 };
 
 export default function PrivacyPolicyPage() {
@@ -15,7 +15,7 @@ export default function PrivacyPolicyPage() {
       <PageHeader
         badge="Legal & Governance"
         title="Privacy Policy & Terms of Engagement"
-        description="Plain-language terms on how Sbu Tech handles your company information, project briefs, and intellectual property."
+        description="Plain-language terms on how Sbu Tech handles your account data, telemetry, and client privacy."
         breadcrumbs={[{ label: 'Privacy Policy' }]}
       />
 
@@ -23,9 +23,9 @@ export default function PrivacyPolicyPage() {
         <div className="p-8 md:p-12 rounded-3xl border border-[#1E5A54]/25 bg-[#F8F4F2] space-y-8 text-sm text-[#1E5A54] leading-relaxed">
           <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[#1E5A54]/20 pb-4">
             <span className="font-mono text-xs uppercase tracking-wider text-[#1E5A54]">
-              Document Ref // LEGAL-MSA-2026
+              Document Ref // LEGAL-PRIVACY-2026
             </span>
-            <StudioStamp text="PLAIN LANGUAGE TERMS" rotate="slight-left" variant="teal" />
+            <StudioStamp text="PLAIN LANGUAGE PRIVACY" rotate="slight-left" variant="teal" />
           </div>
 
           <section className="space-y-3">
@@ -33,67 +33,100 @@ export default function PrivacyPolicyPage() {
               1. Information We Collect
             </h2>
             <p>
-              When you send an inquiry or project scope request through {siteConfig.name}, we
-              collect your contact details (full name, work email address, company name, and phone
-              number) and project specifications. We use this information only to review your
-              technical requirements and reply directly about a potential engagement.
+              When you interact with {siteConfig.name}, we collect minimal, purposeful information:
+            </p>
+            <ul className="list-disc pl-5 space-y-2">
+              <li>
+                <strong>Client Inquiries:</strong> Contact information provided in contact forms (name, work email, phone, and message contents) solely to respond to project requirements.
+              </li>
+              <li>
+                <strong>Authenticated Accounts:</strong> When you register or sign in with email/password or Continue with Google, we store your full name, email address (Gmail), country of incorporation/residence, optional WhatsApp phone number, and profile picture (for Google OAuth users).
+              </li>
+              <li>
+                <strong>Authentication & Activity Telemetry:</strong> Accurate login/logout timestamps, authentication session IDs, and approximate active engagement time measured while the site tab is in active use.
+              </li>
+            </ul>
+          </section>
+
+          <section className="space-y-3">
+            <h2 className="font-headline text-2xl uppercase text-[#1E5A54]">
+              2. Privacy-First Edge Telemetry & No IP Storage
+            </h2>
+            <p>
+              We believe in respectful digital engineering. <strong>We do NOT store IP addresses or raw User-Agent strings.</strong>
+            </p>
+            <p>
+              Geographic country indicators are determined transiently at the Cloudflare edge from network metadata without persisting your IP. Device categories are generalized into coarse groups (desktop or mobile) rather than tracking hardware fingerprints.
             </p>
           </section>
 
           <section className="space-y-3">
             <h2 className="font-headline text-2xl uppercase text-[#1E5A54]">
-              2. Confidentiality & Non-Disclosure
+              3. Purpose & Data Use
             </h2>
             <p>
-              We treat all client architectural blueprints, database schemas, business logic, and
-              unreleased product plans under strict confidentiality. We never sell, rent, or share
-              client data or submission details with third parties.
+              We use stored user and telemetry information strictly for:
+            </p>
+            <ul className="list-disc pl-5 space-y-1">
+              <li>Authenticating client portal access to private staging links, sprints, and invoices.</li>
+              <li>Providing direct engineering partner support via email or WhatsApp.</li>
+              <li>Detecting abusive bot activity and safeguarding system availability.</li>
+              <li>Understanding aggregated studio traffic to improve platform performance.</li>
+            </ul>
+            <p>
+              We never sell, rent, license, or monetize your data with third parties or data brokers.
             </p>
           </section>
 
           <section className="space-y-3">
             <h2 className="font-headline text-2xl uppercase text-[#1E5A54]">
-              3. Intellectual Property Rights
+              4. Data Retention & Deletion Rights
             </h2>
             <p>
-              Unless otherwise specified in a written Master Services Agreement (MSA), all custom
-              source code, design tokens, infrastructure manifests, and documentation produced by{' '}
-              {siteConfig.name} during paid client engagements transfer in full to the client upon
-              payment of agreed milestone invoices.
+              Active session heartbeats are retained for a rolling period of 90 days. Authentication security logs are maintained for up to 1 year for access audit trail verification.
             </p>
-          </section>
-
-          <section className="space-y-3">
-            <h2 className="font-headline text-2xl uppercase text-[#1E5A54]">
-              4. Security & Data Protection
-            </h2>
             <p>
-              We use standard encryption protocols (TLS 1.3 in transit, AES-256 at rest) for all
-              communications and staging environments. Access to client source code and cloud
-              credentials is restricted through hardware multi-factor authentication and role-based
-              access controls.
-            </p>
-          </section>
-
-          <section className="space-y-3">
-            <h2 className="font-headline text-2xl uppercase text-[#1E5A54]">
-              5. Contact Information
-            </h2>
-            <p>
-              For legal questions or to countersign a mutual non-disclosure agreement before project
-              discovery, email our legal desk at{' '}
+              You have the right to request full deletion of your user account and all associated telemetry at any time. To request account deletion, simply contact our engineering governance team at{' '}
               <a
-                href={`mailto:${siteConfig.contact.email}`}
-                className="text-[#1E5A54] decoration-[#F7623D] font-semibold underline"
+                href="mailto:contact@sbutech.com"
+                className="text-[#1E5A54] font-semibold underline hover:text-[#F7623D] transition-colors"
               >
-                {siteConfig.contact.email}
+                contact@sbutech.com
               </a>
-              .
+              . All data will be purged within 5 business days.
             </p>
           </section>
 
-          <div className="pt-6 border-t border-[#1E5A54]/20 text-xs font-mono text-[#1E5A54]">
-            Last Updated: October 2026. Sbu Tech Digital Engineering Studio.
+          <section className="space-y-3">
+            <h2 className="font-headline text-2xl uppercase text-[#1E5A54]">
+              5. Security & Encryption Standards
+            </h2>
+            <p>
+              All communications are encrypted using TLS 1.3 in transit and AES-256 encryption at rest through Supabase and Cloudflare enterprise security infrastructure. Database access is guarded with strict Row Level Security (RLS) and cryptographic tokens.
+            </p>
+          </section>
+
+          <section className="space-y-3">
+            <h2 className="font-headline text-2xl uppercase text-[#1E5A54]">
+              6. Governance Contact
+            </h2>
+            <p>
+              For privacy inquiries, audit questions, or mutual non-disclosure agreements, contact:
+            </p>
+            <p className="font-mono text-xs">
+              Sbu Tech Engineering & Legal Governance<br />
+              Email:{' '}
+              <a
+                href="mailto:contact@sbutech.com"
+                className="text-[#1E5A54] font-semibold underline hover:text-[#F7623D]"
+              >
+                contact@sbutech.com
+              </a>
+            </p>
+          </section>
+
+          <div className="pt-6 border-t border-[#1E5A54]/20 text-xs font-mono text-[#1E5A54]/80">
+            Last Updated: November 2026. Sbu Tech Digital Engineering Studio.
           </div>
         </div>
       </div>

@@ -20,10 +20,11 @@ import {
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
+import { Logo } from '@/components/shared/logo';
 
 const adminLoginSchema = z.object({
   email: z.string().email({ message: 'Valid administrator email is required.' }),
-  password: z.string().min(6, { message: 'Password must be at least 6 characters.' }),
+  password: z.string().min(1, { message: 'Password is required.' }),
 });
 
 type AdminLoginData = z.infer<typeof adminLoginSchema>;
@@ -32,38 +33,57 @@ export default function AdminLoginPage() {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [authError, setAuthError] = useState<string | null>(null);
 
   const {
     register,
     handleSubmit,
-    setValue,
     formState: { errors },
   } = useForm<AdminLoginData>({
     resolver: zodResolver(adminLoginSchema),
     defaultValues: {
-      email: 'admin@sbutech.internal',
-      password: 'password123',
+      email: '',
+      password: '',
     },
   });
 
-  const onSubmit = async () => {
+  const onSubmit = async (data: AdminLoginData) => {
     setIsSubmitting(true);
-    // Simulate brief authentication handshake
-    await new Promise((resolve) => setTimeout(resolve, 600));
-    setIsSubmitting(false);
-    router.push('/admin');
-  };
+    setAuthError(null);
 
-  const handleFillDemo = () => {
-    setValue('email', 'admin@sbutech.internal');
-    setValue('password', 'supersecurepass');
+    try {
+      const res = await fetch('/api/admin/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      const body = (await res.json().catch(() => ({}))) as { error?: string };
+
+      if (!res.ok) {
+        setAuthError(body.error || 'Authentication failed. Please verify your credentials.');
+        setIsSubmitting(false);
+        return;
+      }
+
+      router.push('/admin');
+      router.refresh();
+    } catch {
+      setAuthError('Connection error reaching authentication service. Please try again.');
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <main className="min-h-screen flex items-center justify-center p-4 bg-[#EEE6E2] text-[#1E5A54]">
       <div className="w-full max-w-md space-y-6">
         {/* Header Branding */}
-        <div className="text-center space-y-2">
+        <div className="text-center space-y-3">
+          <div className="flex justify-center">
+            <Logo variant="admin" />
+          </div>
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F8F4F2] border border-[#1E5A54]/25 text-[#1E5A54] text-xs font-mono font-semibold uppercase tracking-wider">
             <ShieldCheck className="h-3.5 w-3.5 text-[#F7623D]" />
             <span>Sbu Tech Control Desk</span>
@@ -73,21 +93,28 @@ export default function AdminLoginPage() {
             Administrator Sign In
           </h1>
           <p className="text-xs text-[#1E5A54]">
-            Internal console for managing case studies, practice areas, and client inquiries.
+            Internal console for managing case studies, engineering staff, and inquiries.
           </p>
         </div>
 
         {/* Notice Card */}
         <div className="p-4 rounded-2xl border border-[#1E5A54]/25 bg-[#F8F4F2] text-[#1E5A54] text-xs space-y-1.5">
           <div className="flex items-center gap-1.5 font-semibold text-[#1E5A54]">
-            <AlertCircle className="h-4 w-4 text-[#F7623D] shrink-0" />
-            <span>Phase 01 Mock Interface</span>
+            <ShieldCheck className="h-4 w-4 text-[#F7623D] shrink-0" />
+            <span>Protected Console</span>
           </div>
           <p className="text-[11px] text-[#1E5A54] leading-relaxed">
-            Live database authentication is not connected in this phase. You can sign in directly
-            using any credentials or the pre-filled demo account.
+            Sign in with your configured administrator email and password. Content management data runs in demo mode while analytics and authentication are live.
           </p>
         </div>
+
+        {/* Authentication Error Feedback */}
+        {authError && (
+          <div className="p-3.5 rounded-2xl border border-[#F7623D]/40 bg-[#F7623D]/10 text-[#1E5A54] text-xs flex items-center gap-2">
+            <AlertCircle className="h-4 w-4 text-[#F7623D] shrink-0" />
+            <span className="font-medium">{authError}</span>
+          </div>
+        )}
 
         {/* Login Form Card */}
         <Card className="p-6 md:p-8 border-[#1E5A54]/25 bg-[#F8F4F2] rounded-3xl space-y-6">
@@ -101,7 +128,7 @@ export default function AdminLoginPage() {
                 <Input
                   type="email"
                   className="pl-10 rounded-full bg-[#EEE6E2] border-[#1E5A54]/30 text-[#1E5A54]"
-                  placeholder="admin@sbutech.internal"
+                  placeholder="admin@sbutech.com"
                   {...register('email')}
                   error={!!errors.email}
                 />
@@ -158,13 +185,7 @@ export default function AdminLoginPage() {
           </form>
 
           <div className="pt-3 border-t border-[#1E5A54]/20 flex items-center justify-between text-xs text-[#1E5A54]">
-            <button
-              type="button"
-              onClick={handleFillDemo}
-              className="text-[#1E5A54] decoration-[#F7623D] hover:underline font-semibold"
-            >
-              Fill Demo Credentials
-            </button>
+            <span className="text-[11px] text-[#1E5A54]/70">Single-owner desk</span>
             <Link href="/" className="hover:text-[#1E5A54] transition-colors flex items-center gap-1 font-medium">
               <Home className="h-3 w-3" />
               <span>Back to Home</span>

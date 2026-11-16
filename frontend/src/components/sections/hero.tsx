@@ -49,10 +49,10 @@ export function Hero() {
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-1">
               <MagneticWrap>
                 <Link
-                  href="/get-a-quote"
+                  href="/contact"
                   className="w-full sm:w-auto rounded-full bg-[#1E5A54] border-2 border-[#F7623D] hover:bg-[#16443F] text-[#EEE6E2] uppercase text-xs font-bold tracking-[0.16em] px-8 py-4 inline-flex items-center justify-center gap-2.5 transition-all"
                 >
-                  <span>Scope Your Project</span>
+                  <span>Book Architecture Call</span>
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </MagneticWrap>

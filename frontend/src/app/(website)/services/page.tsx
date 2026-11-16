@@ -116,8 +116,8 @@ export default function ServicesPage() {
             </p>
             <div className="pt-2 flex items-center gap-3">
               <Button asChild size="default" className="rounded-full">
-                <Link href="/get-a-quote" className="gap-2">
-                  <span>Scope Your Engagement</span>
+                <Link href="/contact" className="gap-2">
+                  <span>Book Architecture Call</span>
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </Button>
@@ -200,15 +200,15 @@ export default function ServicesPage() {
           </h2>
           <p className="text-sm text-[#EEE6E2] max-w-xl mx-auto leading-relaxed">
             Share your requirements with our lead architects. We will return a written breakdown of
-            milestones, sprint cadence, and estimated cost within 48 hours.
+            milestones, sprint cadence, and engineering recommendations within 48 hours.
           </p>
           <Button
             asChild
             size="lg"
             className="rounded-full px-5 sm:px-8 h-auto py-3.5 whitespace-normal text-center bg-[#F8F4F2] hover:bg-[#EEE6E2] text-[#1E5A54] border-2 border-[#F7623D]"
           >
-            <Link href="/get-a-quote" className="gap-2">
-              <span>Request an Engineering Estimate</span>
+            <Link href="/contact" className="gap-2">
+              <span>Contact Architecture Team</span>
               <ArrowRight className="h-4 w-4 text-[#F7623D] shrink-0" />
             </Link>
           </Button>

@@ -28,11 +28,9 @@ export const siteConfig = {
   adminNav: [
     { title: 'Overview', href: '/admin', icon: 'LayoutDashboard' },
     { title: 'Projects', href: '/admin/projects', icon: 'FolderGit2' },
-    { title: 'Services', href: '/admin/services', icon: 'Cpu' },
     { title: 'Team Members', href: '/admin/team', icon: 'Users' },
     { title: 'Testimonials', href: '/admin/testimonials', icon: 'Quote' },
     { title: 'Messages', href: '/admin/messages', icon: 'Mail' },
-    { title: 'Quote Requests', href: '/admin/quote-requests', icon: 'FileSpreadsheet' },
     { title: 'Settings', href: '/admin/settings', icon: 'Settings' },
   ],
   stats: [

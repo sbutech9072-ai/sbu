@@ -3,6 +3,8 @@ import { Anton, Inter } from 'next/font/google';
 import { siteConfig } from '@/config/site';
 import { ThemeProvider } from '@/context/theme-context';
 import ChatWidget from '@/components/ai/chat-widget';
+import PageViewTracker from '@/components/analytics/page-view-tracker';
+import ActivityTracker from '@/components/analytics/activity-tracker';
 import './globals.css';
 
 const anton = Anton({
@@ -52,7 +54,13 @@ export const metadata: Metadata = {
     creator: '@sbutech',
   },
   icons: {
-    icon: '/favicon.svg',
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/icon.png', type: 'image/png', sizes: '512x512' },
+    ],
+    apple: [
+      { url: '/apple-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
   },
 };
 
@@ -76,6 +84,8 @@ export default function RootLayout({
           }}
         />
         <ThemeProvider>
+          <PageViewTracker />
+          <ActivityTracker />
           {children}
           <ChatWidget />
         </ThemeProvider>

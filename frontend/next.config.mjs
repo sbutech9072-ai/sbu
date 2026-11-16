@@ -23,6 +23,21 @@ if (fs.existsSync(rootEnvPath)) {
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  output: 'standalone',
+  async redirects() {
+    return [
+      {
+        source: '/get-a-quote',
+        destination: '/contact',
+        permanent: true,
+      },
+      {
+        source: '/admin/quote-requests',
+        destination: '/admin',
+        permanent: true,
+      },
+    ];
+  },
   async rewrites() {
     // In local development, proxy /api/* to the local backend server (default: port 5000)
     // In Cloudflare production, Cloudflare Worker handles /api/* directly at the edge

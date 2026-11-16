@@ -57,10 +57,10 @@ export function CTASection() {
 
               <MagneticWrap className="w-full">
                 <Link
-                  href="/get-a-quote"
+                  href="/contact"
                   className="w-full rounded-full bg-[#1E5A54] border-2 border-[#F7623D] hover:bg-[#16443F] text-[#EEE6E2] uppercase text-xs font-bold tracking-[0.16em] px-7 py-4 inline-flex items-center justify-center gap-2.5 transition-all"
                 >
-                  <span>Request Project Estimate</span>
+                  <span>Initiate Project Scope</span>
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </MagneticWrap>

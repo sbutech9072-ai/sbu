@@ -4,11 +4,10 @@ from app.models.base import Base
 from app.database.session import engine, SessionLocal
 from app.models.user import User, UserRole
 from app.models.contact import ContactMessage
-from app.models.quote import QuoteRequest
 from app.models.cms import Service, SiteSettings
 from app.models.ai_session import ChatSession, ChatMessage
 from app.core.security import get_password_hash
-from app.database.seed_data import SEED_ADMIN, SEED_SERVICES, SEED_MESSAGES, SEED_QUOTES
+from app.database.seed_data import SEED_ADMIN, SEED_SERVICES, SEED_MESSAGES
 
 logger = logging.getLogger(__name__)
 
@@ -55,14 +54,7 @@ def init_db(db: Session = None) -> None:
                 db.add(ContactMessage(**msg))
             db.commit()
 
-        # 4. Seed Sample Quote Requests if empty
-        if db.query(QuoteRequest).count() == 0:
-            logger.info("Seeding sample project quote briefs...")
-            for qr in SEED_QUOTES:
-                db.add(QuoteRequest(**qr))
-            db.commit()
-
-        # 5. Seed Core Services if empty
+        # 4. Seed Core Services if empty
         if db.query(Service).count() == 0:
             logger.info("Seeding engineering capabilities...")
             for srv in SEED_SERVICES:

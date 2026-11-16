@@ -224,7 +224,7 @@ export default function ProjectDetailPage({ params }: ProjectPageProps) {
                   variant="secondary"
                   className="w-full justify-center h-10 text-xs rounded-full gap-1.5"
                 >
-                  <Link href="/get-a-quote">
+                  <Link href="/contact">
                     <span>Build a Similar System</span>
                     <ArrowRight className="h-3.5 w-3.5" />
                   </Link>

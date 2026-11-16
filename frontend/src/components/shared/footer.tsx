@@ -2,8 +2,9 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Terminal, Github, Twitter, Linkedin } from 'lucide-react';
+import { Github, Twitter, Linkedin } from 'lucide-react';
 import { siteConfig } from '@/config/site';
+import { Logo } from '@/components/shared/logo';
 
 export function Footer() {
   return (
@@ -12,19 +13,7 @@ export function Footer() {
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           {/* Left: Brand Logo & Short One-line Company Description */}
           <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
-            <Link href="/" className="flex items-center gap-2.5 group shrink-0">
-              <div className="h-9 w-9 rounded-full border border-[#1E5A54] bg-[#F8F4F2] flex items-center justify-center text-[#1E5A54] transition-transform group-hover:scale-105 shadow-sm">
-                <Terminal className="h-4 w-4 stroke-[1.75]" />
-              </div>
-              <div className="flex flex-col">
-                <span className="font-headline text-xl font-bold tracking-tight text-[#1E5A54] uppercase flex items-center gap-1 leading-none">
-                  Sbu <span className="text-[#1E5A54] decoration-[#F7623D]">Tech</span>
-                </span>
-                <span className="text-[9px] uppercase font-bold tracking-[0.2em] text-[#1E5A54]/70 mt-0.5">
-                  Software Studio
-                </span>
-              </div>
-            </Link>
+            <Logo variant="footer" />
 
             <span className="hidden sm:inline-block h-4 w-px bg-[#1E5A54]/20" aria-hidden="true" />
 

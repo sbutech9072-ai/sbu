@@ -5,12 +5,30 @@ import Link from 'next/link';
 import { Menu, Bell, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/shared/theme-toggle';
+import { ADMIN_ROLE_LABELS, useAdminAuth } from '@/context/admin-auth-context';
 
 interface AdminHeaderProps {
   onOpenMobileMenu: () => void;
 }
 
+function getInitials(name?: string, email?: string): string {
+  if (name && name.trim()) {
+    const parts = name.trim().split(/\s+/);
+    if (parts.length >= 2) {
+      return `${parts[0][0]}${parts[1][0]}`.toUpperCase();
+    }
+    return parts[0].slice(0, 2).toUpperCase();
+  }
+  return (email || 'AD').slice(0, 2).toUpperCase();
+}
+
 export function AdminHeader({ onOpenMobileMenu }: AdminHeaderProps) {
+  const { adminUser } = useAdminAuth();
+
+  const displayName = adminUser?.full_name || 'Admin Operator';
+  const roleLabel = adminUser ? ADMIN_ROLE_LABELS[adminUser.role] : 'Authenticating';
+  const initials = getInitials(adminUser?.full_name, adminUser?.email);
+
   return (
     <header className="h-16 border-b border-[#1E5A54]/20 bg-[#EEE6E2] px-4 md:px-8 flex items-center justify-between sticky top-0 z-20">
       <div className="flex items-center gap-3">
@@ -25,7 +43,7 @@ export function AdminHeader({ onOpenMobileMenu }: AdminHeaderProps) {
 
         <div className="hidden sm:flex items-center gap-2 text-xs text-[#1E5A54] font-mono">
           <span className="h-2 w-2 rounded-full bg-[#F7623D]" />
-          <span>Studio Ledger • Local Mock State Active</span>
+          <span>SBU TECH Control Desk • {roleLabel}</span>
         </div>
       </div>
 
@@ -50,7 +68,7 @@ export function AdminHeader({ onOpenMobileMenu }: AdminHeaderProps) {
         <button
           type="button"
           className="relative p-2 text-[#1E5A54] hover:bg-[#E2D7D1] rounded-full transition-colors"
-          title="3 Unread Inquiries"
+          title="Notifications"
           aria-label="Notifications"
         >
           <Bell className="h-4 w-4" />
@@ -58,13 +76,20 @@ export function AdminHeader({ onOpenMobileMenu }: AdminHeaderProps) {
         </button>
 
         {/* User Pill */}
-        <div className="flex items-center gap-2 pl-3 border-l border-[#1E5A54]/20">
+        <div
+          className="flex items-center gap-2 pl-3 border-l border-[#1E5A54]/20"
+          title={adminUser?.email || ''}
+        >
           <div className="h-8 w-8 rounded-full bg-[#1E5A54] flex items-center justify-center text-xs font-bold text-[#EEE6E2]">
-            ST
+            {initials}
           </div>
           <div className="hidden sm:flex flex-col text-left">
-            <span className="text-xs font-semibold text-[#1E5A54]">Admin Operator</span>
-            <span className="text-[10px] font-mono text-[#1E5A54]">Mock Session</span>
+            <span className="text-xs font-semibold text-[#1E5A54] leading-tight">
+              {displayName}
+            </span>
+            <span className="text-[10px] font-mono text-[#F7623D] font-semibold">
+              {roleLabel}
+            </span>
           </div>
         </div>
       </div>

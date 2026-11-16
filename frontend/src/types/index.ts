@@ -73,21 +73,6 @@ export interface ContactMessage {
   status: 'new' | 'read' | 'replied';
 }
 
-export interface QuoteRequest {
-  id: string;
-  fullName: string;
-  companyName: string;
-  email: string;
-  phone?: string;
-  serviceCategory: string;
-  budgetRange: string;
-  timeline: string;
-  projectOverview: string;
-  featuresNeeded: string[];
-  createdAt: string;
-  status: 'pending' | 'reviewing' | 'contacted' | 'archived';
-}
-
 export interface SiteSettings {
   companyName: string;
   contactEmail: string;

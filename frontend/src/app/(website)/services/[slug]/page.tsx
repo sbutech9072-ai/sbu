@@ -175,8 +175,8 @@ export default function ServiceDetailPage({ params }: ServicePageProps) {
                   asChild
                   className="w-full justify-center h-11 text-xs font-semibold uppercase tracking-wider rounded-full bg-[#1E5A54] border-2 border-[#F7623D] hover:bg-[#16443F] text-[#EEE6E2]"
                 >
-                  <Link href="/get-a-quote" className="gap-1.5">
-                    <span>Request a Scoped Quote</span>
+                  <Link href="/contact" className="gap-1.5">
+                    <span>Start Practice Engagement</span>
                     <ArrowRight className="h-4 w-4" />
                   </Link>
                 </Button>
