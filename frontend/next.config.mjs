@@ -39,12 +39,12 @@ const nextConfig = {
     ];
   },
   async rewrites() {
-    // In local development, proxy /api/* to the local backend server (default: port 5000)
+    // In local development, proxy /api/* to the local FastAPI server.
     // In Cloudflare production, Cloudflare Worker handles /api/* directly at the edge
     return [
       {
         source: '/api/:path*',
-        destination: `${process.env.INTERNAL_API_URL || 'http://localhost:5000'}/api/:path*`,
+        destination: 'http://127.0.0.1:8000/api/:path*',
       },
     ];
   },

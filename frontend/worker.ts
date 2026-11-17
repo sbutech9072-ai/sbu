@@ -2236,9 +2236,23 @@ export default {
         process.env.INTERNAL_API_URL;
 
       if (backendBase) {
-        const targetUrl = new URL(url.pathname + url.search, backendBase);
+        const backendUrl = new URL(backendBase);
+        if (backendUrl.hostname.endsWith('.trycloudflare.com')) {
+          return new Response(
+            JSON.stringify({ error: 'The configured API backend uses an unsupported temporary Cloudflare tunnel.' }),
+            {
+              status: 503,
+              headers: {
+                'Content-Type': 'application/json',
+                'Cache-Control': 'no-store',
+              },
+            }
+          );
+        }
+
+        const targetUrl = new URL(url.pathname + url.search, backendUrl);
         const headers = new Headers(request.headers);
-        headers.set('host', new URL(backendBase).host);
+        headers.set('host', backendUrl.host);
         return fetch(targetUrl.toString(), {
           method: request.method,
           headers,
