@@ -50,7 +50,7 @@ def send_signup_otp(
         ) from exc
 
     if not EmailService.send_email(
-        subject="Verify your TechZaa signup",
+        subject="Verify your SBUTech signup",
         recipient=email,
         text_body=f"Your signup verification code is {otp}. It expires in 5 minutes.",
         html_body=(
@@ -144,7 +144,7 @@ def send_password_reset_otp(
         return generic_response
 
     EmailService.send_email(
-        subject="Reset your TechZaa password",
+        subject="Reset your SBUTech password",
         recipient=email,
         text_body=f"Your password reset code is {otp}. It expires in 5 minutes.",
         html_body=(
