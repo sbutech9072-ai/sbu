@@ -22,8 +22,8 @@ function OrbBlueprintFallback({ variant = 'hero' }: { variant?: 'hero' | 'compac
         role="img"
         aria-label="Architectural Node Topology Blueprint"
         className={cn(
-          'w-full h-full max-w-[340px] max-h-[340px]',
-          variant === 'compact' && 'max-w-[230px] max-h-[230px]'
+          'w-full h-full max-w-[360px] max-h-[360px] sm:max-w-[400px] sm:max-h-[400px]',
+          variant === 'compact' && 'max-w-[240px] max-h-[240px]'
         )}
       >
         {/* Subtle Technical Polar Grid */}
@@ -161,6 +161,11 @@ export function ArchitectureNodeOrb({
     setViewMode('blueprint');
   }, []);
   const [viewMode, setViewMode] = React.useState<'3d' | 'blueprint'>('3d');
+  const [telemetry, setTelemetry] = React.useState<{ rx: string; ry: string; nodes: number }>({
+    rx: '14.2',
+    ry: '28.6',
+    nodes: 12,
+  });
 
   React.useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -189,26 +194,54 @@ export function ArchitectureNodeOrb({
   return (
     <div
       className={cn(
-        'relative flex flex-col justify-between rounded-2xl border border-[#1E5A54]/15 bg-[#F8F4F2] p-4 sm:p-5 overflow-hidden',
+        'relative flex flex-col justify-between rounded-2xl border border-[#1E5A54]/18 dark:border-[#292D32] bg-[#F8F4F2] dark:bg-[#15181C] p-4 sm:p-5 overflow-hidden shadow-xs select-none',
         variant === 'hero'
-          ? 'min-h-[360px] sm:min-h-[430px]'
-          : 'min-h-[260px] sm:min-h-[290px]',
+          ? 'min-h-[400px] sm:min-h-[470px]'
+          : 'min-h-[280px] sm:min-h-[310px]',
         className
       )}
     >
-      {/* Subtle View Switch */}
-      <div className="relative z-10 flex items-center justify-end">
-        <button
-          type="button"
-          onClick={() =>
-            setViewMode((prev) => (prev === '3d' && canRenderWebGL ? 'blueprint' : '3d'))
-          }
-          disabled={!canRenderWebGL}
-          className="inline-flex items-center gap-1.5 rounded-md border border-[#1E5A54]/20 bg-[#EEE6E2]/80 px-2.5 py-1 text-[11px] font-medium text-[#1E5A54]/80 transition-colors hover:border-[#1E5A54]/40 hover:text-[#1E5A54] disabled:opacity-50"
-          aria-label="Toggle between interactive 3D view and static diagram"
-        >
-          {showWebGL ? 'Schematic view' : '3D view'}
-        </button>
+      {/* Corner Blueprint Crosshairs */}
+      <span aria-hidden="true" className="pointer-events-none absolute top-2.5 left-2.5 font-mono text-[10px] text-[#1E5A54]/30 dark:text-white/20 select-none z-10">+</span>
+      <span aria-hidden="true" className="pointer-events-none absolute top-2.5 right-2.5 font-mono text-[10px] text-[#1E5A54]/30 dark:text-white/20 select-none z-10">+</span>
+      <span aria-hidden="true" className="pointer-events-none absolute bottom-2.5 left-2.5 font-mono text-[10px] text-[#1E5A54]/30 dark:text-white/20 select-none z-10">+</span>
+      <span aria-hidden="true" className="pointer-events-none absolute bottom-2.5 right-2.5 font-mono text-[10px] text-[#1E5A54]/30 dark:text-white/20 select-none z-10">+</span>
+
+      {/* Subtle Coordinate Dots Matrix Background */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 opacity-[0.035] dark:opacity-[0.05]"
+        style={{
+          backgroundImage: `radial-gradient(#1E5A54 1px, transparent 1px)`,
+          backgroundSize: '20px 20px',
+        }}
+      />
+
+      {/* Header Bar with Node Identity & View Switch */}
+      <div className="relative z-10 flex items-center justify-between pb-2 border-b border-[#1E5A54]/10 dark:border-white/10">
+        <div className="flex items-center gap-2">
+          <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+          <span className="font-mono text-[11px] font-semibold tracking-wider text-[#1E5A54] dark:text-[#F5F1EA]">
+            TOPOLOGY // NODE_01
+          </span>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <span className="hidden sm:inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono bg-[#EEE6E2]/80 dark:bg-[#101215] text-[#1E5A54]/80 dark:text-[#A9ADB3] border border-[#1E5A54]/12 dark:border-[#292D32]">
+            LATENCY &lt; 180MS
+          </span>
+          <button
+            type="button"
+            onClick={() =>
+              setViewMode((prev) => (prev === '3d' && canRenderWebGL ? 'blueprint' : '3d'))
+            }
+            disabled={!canRenderWebGL}
+            className="inline-flex items-center gap-1.5 rounded-md border border-[#1E5A54]/20 bg-[#EEE6E2]/90 dark:bg-[#1D2025] px-2.5 py-1 text-[11px] font-medium text-[#1E5A54] dark:text-[#F5F1EA] transition-colors hover:border-[#1E5A54]/40 hover:text-[#1E5A54] disabled:opacity-50 shadow-2xs"
+            aria-label="Toggle between interactive 3D view and static diagram"
+          >
+            {showWebGL ? 'Schematic view' : '3D view'}
+          </button>
+        </div>
       </div>
 
       {/* Center Stage (WebGL or Static SVG Fallback) */}
@@ -216,8 +249,8 @@ export function ArchitectureNodeOrb({
         className={cn(
           'relative w-full flex-1 flex items-center justify-center my-2',
           variant === 'hero'
-            ? 'h-[300px] sm:h-[360px] lg:h-[370px]'
-            : 'h-[220px] sm:h-[250px]'
+            ? 'h-[320px] sm:h-[370px] lg:h-[390px]'
+            : 'h-[230px] sm:h-[260px]'
         )}
       >
         {showWebGL ? (
@@ -225,11 +258,26 @@ export function ArchitectureNodeOrb({
             <LazyArchitectureOrbCanvas
               variant={variant}
               onWebGLError={handleWebGLError}
+              onTelemetryUpdate={setTelemetry}
             />
           </div>
         ) : (
           <OrbBlueprintFallback variant={variant} />
         )}
+      </div>
+
+      {/* Footer Telemetry Strip */}
+      <div className="relative z-10 pt-2 border-t border-[#1E5A54]/10 dark:border-white/10 flex items-center justify-between text-[11px] font-mono text-[#1E5A54]/70 dark:text-[#A9ADB3]">
+        <div className="flex items-center gap-2">
+          <span className="h-1.5 w-1.5 rounded-full bg-[#F7623D] dark:bg-[#FF642D]" />
+          <span className="text-[10px] tracking-wide">
+            {showWebGL ? `ROT: X ${telemetry.rx}° / Y ${telemetry.ry}°` : 'PROJECTION: 2D ORTHO'}
+          </span>
+        </div>
+        <div className="flex items-center gap-3 text-[10px]">
+          <span className="hidden sm:inline opacity-75">CLUSTER: DISTRIBUTED</span>
+          <span className="font-semibold text-emerald-700 dark:text-emerald-400">12 NODES SYNCED</span>
+        </div>
       </div>
     </div>
   );
