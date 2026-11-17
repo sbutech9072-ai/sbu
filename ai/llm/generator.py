@@ -82,7 +82,7 @@ class RAGAnswerGenerator:
             self._system_prompt_cache = (
                 "You are the official AI Assistant for SBU TECH (https://www.sbutech.com). "
                 "Answer ONLY using the retrieved approved knowledge base context. "
-                "Never hallucinate or use external general knowledge. Citing chunk IDs is mandatory."
+                "Never hallucinate or use external general knowledge. Never include chunk IDs or citation tags in your response."
             )
         return self._system_prompt_cache
 
@@ -96,8 +96,8 @@ class RAGAnswerGenerator:
             text = chunk.get("original_text", "").strip()
 
             block = (
-                f"[{cid}]\n"
-                f"Section: {title} (Page {page})\n"
+                f"Reference Block (Page {page}):\n"
+                f"Section: {title}\n"
                 f"Content:\n{text}"
             )
             blocks.append(block)
@@ -269,7 +269,7 @@ class RAGAnswerGenerator:
             f"<retrieved_context>\n{context_text}\n</retrieved_context>\n\n"
             f"User Question: {clean_question}\n\n"
             f"Please respond in the visitor's language ({detected_lang}). "
-            f"Ground every claim strictly in the context above and cite the chunk IDs [chunk_id]."
+            f"Ground every claim strictly in the context above. Do not include any bracketed chunk IDs or citation tags in your reply."
         )
 
         messages: List[Dict[str, str]] = [

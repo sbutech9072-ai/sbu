@@ -234,12 +234,16 @@ export function Navbar() {
       {/* Left Sidebar Drawer */}
       <aside
         className={cn(
-          'fixed inset-y-0 left-0 z-50 w-80 sm:w-96 max-w-[88vw] bg-[#EEE6E2] border-r border-[#1E5A54]/25 shadow-2xl flex flex-col justify-between overflow-y-auto transition-transform duration-300 ease-out',
+          'fixed inset-y-0 left-0 z-50 w-80 sm:w-96 max-w-[88vw] bg-[#EEE6E2] border-r border-[#1E5A54]/25 shadow-2xl flex flex-col justify-between overflow-y-auto overscroll-contain transition-transform duration-300 ease-out',
           isOpen ? 'translate-x-0' : '-translate-x-full'
         )}
         role="dialog"
         aria-label="Navigation Sidebar"
         aria-modal="true"
+        data-lenis-prevent="true"
+        data-lenis-prevent-wheel="true"
+        data-lenis-prevent-touch="true"
+        style={{ overscrollBehavior: 'contain' }}
       >
         {/* Top Header of Sidebar */}
         <div>

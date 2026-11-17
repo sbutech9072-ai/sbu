@@ -11,7 +11,8 @@ import {
   Cloud,
   Cpu,
   Layers,
-  Sparkles,
+  Lightbulb,
+  MessageSquare,
   GitBranch,
   Lock,
   Workflow,
@@ -48,7 +49,7 @@ export default function AboutPage() {
       desc: 'We operate with complete openness: shared repositories, transparent sprint tracking, direct communication channels, and honest technical guidance.',
     },
     {
-      icon: <Sparkles className="h-5 w-5 text-[#F7623D]" />,
+      icon: <Lightbulb className="h-5 w-5 text-[#F7623D]" />,
       title: 'Innovation',
       desc: 'We thoughtfully adopt proven modern technologies, cloud-native paradigms, and applied AI systems to give our clients a distinct technical edge.',
     },
@@ -624,8 +625,8 @@ export default function AboutPage() {
             </div>
 
             <div className="flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-[#1E5A54]/70">
-              <span className="h-2 w-2 rounded-full bg-[#F7623D] animate-ping" />
-              <span>Active Squad Matrix</span>
+              <span className="h-2 w-2 rounded-full bg-[#F7623D]" />
+              <span>Multidisciplinary Squads</span>
             </div>
           </div>
 
@@ -804,7 +805,7 @@ export default function AboutPage() {
         <div className="p-8 sm:p-12 md:p-16 lg:p-20 rounded-3xl border-2 border-[#1E5A54] bg-[#F8F4F2] text-center space-y-8 relative overflow-hidden shadow-sm">
           <div className="max-w-3xl mx-auto space-y-4">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-[#1E5A54]/25 bg-[#EEE6E2] text-xs font-semibold tracking-[0.16em] uppercase text-[#1E5A54]">
-              <Sparkles className="w-3.5 h-3.5 text-[#F7623D]" />
+              <MessageSquare className="w-3.5 h-3.5 text-[#F7623D]" />
               <span>Start The Conversation</span>
             </div>
 

@@ -55,6 +55,26 @@ export async function handleAIChat(
     };
   }
 
+  // 3. Fast Greeting Handler (Instant & Clean response without citations)
+  const isGreetingOnly = /^(hi|hello|hey|salam|assalamu\s*alaikum|ki\s*obsta|kemon\s*acho|hola|namaste|good\s*(morning|afternoon|evening))[\s.!?]*$/i.test(
+    message
+  );
+  if (isGreetingOnly) {
+    const greetingAnswer = isBengali
+      ? 'হ্যালো! SBU TECH-এ আপনাকে স্বাগতম। আমি আমাদের সফটওয়্যার ইঞ্জিনিয়ারিং সেবা, ওয়েব প্ল্যাটফর্ম, ক্লাউড আর্কিটেকচার এবং প্রজেক্ট সংক্রান্ত যেকোনো তথ্যে সাহায্য করতে পারি। আজ আপনাকে কীভাবে সাহায্য করতে পারি?'
+      : 'Hello! Welcome to SBU TECH. I am your studio AI assistant. I can help you with information about our software engineering services, web platforms, cloud architecture, and project workflows. How can I help you today?';
+
+    return {
+      answer: greetingAnswer,
+      session_id: sessionId,
+      status: 'grounded',
+      confidence: 0.95,
+      model: 'studio/greeting',
+      sources: [],
+      request_id: requestId,
+    };
+  }
+
   // 3. Resolve Environment Variables
   const geminiKey =
     env.GEMINI_API_KEY ||
@@ -193,7 +213,7 @@ export async function handleAIChat(
   }
 
   // 8. Citations & Safety Validation
-  const { cleanedAnswer, verifiedSources } = extractAndValidateCitations(
+  const { cleanedAnswer } = extractAndValidateCitations(
     rawAnswer,
     candidateChunks
   );
@@ -204,7 +224,7 @@ export async function handleAIChat(
     status: 'grounded',
     confidence: Math.min(0.99, Math.max(0.6, topSimilarity + 0.15)),
     model: modelUsed,
-    sources: verifiedSources,
+    sources: [],
     request_id: requestId,
   };
 }

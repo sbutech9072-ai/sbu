@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
 import {
   MessageSquare,
   X,
@@ -8,11 +9,7 @@ import {
   RotateCcw,
   Copy,
   Check,
-  FileText,
-  Sparkles,
   AlertCircle,
-  ChevronDown,
-  ChevronUp,
   ExternalLink,
 } from 'lucide-react';
 
@@ -46,12 +43,22 @@ interface ChatMessage {
 const STORAGE_SESSION_KEY = 'sbu_ai_session_id';
 const STORAGE_HISTORY_KEY = 'sbu_ai_chat_history';
 
+const cleanMessageText = (text: string): string => {
+  if (!text) return '';
+  return text
+    .replace(/\[\s*(?:sbu_tech_kb_[a-z0-9_]+|chunk[\s_]*\d+[^\]]*|p\d+_c\d+[^\]]*)\]/gi, '')
+    .replace(/\[\s*sbu_[^\]]+\]/gi, '')
+    .replace(/\s+([.,!?;:])/g, '$1')
+    .replace(/[ \t]{2,}/g, ' ')
+    .trim();
+};
+
 const INITIAL_GREETING: ChatMessage = {
   id: 'welcome-msg',
   role: 'assistant',
   content: `Hello! Welcome to SBU TECH.
 
-I'm your AI assistant. I can help you with information about our services, projects, client portal, login guidance and other company-related questions.
+I can help you with our engineering services, past projects, client portal access, and general company questions.
 
 How can I help you today?`,
   timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
@@ -64,9 +71,9 @@ export default function ChatWidget() {
   const [inputMessage, setInputMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [copiedId, setCopiedId] = useState<string | null>(null);
-  const [expandedSources, setExpandedSources] = useState<Record<string, boolean>>({});
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   // Initialize ephemeral in-memory session (clears automatically on page refresh/tab close)
@@ -84,7 +91,14 @@ export default function ChatWidget() {
   // Auto-scroll to bottom of message list
   useEffect(() => {
     if (isOpen) {
-      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+      if (messagesContainerRef.current) {
+        messagesContainerRef.current.scrollTo({
+          top: messagesContainerRef.current.scrollHeight,
+          behavior: 'smooth',
+        });
+      } else {
+        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   }, [messages, isLoading, isOpen]);
 
@@ -147,9 +161,9 @@ export default function ChatWidget() {
       const aiMessage: ChatMessage = {
         id: `ai_${Date.now()}`,
         role: 'assistant',
-        content: data.answer || 'I could not retrieve an answer at this time.',
+        content: cleanMessageText(data.answer) || 'I could not retrieve an answer at this time.',
         status: data.status,
-        sources: data.sources || [],
+        sources: [],
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       };
 
@@ -185,17 +199,12 @@ export default function ChatWidget() {
       console.warn('Session reset error:', e);
     }
     setMessages([INITIAL_GREETING]);
-    setExpandedSources({});
   };
 
   const handleCopy = (id: string, text: string) => {
     navigator.clipboard.writeText(text);
     setCopiedId(id);
     setTimeout(() => setCopiedId(null), 2000);
-  };
-
-  const toggleSources = (msgId: string) => {
-    setExpandedSources((prev) => ({ ...prev, [msgId]: !prev[msgId] }));
   };
 
   const isRTLText = (text: string) => {
@@ -209,20 +218,14 @@ export default function ChatWidget() {
         {!isOpen && (
           <button
             onClick={() => setIsOpen(true)}
-            aria-label="Open SBU TECH AI Assistant"
-            className="group relative flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-[#1E5A54] dark:bg-[#FF642D] text-[#EEE6E2] dark:text-[#08090B] shadow-2xl hover:scale-105 active:scale-95 transition-all duration-300 ease-out border border-[#F7623D]/30 dark:border-white/20"
+            aria-label="Open SBU TECH Assistant"
+            className="group relative flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-[#1E5A54] dark:bg-[#FF642D] text-[#EEE6E2] dark:text-[#08090B] shadow-xl hover:scale-105 active:scale-95 transition-all duration-200 ease-out border border-[#1E5A54]/30 dark:border-white/20"
           >
-            {/* Subtle Glowing Pulse Effect */}
-            <span className="absolute -inset-1 rounded-full bg-[#F7623D] dark:bg-[#FF642D] opacity-30 animate-pulse group-hover:opacity-50 blur-sm pointer-events-none" />
-
             {/* Icon */}
-            <Sparkles className="w-6 h-6 sm:w-7 sm:h-7 transition-transform group-hover:rotate-12 duration-300" />
+            <MessageSquare className="w-6 h-6 sm:w-7 sm:h-7 transition-transform group-hover:scale-105 duration-200" />
 
-            {/* Notification Badge / Online Dot */}
-            <span className="absolute top-1 right-1 flex h-3.5 w-3.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-emerald-500 border-2 border-[#1E5A54] dark:border-[#08090B]" />
-            </span>
+            {/* Online Dot */}
+            <span className="absolute top-1 right-1 inline-flex rounded-full h-3.5 w-3.5 bg-emerald-500 border-2 border-[#1E5A54] dark:border-[#08090B]" />
           </button>
         )}
       </div>
@@ -232,27 +235,43 @@ export default function ChatWidget() {
         <div
           role="dialog"
           aria-label="SBU TECH AI Assistant"
-          className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 flex flex-col w-[380px] sm:w-[420px] max-w-[calc(100vw-2rem)] h-[620px] max-h-[calc(100vh-5rem)] rounded-2xl shadow-2xl overflow-hidden border border-[rgba(30,90,84,0.18)] dark:border-[#292D32] bg-[#F8F4F2] dark:bg-[#15181C] text-[#1E5A54] dark:text-[#F5F1EA] transition-all duration-300 animate-in fade-in slide-in-from-bottom-5"
+          data-lenis-prevent="true"
+          data-lenis-prevent-wheel="true"
+          data-lenis-prevent-touch="true"
+          onWheel={(e) => {
+            // Forward mouse wheel scrolling to messages if cursor is over header or footer (not textarea)
+            if (
+              messagesContainerRef.current &&
+              !messagesContainerRef.current.contains(e.target as Node) &&
+              e.target !== textareaRef.current
+            ) {
+              messagesContainerRef.current.scrollTop += e.deltaY;
+            }
+          }}
+          className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 flex flex-col w-[380px] sm:w-[420px] max-w-[calc(100vw-2rem)] h-[620px] max-h-[calc(100vh-5rem)] rounded-2xl shadow-2xl overflow-hidden border border-[rgba(30,90,84,0.18)] dark:border-[#292D32] bg-[#F8F4F2] dark:bg-[#15181C] text-[#1E5A54] dark:text-[#F5F1EA] transition-all duration-300 animate-in fade-in slide-in-from-bottom-5 overscroll-contain"
+          style={{ overscrollBehavior: 'contain' }}
         >
           {/* Header */}
           <div className="flex items-center justify-between px-4 py-3.5 bg-[#EEE6E2] dark:bg-[#101215] border-b border-[rgba(30,90,84,0.12)] dark:border-[#292D32] select-none">
             <div className="flex items-center gap-2.5">
-              <div className="relative flex items-center justify-center w-8 h-8 rounded-lg bg-[#1E5A54] dark:bg-[#FF642D] text-[#EEE6E2] dark:text-[#08090B]">
-                <Sparkles className="w-4 h-4" />
+              <div className="relative flex items-center justify-center w-8 h-8 rounded-full overflow-hidden border border-[#1E5A54]/20 dark:border-white/20 bg-white shadow-sm shrink-0">
+                <Image
+                  src="/logo.jpeg"
+                  alt="SBU TECH"
+                  width={32}
+                  height={32}
+                  className="h-full w-full object-cover"
+                  priority
+                />
               </div>
-              <div>
-                <div className="flex items-center gap-2">
-                  <h3 className="font-semibold text-sm tracking-wide text-[#1E5A54] dark:text-[#F5F1EA]">
-                    SBU TECH Assistant
-                  </h3>
-                  <span className="inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-medium rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                    Online
-                  </span>
-                </div>
-                <p className="text-[11px] text-[rgba(30,90,84,0.7)] dark:text-[#A9ADB3]">
-                  Verified Studio RAG Knowledge Base
-                </p>
+              <div className="flex items-center gap-2">
+                <h3 className="font-semibold text-sm tracking-wide text-[#1E5A54] dark:text-[#F5F1EA]">
+                  SBU TECH Assistant
+                </h3>
+                <span className="inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-medium rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                  Online
+                </span>
               </div>
             </div>
 
@@ -280,7 +299,14 @@ export default function ChatWidget() {
           </div>
 
           {/* Messages Scroll Area */}
-          <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4">
+          <div
+            ref={messagesContainerRef}
+            data-lenis-prevent="true"
+            data-lenis-prevent-wheel="true"
+            data-lenis-prevent-touch="true"
+            className="flex-1 overflow-y-auto px-4 py-4 space-y-4 overscroll-contain"
+            style={{ overscrollBehavior: 'contain' }}
+          >
             {messages.map((msg) => {
               const isUser = msg.role === 'user';
               const rtl = isRTLText(msg.content);
@@ -300,7 +326,7 @@ export default function ChatWidget() {
                         : 'bg-[#EEE6E2] dark:bg-[#1D2025] text-[#1E5A54] dark:text-[#F5F1EA] border border-[rgba(30,90,84,0.12)] dark:border-[#292D32] rounded-bl-none shadow-sm'
                     }`}
                   >
-                    {msg.content}
+                    {cleanMessageText(msg.content)}
 
                     {/* Copy Button for Assistant Responses */}
                     {!isUser && !msg.isError && (
@@ -309,7 +335,7 @@ export default function ChatWidget() {
                           {msg.timestamp}
                         </span>
                         <button
-                          onClick={() => handleCopy(msg.id, msg.content)}
+                          onClick={() => handleCopy(msg.id, cleanMessageText(msg.content))}
                           className="flex items-center gap-1 text-[11px] text-[rgba(30,90,84,0.7)] dark:text-[#A9ADB3] hover:text-[#1E5A54] dark:hover:text-[#F5F1EA] transition-colors"
                         >
                           {copiedId === msg.id ? (
@@ -327,44 +353,6 @@ export default function ChatWidget() {
                       </div>
                     )}
                   </div>
-
-                  {/* Verified Knowledge-Base Sources Accordion */}
-                  {!isUser && msg.sources && msg.sources.length > 0 && (
-                    <div className="w-[88%] mt-1">
-                      <button
-                        onClick={() => toggleSources(msg.id)}
-                        className="flex items-center gap-1 text-[11px] font-medium text-[#F7623D] dark:text-[#FF642D] hover:underline"
-                      >
-                        <FileText className="w-3 h-3" />
-                        <span>
-                          {expandedSources[msg.id] ? 'Hide' : 'View'} {msg.sources.length} Verified{' '}
-                          {msg.sources.length === 1 ? 'Source' : 'Sources'}
-                        </span>
-                        {expandedSources[msg.id] ? (
-                          <ChevronUp className="w-3 h-3" />
-                        ) : (
-                          <ChevronDown className="w-3 h-3" />
-                        )}
-                      </button>
-
-                      {expandedSources[msg.id] && (
-                        <div className="mt-1.5 p-2 rounded-lg bg-[#EEE6E2]/70 dark:bg-[#101215]/80 border border-[rgba(30,90,84,0.1)] dark:border-[#292D32] space-y-1.5 animate-in fade-in duration-200">
-                          {msg.sources.map((src, idx) => (
-                            <div
-                              key={idx}
-                              className="text-[11px] flex items-start gap-1.5 text-[rgba(30,90,84,0.85)] dark:text-[#A9ADB3]"
-                            >
-                              <span className="font-semibold text-[#1E5A54] dark:text-[#F5F1EA]">
-                                [{src.page_number ? `P.${src.page_number}` : 'Doc'}]
-                              </span>
-                              <span className="flex-1 truncate">{src.section_title}</span>
-                              <span className="text-[10px] opacity-75">({src.source_file})</span>
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  )}
 
                   {/* Retry Option on Error */}
                   {msg.isError && (
@@ -392,7 +380,7 @@ export default function ChatWidget() {
                     <span className="w-2 h-2 rounded-full bg-[#1E5A54] dark:bg-[#FF642D] animate-bounce [animation-delay:-0.15s]" />
                     <span className="w-2 h-2 rounded-full bg-[#1E5A54] dark:bg-[#FF642D] animate-bounce" />
                     <span className="text-xs text-[rgba(30,90,84,0.7)] dark:text-[#A9ADB3] ml-1.5">
-                      Consulting knowledge base...
+                      Replying...
                     </span>
                   </div>
                 </div>

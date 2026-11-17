@@ -731,7 +731,8 @@ export default function LoginPage() {
             className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-[#1E5A54]/25 bg-[#F8F4F2] hover:border-[#F7623D] hover:text-[#F7623D] transition-colors text-[11px] font-mono tracking-wider"
           >
             <Shield className="w-3.5 h-3.5 text-[#F7623D]" />
-            <span>Admin Portal →</span>
+            <span>Admin Portal</span>
+            <ArrowRight className="w-3 h-3" />
           </Link>
         </div>
 

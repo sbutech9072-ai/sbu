@@ -6,7 +6,7 @@ import {
   Package,
   Layers,
   ArrowRight,
-  Sparkles,
+  Cpu,
 } from 'lucide-react';
 import { servicesData } from '@/data/services';
 import { PageHeader } from '@/components/shared/page-header';
@@ -81,7 +81,7 @@ export default function ServiceDetailPage({ params }: ServicePageProps) {
             {/* Core Capabilities */}
             <div className="space-y-6">
               <h2 className="font-headline text-2xl md:text-3xl uppercase text-[#1E5A54] tracking-tight flex items-center gap-2.5">
-                <Sparkles className="h-5 w-5 text-[#F7623D]" />
+                <Cpu className="h-5 w-5 text-[#F7623D]" />
                 <span>
                   Core Architectural{' '}
                   <span className="relative inline-block">

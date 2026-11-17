@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { AlertCircle, ArrowLeft, Loader2 } from 'lucide-react';
+import { AlertCircle, ArrowLeft, ArrowRight, Loader2 } from 'lucide-react';
 import { Logo } from '@/components/shared/logo';
 import { ClientWorkspaceCard } from '@/components/shared/client-workspace-card';
 
@@ -146,7 +146,8 @@ export default function ClientWorkspacePage() {
             href="/admin/login"
             className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-[#1E5A54]/25 bg-[#F8F4F2] hover:border-[#F7623D] hover:text-[#F7623D] transition-colors text-[11px] font-mono tracking-wider"
           >
-            Admin Portal →
+            <span>Admin Portal</span>
+            <ArrowRight className="w-3 h-3" />
           </Link>
         </div>
 

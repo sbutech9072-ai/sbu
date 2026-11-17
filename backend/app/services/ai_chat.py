@@ -12,10 +12,12 @@ from pathlib import Path
 from typing import Dict, Any, List, Optional
 from sqlalchemy.orm import Session
 
-# Ensure root workspace is accessible for importing the centralized `ai` package
-PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent.parent
-if str(PROJECT_ROOT) not in sys.path:
-    sys.path.insert(0, str(PROJECT_ROOT))
+# Ensure local `backend/ai` (or repo-root `ai` fallback) is accessible on sys.path
+BACKEND_DIR = Path(__file__).resolve().parent.parent.parent
+PROJECT_ROOT = BACKEND_DIR.parent
+_ai_parent = BACKEND_DIR if (BACKEND_DIR / "ai").is_dir() else PROJECT_ROOT
+if str(_ai_parent) not in sys.path:
+    sys.path.insert(0, str(_ai_parent))
 
 from ai.config.settings import settings as ai_settings
 from ai.llm import generate_grounded_answer, GroundedResponse, AgentRouterClient

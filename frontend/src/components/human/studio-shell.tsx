@@ -38,6 +38,15 @@ export function StudioShell({ children }: StudioShellProps) {
         duration: 1.05,
         easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         smoothWheel: true,
+        prevent: (node) => {
+          return (
+            node.hasAttribute('data-lenis-prevent') ||
+            node.hasAttribute('data-lenis-prevent-wheel') ||
+            Boolean(node.closest?.('[data-lenis-prevent]')) ||
+            Boolean(node.closest?.('[data-lenis-prevent-wheel]')) ||
+            Boolean(node.closest?.('[role="dialog"]'))
+          );
+        },
       });
 
       const raf = (time: number) => {

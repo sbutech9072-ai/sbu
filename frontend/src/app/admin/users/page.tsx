@@ -476,7 +476,7 @@ export default function AdminUsersPage() {
                         <td className="py-3 px-4 whitespace-nowrap">
                           {u.online_now ? (
                             <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-700">
-                              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                              <span className="w-2 h-2 rounded-full bg-emerald-500" />
                               Online
                             </span>
                           ) : (

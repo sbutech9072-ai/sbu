@@ -5,7 +5,6 @@ import { ServicesOverview } from '@/components/sections/services-overview';
 import { FeaturedProjects } from '@/components/sections/featured-projects';
 import { WhyChooseUs } from '@/components/sections/why-choose-us';
 import { DevelopmentProcess } from '@/components/sections/development-process';
-import { Technologies } from '@/components/sections/technologies';
 import { TeamOverview } from '@/components/sections/team-overview';
 import { TestimonialsSection } from '@/components/sections/testimonials-section';
 import { CTASection } from '@/components/sections/cta-section';
@@ -33,7 +32,6 @@ export default function HomePage() {
       <FeaturedProjects />
       <WhyChooseUs />
       <DevelopmentProcess />
-      <Technologies />
       <TeamOverview />
       <TestimonialsSection />
       <CTASection />

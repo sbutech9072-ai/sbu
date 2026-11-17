@@ -73,54 +73,23 @@ export function extractAndValidateCitations(
   }
 
   const verifiedSources: SourceCitation[] = [];
-  const seenChunkIds = new Set<string>();
 
-  // Regex to match citation tags: [sbu_tech_kb_v1_p2_c006] or [Chunk 1] etc.
-  const citationRegex = /\[(sbu_tech_kb_[a-z0-9_]+|chunk\s*\d+)\]/gi;
+  // Strip all citation tags, chunk IDs, and bracketed labels
+  const citationRegex = /\[\s*(?:sbu_tech_kb_[a-z0-9_]+|chunk[\s_]*\d+[^\]]*|p\d+_c\d+[^\]]*)\]/gi;
+  cleaned = cleaned.replace(citationRegex, '');
 
-  cleaned = cleaned.replace(citationRegex, (match, rawId) => {
-    const normalized = rawId.trim().toLowerCase();
-    const matchedChunk = validChunkMap.get(normalized);
+  // Strip any other knowledge base citation brackets like [sbu_...]
+  cleaned = cleaned.replace(/\[\s*sbu_[^\]]+\]/gi, '');
 
-    if (matchedChunk) {
-      if (!seenChunkIds.has(matchedChunk.chunk_id)) {
-        seenChunkIds.add(matchedChunk.chunk_id);
-        verifiedSources.push({
-          chunk_id: matchedChunk.chunk_id,
-          source_file: matchedChunk.metadata?.source_file || 'SBU_TECH.pdf',
-          page_number: matchedChunk.page_number,
-          section_title: matchedChunk.title || undefined,
-          similarity_score: Math.round((matchedChunk.similarity || 0) * 100) / 100,
-          preview: (matchedChunk.content || '').slice(0, 160).trim() + '...',
-        });
-      }
-      return `[${matchedChunk.chunk_id}]`;
-    }
-
-    // Strip hallucinated or unverified citation marker
-    return '';
-  });
-
-  // If no inline citations were used but chunks were retrieved and answer is grounded, include top 2 sources
-  if (verifiedSources.length === 0 && candidateChunks.length > 0) {
-    for (const chunk of candidateChunks.slice(0, 2)) {
-      if (!seenChunkIds.has(chunk.chunk_id)) {
-        seenChunkIds.add(chunk.chunk_id);
-        verifiedSources.push({
-          chunk_id: chunk.chunk_id,
-          source_file: chunk.metadata?.source_file || 'SBU_TECH.pdf',
-          page_number: chunk.page_number,
-          section_title: chunk.title || undefined,
-          similarity_score: Math.round((chunk.similarity || 0) * 100) / 100,
-          preview: (chunk.content || '').slice(0, 160).trim() + '...',
-        });
-      }
-    }
-  }
+  // Clean up any extra spacing before punctuation created by stripped citations
+  cleaned = cleaned
+    .replace(/\s+([.,!?;:])/g, '$1')
+    .replace(/[ \t]{2,}/g, ' ')
+    .trim();
 
   return {
-    cleanedAnswer: cleaned.trim(),
-    verifiedSources,
+    cleanedAnswer: cleaned,
+    verifiedSources: [],
   };
 }
 

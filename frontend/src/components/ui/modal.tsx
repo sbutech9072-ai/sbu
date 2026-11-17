@@ -59,8 +59,12 @@ export function Modal({
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-title"
+        data-lenis-prevent="true"
+        data-lenis-prevent-wheel="true"
+        data-lenis-prevent-touch="true"
+        style={{ overscrollBehavior: 'contain' }}
         className={cn(
-          'relative z-10 max-h-[90vh] w-full overflow-y-auto rounded-2xl border border-[#1E5A54]/25 bg-[#F8F4F2] p-6 text-[#1E5A54] shadow-[8px_8px_0px_rgba(30,90,84,0.22)] transition-all duration-200',
+          'relative z-10 max-h-[90vh] w-full overflow-y-auto overscroll-contain rounded-2xl border border-[#1E5A54]/25 bg-[#F8F4F2] p-6 text-[#1E5A54] shadow-[8px_8px_0px_rgba(30,90,84,0.22)] transition-all duration-200',
           maxWidthClasses
         )}
       >
