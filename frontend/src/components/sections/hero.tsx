@@ -112,7 +112,7 @@ export function Hero() {
             >
               {/* Top Index Marker */}
               <div className="flex items-center justify-between text-[11px] font-mono text-[#1E5A54]/50 dark:text-[#A9ADB3]/60 mb-3 select-none">
-                <span>// 0{idx + 1}</span>
+                <span>{'// '}0{idx + 1}</span>
                 <span className="h-1.5 w-1.5 rounded-full bg-[#F7623D] dark:bg-[#FF642D] opacity-40 group-hover:opacity-100 transition-opacity" />
               </div>
 
