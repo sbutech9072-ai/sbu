@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import { PageHeader } from '@/components/shared/page-header';
 import { siteConfig } from '@/config/site';
-import { StudioStamp } from '@/components/human/hand-crafted-svg';
 
 export const metadata: Metadata = {
   title: 'Privacy Policy & Terms of Service',
@@ -20,16 +19,9 @@ export default function PrivacyPolicyPage() {
       />
 
       <div className="site-container-narrow">
-        <div className="p-8 md:p-12 rounded-3xl border border-[#1E5A54]/25 bg-[#F8F4F2] space-y-8 text-sm text-[#1E5A54] leading-relaxed">
-          <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[#1E5A54]/20 pb-4">
-            <span className="font-mono text-xs uppercase tracking-wider text-[#1E5A54]">
-              Document Ref // LEGAL-PRIVACY-2026
-            </span>
-            <StudioStamp text="PLAIN LANGUAGE PRIVACY" rotate="slight-left" variant="teal" />
-          </div>
-
+        <div className="p-8 md:p-12 rounded-2xl border border-[#1E5A54]/20 bg-[#F8F4F2] space-y-8 text-sm text-[#1E5A54] leading-relaxed">
           <section className="space-y-3">
-            <h2 className="font-headline text-2xl uppercase text-[#1E5A54]">
+            <h2 className="font-headline text-2xl font-bold text-[#1E5A54]">
               1. Information We Collect
             </h2>
             <p>

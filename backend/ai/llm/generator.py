@@ -269,7 +269,7 @@ class RAGAnswerGenerator:
             f"<retrieved_context>\n{context_text}\n</retrieved_context>\n\n"
             f"User Question: {clean_question}\n\n"
             f"Please respond in the visitor's language ({detected_lang}). "
-            f"Ground every claim strictly in the context above and cite the chunk IDs [chunk_id]."
+            f"Ground every claim strictly in the context above. Do not include any bracketed chunk IDs or citation tags in your reply."
         )
 
         messages: List[Dict[str, str]] = [

@@ -69,7 +69,7 @@ const config: Config = {
         ring: '#1E5A54',
       },
       fontFamily: {
-        headline: ['var(--font-anton)', 'Anton', 'Impact', 'League Gothic', 'Bebas Neue', 'sans-serif'],
+        headline: ['var(--font-display)', 'Plus Jakarta Sans', 'Inter', 'system-ui', 'sans-serif'],
         sans: ['var(--font-sans)', 'Inter', 'system-ui', 'sans-serif'],
       },
       letterSpacing: {

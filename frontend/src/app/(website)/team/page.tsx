@@ -5,8 +5,6 @@ import { PageHeader } from '@/components/shared/page-header';
 import { teamData } from '@/data/team';
 import { TeamList } from '@/features/team/team-list';
 import { Button } from '@/components/ui/button';
-import { StudioStamp, HandArrow } from '@/components/human/hand-crafted-svg';
-import { TiltCard } from '@/components/human/tilt-card';
 
 export const metadata: Metadata = {
   title: 'Our Engineering & Design Team',
@@ -18,8 +16,7 @@ export default function TeamPage() {
   return (
     <div className="space-y-20 pb-24 bg-[#EEE6E2] text-[#1E5A54]">
       <PageHeader
-        badge="The Builders"
-        title="The Engineers Who Actually Write Your Code"
+        title="The engineers who write your code"
         description="We do not pitch with principals and staff with juniors. Meet the architects, open-source maintainers, and product designers who run our engagements."
         breadcrumbs={[{ label: 'Our Team' }]}
       />
@@ -27,33 +24,28 @@ export default function TeamPage() {
       <div className="site-container space-y-20">
         <TeamList initialMembers={teamData} />
 
-        {/* Culture / Hiring Callout */}
-        <TiltCard className="p-8 md:p-12 rounded-3xl border border-[#1E5A54]/25 bg-[#F8F4F2] flex flex-col md:flex-row items-center justify-between gap-8">
-          <div className="space-y-3 text-center md:text-left max-w-xl">
-            <StudioStamp
-              text="CAREERS // SAN FRANCISCO & REMOTE"
-              rotate="slight-left"
-              variant="orange"
-            />
-            <h3 className="font-headline text-2xl md:text-4xl uppercase text-[#1E5A54] tracking-tight pt-1">
-              Care About Clean Schemas and Fast Builds?
+        {/* Hiring Callout */}
+        <div className="p-8 md:p-12 rounded-2xl border border-[#1E5A54]/20 bg-[#F8F4F2] flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+          <div className="space-y-2 max-w-xl">
+            <span className="text-xs font-semibold text-[#F7623D]">
+              Careers &middot; San Francisco &amp; Remote
+            </span>
+            <h3 className="font-headline text-2xl md:text-3xl font-bold text-[#1E5A54]">
+              Care about clean schemas and fast builds?
             </h3>
-            <p className="text-sm text-[#1E5A54] leading-relaxed">
+            <p className="text-sm text-[#1E5A54]/80 leading-relaxed">
               We hire senior full-stack engineers, Kubernetes operators, and product designers who
               prefer shipping working code over sitting in status meetings.
             </p>
           </div>
 
-          <div className="flex items-center gap-4 shrink-0">
-            <HandArrow direction="right" className="hidden md:block" />
-            <Button asChild size="lg" className="shrink-0 gap-2 rounded-full">
-              <Link href="/contact">
-                <span>Send Your GitHub</span>
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            </Button>
-          </div>
-        </TiltCard>
+          <Button asChild size="lg" className="shrink-0 gap-2">
+            <Link href="/contact">
+              <span>Send your GitHub</span>
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </Button>
+        </div>
       </div>
     </div>
   );

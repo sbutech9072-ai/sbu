@@ -210,12 +210,10 @@ export function Navbar() {
             <MagneticWrap>
               <Link
                 href="/contact"
-                className="group flex items-center gap-2.5 sm:gap-3 rounded-full border border-[#1E5A54] bg-[#F8F4F2] pl-4 sm:pl-5 pr-1.5 py-1.5 text-xs font-bold uppercase tracking-[0.16em] text-[#1E5A54] hover:bg-[#1E5A54] hover:text-[#EEE6E2] transition-all shadow-sm"
+                className="inline-flex items-center gap-2 rounded-lg bg-[#1E5A54] hover:bg-[#16443F] px-4 py-2 text-xs font-semibold text-[#EEE6E2] transition-colors"
               >
                 <span>Contact Us</span>
-                <span className="w-6 h-6 rounded-full bg-[#F7623D] text-white flex items-center justify-center transition-transform group-hover:scale-110">
-                  <ArrowUpRight className="h-3.5 w-3.5 stroke-2" />
-                </span>
+                <ArrowUpRight className="h-3.5 w-3.5 stroke-2" />
               </Link>
             </MagneticWrap>
           </div>

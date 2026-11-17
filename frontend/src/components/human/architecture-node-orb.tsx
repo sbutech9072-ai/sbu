@@ -3,7 +3,6 @@
 import * as React from 'react';
 import dynamic from 'next/dynamic';
 import { cn } from '@/lib/utils';
-import { StudioStamp } from './hand-crafted-svg';
 
 export interface ArchitectureNodeOrbProps {
   variant?: 'hero' | 'compact';
@@ -139,28 +138,6 @@ function OrbBlueprintFallback({ variant = 'hero' }: { variant?: 'hero' | 'compac
         <circle cx="64" cy="248" r="5" fill="#F7623D" />
         <circle cx="64" cy="112" r="4.5" fill="#1E5A54" />
         <circle cx="180" cy="180" r="5.5" fill="#F7623D" stroke="#EEE6E2" strokeWidth="1.5" />
-
-        {/* Blueprint Callout Labels */}
-        <text
-          x="192"
-          y="40"
-          fill="#1E5A54"
-          fontSize="8"
-          fontFamily="monospace"
-          letterSpacing="1.4"
-        >
-          N-01 // EDGE GATEWAY
-        </text>
-        <text
-          x="234"
-          y="302"
-          fill="#F7623D"
-          fontSize="8"
-          fontFamily="monospace"
-          letterSpacing="1.4"
-        >
-          SYNC: 99.98%
-        </text>
       </svg>
     </div>
   );
@@ -184,11 +161,6 @@ export function ArchitectureNodeOrb({
     setViewMode('blueprint');
   }, []);
   const [viewMode, setViewMode] = React.useState<'3d' | 'blueprint'>('3d');
-  const [telemetry, setTelemetry] = React.useState({
-    rx: '14.2',
-    ry: '42.8',
-    nodes: 12,
-  });
 
   React.useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -217,41 +189,26 @@ export function ArchitectureNodeOrb({
   return (
     <div
       className={cn(
-        'relative flex flex-col justify-between rounded-2xl border border-[#1E5A54]/20 bg-[#F8F4F2] p-4 sm:p-5 overflow-hidden',
+        'relative flex flex-col justify-between rounded-2xl border border-[#1E5A54]/15 bg-[#F8F4F2] p-4 sm:p-5 overflow-hidden',
         variant === 'hero'
           ? 'min-h-[360px] sm:min-h-[430px]'
           : 'min-h-[260px] sm:min-h-[290px]',
         className
       )}
     >
-      {/* Top Studio HUD Header */}
-      <div className="relative z-10 flex flex-wrap items-center justify-between gap-2 border-b border-[#1E5A54]/15 pb-3">
-        <StudioStamp
-          text="NODE TOPOLOGY // REV 4.2"
-          subtext="DISTRIBUTED MESH CORE"
-          rotate="slight-left"
-          variant="teal"
-        />
-
-        <div className="flex items-center gap-1.5">
-          <button
-            type="button"
-            onClick={() =>
-              setViewMode((prev) => (prev === '3d' && canRenderWebGL ? 'blueprint' : '3d'))
-            }
-            disabled={!canRenderWebGL}
-            className="inline-flex items-center gap-1.5 rounded-full border border-[#1E5A54]/25 bg-[#EEE6E2] px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-[#1E5A54] transition-colors duration-200 hover:border-[#F7623D] hover:text-[#F7623D] disabled:opacity-60"
-            aria-label="Toggle between 3D live mesh and static architectural blueprint"
-          >
-            <span
-              className={cn(
-                'h-1.5 w-1.5 rounded-full',
-                showWebGL ? 'bg-[#F7623D]' : 'bg-[#1E5A54]'
-              )}
-            />
-            <span>{showWebGL ? '3D LIVE' : 'BLUEPRINT'}</span>
-          </button>
-        </div>
+      {/* Subtle View Switch */}
+      <div className="relative z-10 flex items-center justify-end">
+        <button
+          type="button"
+          onClick={() =>
+            setViewMode((prev) => (prev === '3d' && canRenderWebGL ? 'blueprint' : '3d'))
+          }
+          disabled={!canRenderWebGL}
+          className="inline-flex items-center gap-1.5 rounded-md border border-[#1E5A54]/20 bg-[#EEE6E2]/80 px-2.5 py-1 text-[11px] font-medium text-[#1E5A54]/80 transition-colors hover:border-[#1E5A54]/40 hover:text-[#1E5A54] disabled:opacity-50"
+          aria-label="Toggle between interactive 3D view and static diagram"
+        >
+          {showWebGL ? 'Schematic view' : '3D view'}
+        </button>
       </div>
 
       {/* Center Stage (WebGL or Static SVG Fallback) */}
@@ -259,7 +216,7 @@ export function ArchitectureNodeOrb({
         className={cn(
           'relative w-full flex-1 flex items-center justify-center my-2',
           variant === 'hero'
-            ? 'h-[280px] sm:h-[330px] lg:h-[340px]'
+            ? 'h-[300px] sm:h-[360px] lg:h-[370px]'
             : 'h-[220px] sm:h-[250px]'
         )}
       >
@@ -268,28 +225,11 @@ export function ArchitectureNodeOrb({
             <LazyArchitectureOrbCanvas
               variant={variant}
               onWebGLError={handleWebGLError}
-              onTelemetryUpdate={setTelemetry}
             />
           </div>
         ) : (
           <OrbBlueprintFallback variant={variant} />
         )}
-      </div>
-
-      {/* Bottom Studio Telemetry Strip */}
-      <div className="relative z-10 flex flex-wrap items-center justify-between gap-2 border-t border-[#1E5A54]/15 pt-3 font-mono text-[10px] uppercase tracking-[0.15em] text-[#1E5A54]">
-        <div className="flex items-center gap-3">
-          <span>
-            PITCH: <strong className="text-[#1E5A54]">{telemetry.rx} DEG</strong>
-          </span>
-          <span>
-            YAW: <strong className="text-[#1E5A54]">{telemetry.ry} DEG</strong>
-          </span>
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#F7623D]" />
-          <span>{telemetry.nodes} ACTIVE NODES // 60HZ</span>
-        </div>
       </div>
     </div>
   );

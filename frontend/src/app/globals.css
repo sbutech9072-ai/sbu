@@ -10,7 +10,7 @@
   --cream-dark: #E2D7D1;
   --teal: #1E5A54;
   --orange: #F7623D;
-  --font-anton: 'Anton', Impact, 'League Gothic', sans-serif;
+  --font-display: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
   --font-sans: 'Inter', system-ui, sans-serif;
   --ease-studio: cubic-bezier(0.22, 1, 0.36, 1);
 
@@ -68,24 +68,21 @@
     overflow-x: hidden;
     position: relative;
     line-height: 1.65;
-    letter-spacing: 0.01em;
+    caret-color: #F7623D;
   }
 
-  /* Display / Headings: ultra-condensed, heavy, UPPERCASE grotesque
-     IMPORTANT: Anton is a 400-weight display face. Setting font-weight: 400 !important
-     prevents browser synthetic faux-bold from bloating and jamming letterforms together. */
+  /* Display & Headings: crisp geometric sans with tight editorial tracking */
   h1, h2, h3, h4, h5, h6, .font-headline {
-    font-family: var(--font-anton), 'Anton', Impact, 'League Gothic', sans-serif;
-    font-weight: 400 !important;
-    text-transform: uppercase;
-    letter-spacing: 0.04em !important;
-    word-spacing: 0.08em !important;
-    line-height: 1.15 !important;
+    font-family: var(--font-display), 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.15;
+    text-wrap: balance;
   }
 
   p {
-    line-height: 1.7;
-    letter-spacing: 0.01em;
+    line-height: 1.65;
+    text-wrap: pretty;
   }
 }
 
@@ -143,7 +140,7 @@
   }
 }
 
-/* Subtle paper-grain texture overlay (about 4-6% opacity, fixed, pointer-events: none) */
+/* Subtle paper-grain texture overlay */
 body::before {
   content: "";
   position: fixed;
@@ -152,7 +149,7 @@ body::before {
   height: 100%;
   pointer-events: none;
   z-index: 9999;
-  opacity: 0.05;
+  opacity: 0.02;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 

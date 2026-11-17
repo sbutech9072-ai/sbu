@@ -376,9 +376,9 @@ export default function ChatWidget() {
               <div className="flex items-start space-y-1">
                 <div className="bg-[#EEE6E2] dark:bg-[#1D2025] border border-[rgba(30,90,84,0.12)] dark:border-[#292D32] rounded-2xl rounded-bl-none px-4 py-3 shadow-sm">
                   <div className="flex items-center gap-1.5">
-                    <span className="w-2 h-2 rounded-full bg-[#1E5A54] dark:bg-[#FF642D] animate-bounce [animation-delay:-0.3s]" />
-                    <span className="w-2 h-2 rounded-full bg-[#1E5A54] dark:bg-[#FF642D] animate-bounce [animation-delay:-0.15s]" />
-                    <span className="w-2 h-2 rounded-full bg-[#1E5A54] dark:bg-[#FF642D] animate-bounce" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#1E5A54] dark:bg-[#FF642D] animate-pulse [animation-delay:-0.3s]" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#1E5A54] dark:bg-[#FF642D] animate-pulse [animation-delay:-0.15s]" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#1E5A54] dark:bg-[#FF642D] animate-pulse" />
                     <span className="text-xs text-[rgba(30,90,84,0.7)] dark:text-[#A9ADB3] ml-1.5">
                       Replying...
                     </span>

@@ -139,17 +139,8 @@ class AIChatService:
                 request_id=request_id,
             )
 
-        # 4. Map sources
+        # 4. Map sources (empty to keep client response clean without citations)
         sources_list: List[SourceCitation] = []
-        for src in rag_result.sources:
-            sources_list.append(
-                SourceCitation(
-                    chunk_id=src.get("chunk_id", "kb_ref"),
-                    source_file=src.get("source_file", "SBU_TECH.pdf"),
-                    page_number=src.get("page_number", 1),
-                    section_title=src.get("section_title", "Document Section"),
-                )
-            )
 
         # 5. Persist turns in database
         try:

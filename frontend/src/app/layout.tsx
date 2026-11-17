@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Anton, Inter } from 'next/font/google';
+import { Plus_Jakarta_Sans, Inter } from 'next/font/google';
 import { siteConfig } from '@/config/site';
 import { ThemeProvider } from '@/context/theme-context';
 import ChatWidget from '@/components/ai/chat-widget';
@@ -7,10 +7,10 @@ import PageViewTracker from '@/components/analytics/page-view-tracker';
 import ActivityTracker from '@/components/analytics/activity-tracker';
 import './globals.css';
 
-const anton = Anton({
-  weight: '400',
+const plusJakarta = Plus_Jakarta_Sans({
+  weight: ['500', '600', '700', '800'],
   subsets: ['latin'],
-  variable: '--font-anton',
+  variable: '--font-display',
   display: 'swap',
 });
 
@@ -76,7 +76,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${anton.variable} ${inter.variable} scroll-smooth`}>
+    <html lang="en" suppressHydrationWarning className={`${plusJakarta.variable} ${inter.variable} scroll-smooth`}>
       <body className="min-h-screen bg-[#EEE6E2] text-[#1E5A54] font-sans antialiased selection:bg-[#F7623D] selection:text-[#EEE6E2]">
         <script
           dangerouslySetInnerHTML={{

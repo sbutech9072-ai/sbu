@@ -101,13 +101,17 @@ class AnswerValidator:
                         "section_title": chunk.get("section_title", "Document Section"),
                     })
 
-        # Strip hallucinated citation tags from the text
-        cleaned_answer = answer_text
-        for bad_cid in hallucinated_citations:
-            logger.warning("Stripping hallucinated citation ID: %s", bad_cid)
-            cleaned_answer = cleaned_answer.replace(f"[{bad_cid}]", "")
+        # Strip all citation tags and bracketed chunk IDs from the text
+        cleaned_answer = CITATION_REGEX.sub("", answer_text)
+        cleaned_answer = re.sub(r"\[\s*sbu_tech_kb_[^\]]+\]", "", cleaned_answer, flags=re.IGNORECASE)
+        cleaned_answer = re.sub(r"\[\s*sbu_[^\]]+\]", "", cleaned_answer, flags=re.IGNORECASE)
+        cleaned_answer = re.sub(r"\[\s*chunk[\s_]*\d+[^\]]*\]", "", cleaned_answer, flags=re.IGNORECASE)
+        cleaned_answer = re.sub(r"\[\s*p\d+_c\d+[^\]]*\]", "", cleaned_answer, flags=re.IGNORECASE)
+        # Clean up any spacing before punctuation
+        cleaned_answer = re.sub(r"\s+([.,!?;:])", r"\1", cleaned_answer)
+        cleaned_answer = re.sub(r"[ \t]{2,}", " ", cleaned_answer).strip()
 
-        return validated_sources, hallucinated_citations, cleaned_answer.strip()
+        return validated_sources, hallucinated_citations, cleaned_answer
 
     def is_abstention_response(self, text: str) -> bool:
         """
