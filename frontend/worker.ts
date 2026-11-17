@@ -2227,38 +2227,71 @@ export default {
     // GENERIC /api/* PROXY FALLBACK (to FastAPI if configured)
     // ============================================================================
     if (url.pathname === '/api' || url.pathname.startsWith('/api/')) {
-      const backendBase =
+      const backendBase = (
         env?.BACKEND_URL ||
         env?.FASTAPI_BACKEND_URL ||
         env?.INTERNAL_API_URL ||
         process.env.BACKEND_URL ||
         process.env.FASTAPI_BACKEND_URL ||
-        process.env.INTERNAL_API_URL;
+        process.env.INTERNAL_API_URL ||
+        ''
+      ).trim();
 
-      if (backendBase) {
-        const backendUrl = new URL(backendBase);
-        if (backendUrl.hostname.endsWith('.trycloudflare.com')) {
-          return new Response(
-            JSON.stringify({ error: 'The configured API backend uses an unsupported temporary Cloudflare tunnel.' }),
-            {
-              status: 503,
-              headers: {
-                'Content-Type': 'application/json',
-                'Cache-Control': 'no-store',
-              },
-            }
-          );
-        }
+      if (!backendBase) {
+        return jsonResponse(
+          {
+            success: false,
+            message: 'Backend API service is not configured on this worker (set BACKEND_URL).',
+            error: 'Backend API service is not configured on this worker (set BACKEND_URL).',
+          },
+          503
+        );
+      }
 
-        const targetUrl = new URL(url.pathname + url.search, backendUrl);
-        const headers = new Headers(request.headers);
-        headers.set('host', backendUrl.host);
-        return fetch(targetUrl.toString(), {
+      let backendUrl: URL;
+      try {
+        backendUrl = new URL(backendBase);
+      } catch {
+        return jsonResponse(
+          {
+            success: false,
+            message: 'The configured API backend URL is invalid.',
+            error: 'The configured API backend URL is invalid.',
+          },
+          503
+        );
+      }
+
+      if (backendUrl.hostname.endsWith('.trycloudflare.com')) {
+        return jsonResponse(
+          {
+            success: false,
+            message: 'The configured API backend uses an unsupported temporary Cloudflare tunnel.',
+            error: 'The configured API backend uses an unsupported temporary Cloudflare tunnel.',
+          },
+          503
+        );
+      }
+
+      const targetUrl = new URL(url.pathname + url.search, backendUrl);
+      const headers = new Headers(request.headers);
+      headers.set('host', backendUrl.host);
+      try {
+        return await fetch(targetUrl.toString(), {
           method: request.method,
           headers,
-          body: request.body,
+          body: request.method === 'GET' || request.method === 'HEAD' ? undefined : request.body,
           redirect: 'follow',
         });
+      } catch {
+        return jsonResponse(
+          {
+            success: false,
+            message: 'Unable to reach the backend API service. Please try again later.',
+            error: 'Unable to reach the backend API service.',
+          },
+          502
+        );
       }
     }
 

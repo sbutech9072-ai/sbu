@@ -85,7 +85,9 @@ class Settings(BaseSettings):
     @field_validator("SMTP_PORT", mode="before")
     @classmethod
     def empty_smtp_port_is_unset(cls, value):
-        return None if value == "" else value
+        if isinstance(value, str) and not value.strip():
+            return None
+        return value
 
     # AI / RAG Architecture
     AI_ENABLED: bool = True

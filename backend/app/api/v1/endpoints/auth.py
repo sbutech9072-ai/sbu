@@ -58,6 +58,7 @@ def send_signup_otp(
             "<p>This code expires in 5 minutes.</p>"
         ),
     ):
+        OTPService.discard_latest_unused(db, email, OTPPurpose.SIGNUP)
         raise HTTPException(
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
             detail="Unable to send the verification email. Please try again later.",

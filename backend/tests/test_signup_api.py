@@ -161,6 +161,12 @@ class SignupOTPAPITests(unittest.TestCase):
         self.assertEqual(response.status_code, 503)
         with self.session_factory() as db:
             self.assertIsNone(db.query(User).filter_by(email="new@example.com").first())
+            self.assertEqual(db.query(OTPVerification).count(), 0)
+
+        self.send_email.return_value = True
+        retry_response, code = self._send_otp()
+        self.assertEqual(retry_response.status_code, 200)
+        self.assertIsNotNone(code)
 
 
 if __name__ == "__main__":

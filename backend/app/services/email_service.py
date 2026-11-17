@@ -18,17 +18,23 @@ class EmailService:
         html_body: str = "",
     ) -> bool:
         """Send a plain-text, HTML, or multipart email using the configured SMTP server."""
+        smtp_host = settings.SMTP_HOST.strip()
+        smtp_user = settings.SMTP_USER.strip()
+        from_email = (settings.EMAILS_FROM_EMAIL or smtp_user).strip()
+        from_name = (settings.EMAILS_FROM_NAME or "Sbu Tech Dispatch").strip()
         security = settings.SMTP_SECURITY.strip().lower()
-        if not settings.SMTP_HOST or not settings.SMTP_PORT:
+        if not smtp_host or not settings.SMTP_PORT:
             logger.error("SMTP email is not configured: SMTP_HOST and SMTP_PORT are required")
             return False
+        if not security:
+            security = "ssl" if settings.SMTP_PORT == 465 else "starttls"
         if security not in {"starttls", "ssl"}:
             logger.error("SMTP email is not configured: SMTP_SECURITY must be starttls or ssl")
             return False
-        if not settings.SMTP_USER or "@" not in settings.SMTP_USER:
+        if not smtp_user or "@" not in smtp_user:
             logger.error("SMTP email is not configured: SMTP_USER must be a full email address")
             return False
-        if not settings.SMTP_PASSWORD or not settings.EMAILS_FROM_EMAIL:
+        if not settings.SMTP_PASSWORD or not from_email:
             logger.error("SMTP email is not configured: SMTP_PASSWORD and EMAILS_FROM_EMAIL are required")
             return False
         if not recipient or not (text_body or html_body):
@@ -36,7 +42,7 @@ class EmailService:
             return False
 
         message = EmailMessage()
-        message["From"] = f"{settings.EMAILS_FROM_NAME} <{settings.EMAILS_FROM_EMAIL}>"
+        message["From"] = f"{from_name} <{from_email}>"
         message["To"] = recipient
         message["Subject"] = subject
         if text_body:
@@ -50,18 +56,23 @@ class EmailService:
         try:
             if security == "ssl":
                 server_context = smtplib.SMTP_SSL(
-                    settings.SMTP_HOST,
+                    smtp_host,
                     settings.SMTP_PORT,
                     context=tls_context,
+                    timeout=15,
                 )
             else:
-                server_context = smtplib.SMTP(settings.SMTP_HOST, settings.SMTP_PORT)
+                server_context = smtplib.SMTP(
+                    smtp_host,
+                    settings.SMTP_PORT,
+                    timeout=15,
+                )
 
             with server_context as server:
                 if security == "starttls":
                     server.starttls(context=tls_context)
                     server.ehlo()
-                server.login(settings.SMTP_USER, settings.SMTP_PASSWORD)
+                server.login(smtp_user, settings.SMTP_PASSWORD)
                 server.send_message(message)
 
             logger.info("Email accepted by SMTP server for %s", recipient)

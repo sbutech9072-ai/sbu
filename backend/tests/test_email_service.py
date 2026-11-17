@@ -55,7 +55,7 @@ class EmailServiceTests(unittest.TestCase):
             )
 
         self.assertTrue(sent)
-        smtp.assert_called_once_with("smtp.example.test", 587)
+        smtp.assert_called_once_with("smtp.example.test", 587, timeout=15)
         server.starttls.assert_called_once()
         server.login.assert_called_once_with("mailer@example.test", "test-secret")
         message = server.send_message.call_args.args[0]
@@ -108,6 +108,25 @@ class EmailServiceTests(unittest.TestCase):
             )
 
         smtp.assert_not_called()
+
+    def test_infers_security_and_from_email_when_omitted(self):
+        settings.SMTP_SECURITY = ""
+        settings.EMAILS_FROM_EMAIL = ""
+        settings.SMTP_PORT = 465
+        server = MagicMock()
+        server.__enter__.return_value = server
+
+        with patch("app.services.email_service.smtplib.SMTP_SSL", return_value=server) as smtp_ssl:
+            sent = EmailService.send_email(
+                subject="Test",
+                recipient="recipient@example.test",
+                text_body="Plain body",
+            )
+
+        self.assertTrue(sent)
+        smtp_ssl.assert_called_once()
+        message = server.send_message.call_args.args[0]
+        self.assertEqual(message["From"], "Test Mailer <mailer@example.test>")
 
 
 if __name__ == "__main__":

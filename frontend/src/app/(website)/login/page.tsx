@@ -66,8 +66,20 @@ const isBackendSession = (value: unknown): value is BackendSession =>
 
 const getApiErrorMessage = (value: unknown, fallback: string): string => {
   if (!isRecord(value)) return fallback;
-  if (typeof value.message === 'string') return value.message;
-  if (typeof value.detail === 'string') return value.detail;
+  if (typeof value.message === 'string' && value.message.trim()) return value.message;
+  if (typeof value.detail === 'string' && value.detail.trim()) return value.detail;
+  if (typeof value.error === 'string' && value.error.trim()) return value.error;
+  if (isRecord(value.errors)) {
+    for (const entry of Object.values(value.errors)) {
+      if (typeof entry === 'string' && entry.trim()) return entry;
+      if (Array.isArray(entry)) {
+        const first = entry.find(
+          (item): item is string => typeof item === 'string' && item.trim().length > 0
+        );
+        if (first) return first;
+      }
+    }
+  }
   return fallback;
 };
 

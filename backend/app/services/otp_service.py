@@ -114,3 +114,23 @@ class OTPService:
             verification.is_used = True
         db.commit()
         return False
+
+    @staticmethod
+    def discard_latest_unused(db: Session, email: str, purpose: OTPPurpose) -> None:
+        """Delete the most recent unused OTP so a failed email delivery does not impose a cooldown."""
+        normalized_email = email.strip().lower()
+        if not normalized_email:
+            return
+        latest = (
+            db.query(OTPVerification)
+            .filter(
+                OTPVerification.email == normalized_email,
+                OTPVerification.purpose == purpose.value,
+                OTPVerification.is_used.is_(False),
+            )
+            .order_by(OTPVerification.created_at.desc())
+            .first()
+        )
+        if latest is not None:
+            db.delete(latest)
+            db.commit()
